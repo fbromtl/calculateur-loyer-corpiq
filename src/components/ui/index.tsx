@@ -296,29 +296,35 @@ interface NavigationButtonsProps {
 export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
   onPrevious,
   onNext,
-  previousLabel = 'Précédent',
-  nextLabel = 'Suivant',
+  previousLabel,
+  nextLabel,
   showPrevious = true,
   showNext = true,
   nextDisabled = false,
-}) => (
-  <div className="flex justify-between mt-8 pt-6 border-t border-gray-200">
-    {showPrevious && onPrevious ? (
-      <button type="button" onClick={onPrevious} className="btn-secondary">
-        ← {previousLabel}
-      </button>
-    ) : (
-      <div />
-    )}
-    {showNext && onNext && (
-      <button 
-        type="button" 
-        onClick={onNext} 
-        disabled={nextDisabled}
-        className="btn-primary"
-      >
-        {nextLabel} →
-      </button>
-    )}
-  </div>
-);
+}) => {
+  // Les labels par défaut seront gérés par les composants parents qui utilisent useLanguage
+  const defaultPrevious = previousLabel || 'Previous';
+  const defaultNext = nextLabel || 'Next';
+  
+  return (
+    <div className="flex justify-between mt-8 pt-6 border-t border-gray-200">
+      {showPrevious && onPrevious ? (
+        <button type="button" onClick={onPrevious} className="btn-secondary">
+          ← {defaultPrevious}
+        </button>
+      ) : (
+        <div />
+      )}
+      {showNext && onNext && (
+        <button 
+          type="button" 
+          onClick={onNext} 
+          disabled={nextDisabled}
+          className="btn-primary"
+        >
+          {defaultNext} →
+        </button>
+      )}
+    </div>
+  );
+};

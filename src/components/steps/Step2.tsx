@@ -8,6 +8,7 @@ import {
   NavigationButtons,
   InfoTooltip
 } from '../ui';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 interface Step2Props {
   formData: FormData;
@@ -24,6 +25,7 @@ export const Step2: React.FC<Step2Props> = ({
   onNext,
   onPrevious,
 }) => {
+  const { t } = useLanguage();
   const updateTaxesMunicipales = (field: 'anneeCourante' | 'anneePrecedente', value: number) => {
     updateFormData({
       taxesMunicipales: {
@@ -117,26 +119,24 @@ export const Step2: React.FC<Step2Props> = ({
   return (
     <div>
       <SectionCard 
-        title="Taxes et assurances de l'immeuble"
+        title={t.step2.title}
         badge={2}
-        tooltip="Seule l'augmentation excédant l'inflation (3,1%) est répercutée sur le loyer"
+        tooltip={t.step2.tooltip}
       >
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
           <p className="text-sm text-blue-800">
-            <strong>Important:</strong> Seule la portion de l'augmentation qui dépasse l'inflation ({((calculatedValues?.tauxIPC || 0) * 100).toFixed(1)}%) 
-            est prise en compte dans le calcul de l'ajustement. Si vos taxes ou assurances diminuent, 
-            la réduction est entièrement répercutée.
+            <strong>{t.step2.important}</strong> {t.step2.importantNote.replace('{rate}', ((calculatedValues?.tauxIPC || 0) * 100).toFixed(1))}
           </p>
         </div>
 
         <div className="space-y-6">
           {/* Taxes municipales */}
           <div className="border-b border-gray-200 pb-6">
-            <h3 className="font-semibold text-gray-800 mb-4">Taxes municipales</h3>
+            <h3 className="font-semibold text-gray-800 mb-4">{t.step2.municipalTaxes}</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <LabelWithTooltip htmlFor="taxeMuni2026">
-                  Année <strong>2026</strong>
+                  {t.step2.year2026}
                 </LabelWithTooltip>
                 <CurrencyInput
                   id="taxeMuni2026"
@@ -146,7 +146,7 @@ export const Step2: React.FC<Step2Props> = ({
               </div>
               <div>
                 <LabelWithTooltip htmlFor="taxeMuni2025">
-                  Année <strong>2025</strong>
+                  {t.step2.year2025}
                 </LabelWithTooltip>
                 <CurrencyInput
                   id="taxeMuni2025"
@@ -155,8 +155,8 @@ export const Step2: React.FC<Step2Props> = ({
                 />
               </div>
               <div>
-                <LabelWithTooltip tooltip="Ajustement mensuel calculé selon la formule du TAL">
-                  Ajustement mensuel
+                <LabelWithTooltip tooltip={t.step2.monthlyAdjustmentTooltip}>
+                  {t.step2.monthlyAdjustment}
                 </LabelWithTooltip>
                 <CalculatedField value={ajustementTaxesMunicipales} />
               </div>
@@ -165,11 +165,11 @@ export const Step2: React.FC<Step2Props> = ({
 
           {/* Taxes scolaires */}
           <div className="border-b border-gray-200 pb-6">
-            <h3 className="font-semibold text-gray-800 mb-4">Taxes scolaires</h3>
+            <h3 className="font-semibold text-gray-800 mb-4">{t.step2.schoolTaxes}</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <LabelWithTooltip htmlFor="taxeScol2526">
-                  Année <strong>2025-2026</strong>
+                  {t.step2.year2025_2026}
                 </LabelWithTooltip>
                 <CurrencyInput
                   id="taxeScol2526"
@@ -179,7 +179,7 @@ export const Step2: React.FC<Step2Props> = ({
               </div>
               <div>
                 <LabelWithTooltip htmlFor="taxeScol2425">
-                  Année <strong>2024-2025</strong>
+                  {t.step2.year2024_2025}
                 </LabelWithTooltip>
                 <CurrencyInput
                   id="taxeScol2425"
@@ -188,7 +188,7 @@ export const Step2: React.FC<Step2Props> = ({
                 />
               </div>
               <div>
-                <LabelWithTooltip>Ajustement mensuel</LabelWithTooltip>
+                <LabelWithTooltip>{t.step2.monthlyAdjustment}</LabelWithTooltip>
                 <CalculatedField value={ajustementTaxesScolaires} />
               </div>
             </div>
@@ -196,11 +196,11 @@ export const Step2: React.FC<Step2Props> = ({
 
           {/* Assurances */}
           <div className="border-b border-gray-200 pb-6">
-            <h3 className="font-semibold text-gray-800 mb-4">Assurances</h3>
+            <h3 className="font-semibold text-gray-800 mb-4">{t.step2.insurance}</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <LabelWithTooltip htmlFor="assur2025">
-                  Au 31 décembre <strong>2025</strong>
+                  {t.step2.asOfDec31} <strong>2025</strong>
                 </LabelWithTooltip>
                 <CurrencyInput
                   id="assur2025"
@@ -210,7 +210,7 @@ export const Step2: React.FC<Step2Props> = ({
               </div>
               <div>
                 <LabelWithTooltip htmlFor="assur2024">
-                  Au 31 décembre <strong>2024</strong>
+                  {t.step2.asOfDec31} <strong>2024</strong>
                 </LabelWithTooltip>
                 <CurrencyInput
                   id="assur2024"
@@ -219,7 +219,7 @@ export const Step2: React.FC<Step2Props> = ({
                 />
               </div>
               <div>
-                <LabelWithTooltip>Ajustement mensuel</LabelWithTooltip>
+                <LabelWithTooltip>{t.step2.monthlyAdjustment}</LabelWithTooltip>
                 <CalculatedField value={ajustementAssurances} />
               </div>
             </div>
@@ -232,8 +232,8 @@ export const Step2: React.FC<Step2Props> = ({
                 <span className="bg-corpiq-bordeaux text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">
                   2
                 </span>
-                <span className="font-semibold">Ajustement pour les taxes et les assurances</span>
-                <InfoTooltip content="Somme des trois ajustements ci-dessus" />
+                <span className="font-semibold">{t.step2.totalAdjustment}</span>
+                <InfoTooltip content={t.step2.totalAdjustmentTooltip} />
               </div>
               <div className="w-40">
                 <CalculatedField 
@@ -249,6 +249,8 @@ export const Step2: React.FC<Step2Props> = ({
       <NavigationButtons 
         onPrevious={onPrevious}
         onNext={onNext}
+        previousLabel={t.common.previous}
+        nextLabel={t.common.next}
       />
     </div>
   );

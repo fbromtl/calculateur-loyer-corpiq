@@ -12,6 +12,7 @@ import {
 } from '../ui';
 import { Plus, Trash2 } from 'lucide-react';
 import { calculAjustementNouvelleDepense, calculAjustementVariationAide, formatCurrency } from '../../utils/calculations';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 interface Step4Props {
   formData: FormData;
@@ -38,6 +39,7 @@ export const Step4: React.FC<Step4Props> = ({
   onNext,
   onPrevious,
 }) => {
+  const { t } = useLanguage();
   const getAjustementNouvelleDepense = (ligne: LigneNouvelleDepense): number => {
     if (!calculatedValues) return 0;
     return calculAjustementNouvelleDepense(
@@ -66,27 +68,25 @@ export const Step4: React.FC<Step4Props> = ({
     <div>
       {/* Section 4A: Nouvelles dépenses */}
       <SectionCard 
-        title="4A - Nouvelles dépenses pour services, accessoires ou dépendances"
-        tooltip="Nouveaux services offerts aux locataires (ex: stationnement, rangement, etc.)"
+        title={t.step4.newExpenses.title}
+        tooltip={t.step4.newExpenses.tooltip}
       >
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
           <p className="text-sm text-blue-800">
-            <strong>Note:</strong> Contrairement aux réparations majeures, les nouvelles dépenses 
-            ne sont pas amorties sur 20 ans. Elles sont divisées par 12 mois et réparties selon 
-            le poids du logement.
+            <strong>{t.step4.newExpenses.note}</strong> {t.step4.newExpenses.noteText}
           </p>
         </div>
 
         {formData.nouvellesDepenses.length === 0 ? (
           <div className="text-center py-6 text-gray-500">
-            <p className="mb-4">Aucune nouvelle dépense ajoutée.</p>
+            <p className="mb-4">{t.step4.newExpenses.noExpenses}</p>
             <button
               type="button"
               onClick={addNouvelleDepense}
               className="btn-primary inline-flex items-center gap-2"
             >
               <Plus size={20} />
-              Ajouter une nouvelle dépense
+              {t.step4.newExpenses.addExpense}
             </button>
           </div>
         ) : (
@@ -96,37 +96,38 @@ export const Step4: React.FC<Step4Props> = ({
               {formData.nouvellesDepenses.map((ligne, index) => (
                 <div key={ligne.id} className="bg-gray-50 rounded-lg p-4 space-y-3">
                   <div className="flex justify-between items-start">
-                    <span className="font-semibold text-corpiq-blue">Dépense {index + 1}</span>
+                    <span className="font-semibold text-corpiq-blue">{t.step4.newExpenses.expense} {index + 1}</span>
                     <button
                       type="button"
                       onClick={() => removeNouvelleDepense(ligne.id)}
                       className="text-red-500 hover:text-red-700 p-1"
+                      title={t.common.delete}
                     >
                       <Trash2 size={18} />
                     </button>
                   </div>
                   
                   <div>
-                    <LabelWithTooltip>Nature</LabelWithTooltip>
+                    <LabelWithTooltip>{t.step3.nature}</LabelWithTooltip>
                     <input
                       type="text"
                       value={ligne.nature}
                       onChange={(e) => updateNouvelleDepense(ligne.id, { nature: e.target.value })}
                       className="input-field"
-                      placeholder="Ex: Nouveau stationnement"
+                      placeholder={t.step3.naturePlaceholder}
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <LabelWithTooltip>Dépense ($)</LabelWithTooltip>
+                      <LabelWithTooltip>{t.step3.expense}</LabelWithTooltip>
                       <CurrencyInput
                         value={ligne.depense}
                         onChange={(v) => updateNouvelleDepense(ligne.id, { depense: v })}
                       />
                     </div>
                     <div>
-                      <LabelWithTooltip>Aide financière</LabelWithTooltip>
+                      <LabelWithTooltip>{t.step3.financialAid}</LabelWithTooltip>
                       <CurrencyInput
                         value={ligne.aideFinanciere}
                         onChange={(v) => updateNouvelleDepense(ligne.id, { aideFinanciere: v })}
@@ -136,7 +137,7 @@ export const Step4: React.FC<Step4Props> = ({
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <LabelWithTooltip>Nb logements</LabelWithTooltip>
+                      <LabelWithTooltip>{t.step3.nbDwellings}</LabelWithTooltip>
                       <NumberInput
                         value={ligne.nbLogements}
                         onChange={(v) => updateNouvelleDepense(ligne.id, { nbLogements: v })}
@@ -144,7 +145,7 @@ export const Step4: React.FC<Step4Props> = ({
                       />
                     </div>
                     <div>
-                      <LabelWithTooltip>Nb locaux</LabelWithTooltip>
+                      <LabelWithTooltip>{t.step3.nbNonResidential}</LabelWithTooltip>
                       <NumberInput
                         value={ligne.nbLocauxNonResidentiels}
                         onChange={(v) => updateNouvelleDepense(ligne.id, { nbLocauxNonResidentiels: v })}
@@ -157,10 +158,10 @@ export const Step4: React.FC<Step4Props> = ({
                     <Checkbox
                       checked={ligne.logementConcerne}
                       onChange={(v) => updateNouvelleDepense(ligne.id, { logementConcerne: v })}
-                      label="Logement concerné"
+                      label={t.step3.concernedDwelling}
                     />
                     <div className="text-right">
-                      <span className="text-sm text-gray-500">Ajustement:</span>
+                      <span className="text-sm text-gray-500">{t.step3.adjustment}</span>
                       <div className="font-semibold text-green-700">
                         {formatCurrency(getAjustementNouvelleDepense(ligne))}
                       </div>
@@ -270,7 +271,7 @@ export const Step4: React.FC<Step4Props> = ({
 
         <div className="bg-gray-100 p-3 rounded-lg mt-4">
           <div className="flex items-center justify-between">
-            <span className="font-medium">Sous-total nouvelles dépenses</span>
+            <span className="font-medium">{t.step4.newExpenses.subtotal}</span>
             <div className="w-36">
               <CalculatedField value={calculatedValues?.totalAjustementNouvellesDepenses || 0} />
             </div>
@@ -280,26 +281,25 @@ export const Step4: React.FC<Step4Props> = ({
 
       {/* Section 4B: Variations d'aide */}
       <SectionCard 
-        title="4B - Variation ou cessation d'une aide financière"
-        tooltip="Si une aide gouvernementale diminue ou cesse, cette perte peut être répercutée sur le loyer"
+        title={t.step4.aidVariation.title}
+        tooltip={t.step4.aidVariation.tooltip}
       >
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
           <p className="text-sm text-red-800">
-            <strong>Important:</strong> Une <u>diminution</u> de l'aide financière (montant 2025 &lt; montant 2024) 
-            entraîne une <u>augmentation</u> du loyer. Le signe est inversé automatiquement dans le calcul.
+            <strong>{t.step4.aidVariation.important}</strong> {t.step4.aidVariation.importantNote}
           </p>
         </div>
 
         {formData.variationsAide.length === 0 ? (
           <div className="text-center py-6 text-gray-500">
-            <p className="mb-4">Aucune variation d'aide ajoutée.</p>
+            <p className="mb-4">{t.step4.aidVariation.noVariations}</p>
             <button
               type="button"
               onClick={addVariationAide}
               className="btn-primary inline-flex items-center gap-2"
             >
               <Plus size={20} />
-              Ajouter une variation d'aide
+              {t.step4.aidVariation.addVariation}
             </button>
           </div>
         ) : (
@@ -479,7 +479,7 @@ export const Step4: React.FC<Step4Props> = ({
 
         <div className="bg-gray-100 p-3 rounded-lg mt-4">
           <div className="flex items-center justify-between">
-            <span className="font-medium">Sous-total variations d'aide</span>
+            <span className="font-medium">{t.step4.aidVariation.subtotal}</span>
             <div className="w-36">
               <CalculatedField value={calculatedValues?.totalAjustementVariationsAide || 0} />
             </div>
@@ -494,8 +494,8 @@ export const Step4: React.FC<Step4Props> = ({
             <span className="bg-corpiq-bordeaux text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">
               4
             </span>
-            <span className="font-semibold">Total section 4 (Dépenses + Variations d'aide)</span>
-            <InfoTooltip content="Somme des nouvelles dépenses et des variations d'aide" />
+            <span className="font-semibold">{t.step4.totalSection4}</span>
+            <InfoTooltip content={t.step4.totalSection4Tooltip} />
           </div>
           <div className="w-40">
             <CalculatedField 
@@ -509,6 +509,8 @@ export const Step4: React.FC<Step4Props> = ({
       <NavigationButtons 
         onPrevious={onPrevious}
         onNext={onNext}
+        previousLabel={t.common.previous}
+        nextLabel={t.common.next}
       />
     </div>
   );

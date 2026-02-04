@@ -10,6 +10,7 @@ import {
   NavigationButtons 
 } from '../ui';
 import { formatCurrency } from '../../utils/calculations';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 interface Step1Props {
   formData: FormData;
@@ -24,6 +25,7 @@ export const Step1: React.FC<Step1Props> = ({
   updateFormData,
   onNext,
 }) => {
+  const { t } = useLanguage();
   const updateLogements = (
     type: 'loues' | 'inoccupes' | 'occupesLocateur',
     field: 'nombre' | 'loyerMensuel',
@@ -60,13 +62,13 @@ export const Step1: React.FC<Step1Props> = ({
     <div>
       {/* Section: Renseignements sur le logement */}
       <SectionCard 
-        title="Renseignements sur le logement concerné"
-        tooltip="Informations sur le logement pour lequel vous calculez l'augmentation de loyer"
+        title={t.step1.housingInfo.title}
+        tooltip={t.step1.housingInfo.tooltip}
       >
         <div className="space-y-4">
           <div>
             <LabelWithTooltip htmlFor="adresse" required>
-              Adresse du logement concerné
+              {t.step1.housingInfo.address}
             </LabelWithTooltip>
             <textarea
               id="adresse"
@@ -74,23 +76,23 @@ export const Step1: React.FC<Step1Props> = ({
               onChange={(e) => updateFormData({ adresse: e.target.value })}
               className="input-field"
               rows={2}
-              placeholder="Ex: 123, rue Principale, Montréal, QC H1A 2B3"
+              placeholder={t.step1.housingInfo.addressPlaceholder}
             />
           </div>
           
           <Checkbox
             checked={formData.isRPA}
             onChange={(checked) => updateFormData({ isRPA: checked })}
-            label="Cet immeuble est en tout ou en partie une résidence privée pour aînés (RPA) ou un autre lieu d'hébergement offrant des services aux aînés"
+            label={t.step1.housingInfo.rpa}
           />
         </div>
       </SectionCard>
 
       {/* Section: Ajustement de base */}
       <SectionCard 
-        title="Ajustement de base du loyer"
+        title={t.step1.baseAdjustment.title}
         badge={1}
-        tooltip="L'ajustement de base est calculé selon la variation annuelle moyenne de l'IPC pour le Québec"
+        tooltip={t.step1.baseAdjustment.tooltip}
       >
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
@@ -98,9 +100,9 @@ export const Step1: React.FC<Step1Props> = ({
               <LabelWithTooltip 
                 htmlFor="loyer" 
                 required
-                tooltip="Le loyer mensuel actuel, avant toute augmentation"
+                tooltip={t.step1.baseAdjustment.currentRentTooltip}
               >
-                Loyer mensuel du logement (avant augmentation)
+                {t.step1.baseAdjustment.currentRent}
               </LabelWithTooltip>
               <CurrencyInput
                 id="loyer"
@@ -115,17 +117,17 @@ export const Step1: React.FC<Step1Props> = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <LabelWithTooltip 
-                  tooltip="Taux fixé par le TAL pour 2026 basé sur la moyenne de l'IPC des 3 dernières années"
+                  tooltip={t.step1.baseAdjustment.ipcVariationTooltip}
                 >
-                  Variation annuelle moyenne de l'IPC
+                  {t.step1.baseAdjustment.ipcVariation}
                 </LabelWithTooltip>
                 <div className="input-readonly text-right font-medium">
                   {((calculatedValues?.tauxIPC || 0) * 100).toFixed(1)} %
                 </div>
               </div>
               <div>
-                <LabelWithTooltip tooltip="Loyer × Taux IPC">
-                  Ajustement de base du loyer mensuel
+                <LabelWithTooltip tooltip={t.step1.baseAdjustment.baseAdjustmentTooltip}>
+                  {t.step1.baseAdjustment.baseAdjustment}
                 </LabelWithTooltip>
                 <CalculatedField 
                   value={calculatedValues?.ajustementBase || 0} 
@@ -139,8 +141,8 @@ export const Step1: React.FC<Step1Props> = ({
 
       {/* Section: Revenus de l'immeuble */}
       <SectionCard 
-        title="Revenus de l'immeuble"
-        tooltip="Loyers de tous les logements et locaux de l'immeuble. Ces données servent à calculer le poids du logement concerné."
+        title={t.step1.buildingRevenue.title}
+        tooltip={t.step1.buildingRevenue.tooltip}
       >
         <div className="space-y-6">
           <div className="overflow-x-auto">
@@ -149,26 +151,26 @@ export const Step1: React.FC<Step1Props> = ({
                 <tr className="border-b-2 border-corpiq-blue">
                   <th className="text-left py-2"></th>
                   <th colSpan={2} className="text-center py-2 text-corpiq-blue">
-                    Logements
+                    {t.step1.buildingRevenue.dwellings}
                   </th>
                   <th colSpan={2} className="text-center py-2 text-corpiq-blue border-l border-gray-200">
-                    Locaux non résidentiels
+                    {t.step1.buildingRevenue.nonResidential}
                   </th>
                 </tr>
                 <tr className="border-b text-sm text-gray-600">
                   <th className="text-left py-2"></th>
-                  <th className="text-center py-2 w-24">Nombre</th>
-                  <th className="text-center py-2 w-36">Loyers mensuels</th>
-                  <th className="text-center py-2 w-24 border-l border-gray-200">Nombre</th>
-                  <th className="text-center py-2 w-36">Loyers mensuels</th>
+                  <th className="text-center py-2 w-24">{t.step1.buildingRevenue.number}</th>
+                  <th className="text-center py-2 w-36">{t.step1.buildingRevenue.monthlyRent}</th>
+                  <th className="text-center py-2 w-24 border-l border-gray-200">{t.step1.buildingRevenue.number}</th>
+                  <th className="text-center py-2 w-36">{t.step1.buildingRevenue.monthlyRent}</th>
                 </tr>
               </thead>
               <tbody>
                 {/* Loués */}
                 <tr className="border-b">
                   <td className="py-3">
-                    <div className="font-medium">Loués</div>
-                    <div className="text-sm text-gray-500">Loyers mensuels</div>
+                    <div className="font-medium">{t.step1.buildingRevenue.rented}</div>
+                    <div className="text-sm text-gray-500">{t.step1.buildingRevenue.monthlyRent}</div>
                   </td>
                   <td className="py-3 px-2">
                     <NumberInput
@@ -199,8 +201,8 @@ export const Step1: React.FC<Step1Props> = ({
                 {/* Inoccupés */}
                 <tr className="border-b">
                   <td className="py-3">
-                    <div className="font-medium">Inoccupés</div>
-                    <div className="text-sm text-gray-500">Loyers mensuels</div>
+                    <div className="font-medium">{t.step1.buildingRevenue.vacant}</div>
+                    <div className="text-sm text-gray-500">{t.step1.buildingRevenue.monthlyRent}</div>
                   </td>
                   <td className="py-3 px-2">
                     <NumberInput
@@ -231,8 +233,8 @@ export const Step1: React.FC<Step1Props> = ({
                 {/* Occupés par le locateur */}
                 <tr className="border-b">
                   <td className="py-3">
-                    <div className="font-medium">Occupés par le locateur</div>
-                    <div className="text-sm text-gray-500">Loyers mensuels</div>
+                    <div className="font-medium">{t.step1.buildingRevenue.occupiedByOwner}</div>
+                    <div className="text-sm text-gray-500">{t.step1.buildingRevenue.monthlyRent}</div>
                   </td>
                   <td className="py-3 px-2">
                     <NumberInput
@@ -262,7 +264,7 @@ export const Step1: React.FC<Step1Props> = ({
 
                 {/* Sous-total */}
                 <tr className="bg-gray-50 font-semibold">
-                  <td className="py-3">Sous-total</td>
+                  <td className="py-3">{t.step1.buildingRevenue.subtotal}</td>
                   <td className="py-3 px-2 text-center">
                     {calculatedValues?.soustotalLogements.nombre || 0}
                   </td>
@@ -284,16 +286,16 @@ export const Step1: React.FC<Step1Props> = ({
           <div className="bg-corpiq-light p-4 rounded-lg space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <LabelWithTooltip tooltip="(Total loyers logements + locaux) × 12 mois">
-                  Total des loyers sur une base annuelle
+                <LabelWithTooltip tooltip={t.step1.buildingRevenue.totalAnnualRentTooltip}>
+                  {t.step1.buildingRevenue.totalAnnualRent}
                 </LabelWithTooltip>
                 <CalculatedField value={calculatedValues?.totalLoyersAnnuel || 0} />
               </div>
               <div>
                 <LabelWithTooltip 
-                  tooltip="Stationnements, buanderie, etc."
+                  tooltip={t.step1.buildingRevenue.otherRevenueTooltip}
                 >
-                  Autres revenus provenant de l'exploitation
+                  {t.step1.buildingRevenue.otherRevenue}
                 </LabelWithTooltip>
                 <CurrencyInput
                   value={formData.autresRevenus}
@@ -309,6 +311,7 @@ export const Step1: React.FC<Step1Props> = ({
         showPrevious={false}
         onNext={onNext}
         nextDisabled={formData.loyerMensuelActuel <= 0}
+        nextLabel={t.common.next}
       />
     </div>
   );

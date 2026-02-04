@@ -4,9 +4,11 @@ import { STEPS } from './types';
 import { StepIndicator } from './components/ui';
 import { Step1, Step2, Step3, Step4, Step5 } from './components/steps';
 import { generatePDF } from './utils/pdfExport';
-import { Building2, ExternalLink } from 'lucide-react';
+import { Building2, ExternalLink, Languages } from 'lucide-react';
+import { useLanguage } from './i18n/LanguageContext';
 
 function App() {
+  const { language, setLanguage, t } = useLanguage();
   const {
     formData,
     calculatedValues,
@@ -31,7 +33,7 @@ function App() {
   const handleExportPDF = async () => {
     if (calculatedValues) {
       try {
-        await generatePDF(formData, calculatedValues);
+        await generatePDF(formData, calculatedValues, language);
       } catch (error) {
         console.error('Erreur lors de la génération du PDF:', error);
         alert('Une erreur est survenue lors de la génération du PDF.');
@@ -39,12 +41,16 @@ function App() {
     }
   };
 
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'fr' : 'en');
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-4 border-corpiq-blue border-t-transparent mx-auto mb-4"></div>
-          <p className="text-gray-600">Chargement...</p>
+          <p className="text-gray-600">{t.app.loading}</p>
         </div>
       </div>
     );
@@ -59,19 +65,29 @@ function App() {
             <div className="flex items-center gap-3">
               <Building2 size={32} />
               <div>
-                <h1 className="text-2xl font-bold">Calculateur d'augmentation de loyer</h1>
-                <p className="text-blue-200 text-sm">Année 2026 - CORPIQ</p>
+                <h1 className="text-2xl font-bold">{t.app.title}</h1>
+                <p className="text-blue-200 text-sm">{t.app.subtitle}</p>
               </div>
             </div>
-            <a 
-              href="https://www.corpiq.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hidden md:flex items-center gap-2 text-blue-200 hover:text-white transition-colors"
-            >
-              <span>corpiq.com</span>
-              <ExternalLink size={16} />
-            </a>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={toggleLanguage}
+                className="flex items-center gap-2 text-blue-200 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-white/10"
+                title={language === 'en' ? 'Changer en français' : 'Switch to English'}
+              >
+                <Languages size={20} />
+                <span className="font-medium">{language === 'en' ? 'FR' : 'EN'}</span>
+              </button>
+              <a 
+                href="https://www.corpiq.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hidden md:flex items-center gap-2 text-blue-200 hover:text-white transition-colors"
+              >
+                <span>corpiq.com</span>
+                <ExternalLink size={16} />
+              </a>
+            </div>
           </div>
         </div>
       </header>
@@ -89,9 +105,9 @@ function App() {
         {/* Current step title */}
         <div className="mb-6">
           <h2 className="text-xl font-bold text-corpiq-blue">
-            Étape {currentStep}: {STEPS[currentStep - 1]?.title}
+            {language === 'en' ? 'Step' : 'Étape'} {currentStep}: {t.steps[`step${currentStep}` as keyof typeof t.steps].title}
           </h2>
-          <p className="text-gray-600">{STEPS[currentStep - 1]?.description}</p>
+          <p className="text-gray-600">{t.steps[`step${currentStep}` as keyof typeof t.steps].description}</p>
         </div>
 
         {/* Step content */}
@@ -155,7 +171,7 @@ function App() {
         {/* Auto-save indicator */}
         <div className="fixed bottom-4 right-4 bg-green-100 text-green-800 px-3 py-2 rounded-full text-sm shadow-md flex items-center gap-2">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-          Sauvegarde automatique
+          {t.app.autoSave}
         </div>
       </main>
 
@@ -163,7 +179,7 @@ function App() {
       <footer className="bg-gray-100 border-t border-gray-200 mt-12">
         <div className="max-w-5xl mx-auto px-4 py-6 text-center text-gray-600 text-sm">
           <p>
-            © {new Date().getFullYear()} CORPIQ - Corporation des propriétaires immobiliers du Québec
+            {t.app.footer}
           </p>
         </div>
       </footer>

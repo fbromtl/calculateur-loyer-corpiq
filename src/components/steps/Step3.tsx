@@ -12,6 +12,7 @@ import {
 } from '../ui';
 import { Plus, Trash2 } from 'lucide-react';
 import { calculAjustementReparation, formatCurrency } from '../../utils/calculations';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 interface Step3Props {
   formData: FormData;
@@ -32,6 +33,7 @@ export const Step3: React.FC<Step3Props> = ({
   onNext,
   onPrevious,
 }) => {
+  const { t } = useLanguage();
   const getAjustementLigne = (ligne: LigneReparation): number => {
     if (!calculatedValues) return 0;
     return calculAjustementReparation(
@@ -47,28 +49,26 @@ export const Step3: React.FC<Step3Props> = ({
   return (
     <div>
       <SectionCard 
-        title="Réparations ou améliorations majeures"
+        title={t.step3.title}
         badge={3}
-        tooltip="Les dépenses de réparations majeures sont amorties sur 20 ans et réparties entre les logements concernés"
+        tooltip={t.step3.tooltip}
       >
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
           <p className="text-sm text-amber-800">
-            <strong>Comment ça fonctionne:</strong> Les dépenses sont divisées par 20 ans, puis réparties 
-            proportionnellement entre les logements/locaux concernés selon leur loyer. 
-            Seule la part attribuable au logement pour lequel vous calculez l'augmentation est comptée.
+            <strong>{t.step3.howItWorks}</strong> {t.step3.howItWorksNote}
           </p>
         </div>
 
         {formData.reparations.length === 0 ? (
           <div className="text-center py-8 text-gray-500">
-            <p className="mb-4">Aucune réparation ou amélioration majeure ajoutée.</p>
+            <p className="mb-4">{t.step3.noRepairs}</p>
             <button
               type="button"
               onClick={addReparation}
               className="btn-primary inline-flex items-center gap-2"
             >
               <Plus size={20} />
-              Ajouter une réparation
+              {t.step3.addRepair}
             </button>
           </div>
         ) : (
@@ -78,38 +78,38 @@ export const Step3: React.FC<Step3Props> = ({
               {formData.reparations.map((ligne, index) => (
                 <div key={ligne.id} className="bg-gray-50 rounded-lg p-4 space-y-3">
                   <div className="flex justify-between items-start">
-                    <span className="font-semibold text-corpiq-blue">Ligne {index + 1}</span>
+                    <span className="font-semibold text-corpiq-blue">{t.step3.line} {index + 1}</span>
                     <button
                       type="button"
                       onClick={() => removeReparation(ligne.id)}
                       className="text-red-500 hover:text-red-700 p-1"
-                      title="Supprimer"
+                      title={t.common.delete}
                     >
                       <Trash2 size={18} />
                     </button>
                   </div>
                   
                   <div>
-                    <LabelWithTooltip>Nature de la dépense</LabelWithTooltip>
+                    <LabelWithTooltip>{t.step3.nature}</LabelWithTooltip>
                     <input
                       type="text"
                       value={ligne.nature}
                       onChange={(e) => updateReparation(ligne.id, { nature: e.target.value })}
                       className="input-field"
-                      placeholder="Ex: Réfection toiture"
+                      placeholder={t.step3.naturePlaceholder}
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <LabelWithTooltip>Dépense ($)</LabelWithTooltip>
+                      <LabelWithTooltip>{t.step3.expense}</LabelWithTooltip>
                       <CurrencyInput
                         value={ligne.depense}
                         onChange={(v) => updateReparation(ligne.id, { depense: v })}
                       />
                     </div>
                     <div>
-                      <LabelWithTooltip>Aide financière</LabelWithTooltip>
+                      <LabelWithTooltip>{t.step3.financialAid}</LabelWithTooltip>
                       <CurrencyInput
                         value={ligne.aideFinanciere}
                         onChange={(v) => updateReparation(ligne.id, { aideFinanciere: v })}
@@ -119,21 +119,21 @@ export const Step3: React.FC<Step3Props> = ({
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <LabelWithTooltip>Indemnité tiers</LabelWithTooltip>
+                      <LabelWithTooltip>{t.step3.thirdPartyCompensation}</LabelWithTooltip>
                       <CurrencyInput
                         value={ligne.indemniteTiers}
                         onChange={(v) => updateReparation(ligne.id, { indemniteTiers: v })}
                       />
                     </div>
                     <div>
-                      <LabelWithTooltip>Dépense retenue</LabelWithTooltip>
+                      <LabelWithTooltip>{t.step3.retainedExpense}</LabelWithTooltip>
                       <CalculatedField value={ligne.depenseRetenue} />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <LabelWithTooltip>Nb logements</LabelWithTooltip>
+                      <LabelWithTooltip>{t.step3.nbDwellings}</LabelWithTooltip>
                       <NumberInput
                         value={ligne.nbLogements}
                         onChange={(v) => updateReparation(ligne.id, { nbLogements: v })}
@@ -141,7 +141,7 @@ export const Step3: React.FC<Step3Props> = ({
                       />
                     </div>
                     <div>
-                      <LabelWithTooltip>Nb locaux non-rés.</LabelWithTooltip>
+                      <LabelWithTooltip>{t.step3.nbNonResidential}</LabelWithTooltip>
                       <NumberInput
                         value={ligne.nbLocauxNonResidentiels}
                         onChange={(v) => updateReparation(ligne.id, { nbLocauxNonResidentiels: v })}
@@ -154,10 +154,10 @@ export const Step3: React.FC<Step3Props> = ({
                     <Checkbox
                       checked={ligne.logementConcerne}
                       onChange={(v) => updateReparation(ligne.id, { logementConcerne: v })}
-                      label="Logement concerné"
+                      label={t.step3.concernedDwelling}
                     />
                     <div className="text-right">
-                      <span className="text-sm text-gray-500">Ajustement:</span>
+                      <span className="text-sm text-gray-500">{t.step3.adjustment}</span>
                       <div className="font-semibold text-green-700">
                         {formatCurrency(getAjustementLigne(ligne))}
                       </div>
@@ -270,10 +270,10 @@ export const Step3: React.FC<Step3Props> = ({
               disabled={formData.reparations.length >= 30}
             >
               <Plus size={20} />
-              Ajouter une ligne
+              {t.step3.addLine}
             </button>
             {formData.reparations.length >= 30 && (
-              <p className="text-sm text-amber-600">Maximum de 30 lignes atteint.</p>
+              <p className="text-sm text-amber-600">{t.step3.maxLines}</p>
             )}
           </div>
         )}
@@ -285,8 +285,8 @@ export const Step3: React.FC<Step3Props> = ({
               <span className="bg-corpiq-bordeaux text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">
                 3
               </span>
-              <span className="font-semibold">Ajustement pour les réparations majeures</span>
-              <InfoTooltip content="Somme des ajustements pour toutes les réparations où le logement est concerné" />
+              <span className="font-semibold">{t.step3.totalAdjustment}</span>
+              <InfoTooltip content={t.step3.totalAdjustmentTooltip} />
             </div>
             <div className="w-40">
               <CalculatedField 
@@ -301,6 +301,8 @@ export const Step3: React.FC<Step3Props> = ({
       <NavigationButtons 
         onPrevious={onPrevious}
         onNext={onNext}
+        previousLabel={t.common.previous}
+        nextLabel={t.common.next}
       />
     </div>
   );
