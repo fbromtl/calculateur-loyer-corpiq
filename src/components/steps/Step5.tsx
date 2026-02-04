@@ -1,0 +1,299 @@
+import React from 'react';
+import { FormData, CalculatedValues } from '../../types';
+import { 
+  SectionCard, 
+  CurrencyInput, 
+  CalculatedField, 
+  LabelWithTooltip,
+  NavigationButtons,
+  InfoTooltip
+} from '../ui';
+import { Download, RotateCcw, Calculator, TrendingUp, Home } from 'lucide-react';
+import { formatCurrency } from '../../utils/calculations';
+
+interface Step5Props {
+  formData: FormData;
+  calculatedValues: CalculatedValues | null;
+  updateFormData: (updates: Partial<FormData>) => void;
+  onPrevious: () => void;
+  onReset: () => void;
+  onExportPDF: () => void;
+}
+
+export const Step5: React.FC<Step5Props> = ({
+  formData,
+  calculatedValues,
+  updateFormData,
+  onPrevious,
+  onReset,
+  onExportPDF,
+}) => {
+  const [showResetConfirm, setShowResetConfirm] = React.useState(false);
+
+  const updateDeneigement = (field: 'frais2025' | 'frais2024', value: number) => {
+    updateFormData({
+      deneigement: {
+        ...formData.deneigement,
+        [field]: value,
+      },
+    });
+  };
+
+  // Calcul ajustement déneigement
+  const ajustementDeneigement = React.useMemo(() => {
+    if (!calculatedValues || calculatedValues.revenusImmeuble === 0) return 0;
+    const variation = formData.deneigement.frais2025 - formData.deneigement.frais2024;
+    const poidsLoyer = (formData.loyerMensuelActuel * 12) / calculatedValues.revenusImmeuble;
+    return Math.round((variation / 12) * poidsLoyer * 100) / 100;
+  }, [formData, calculatedValues]);
+
+  const handleReset = () => {
+    onReset();
+    setShowResetConfirm(false);
+  };
+
+  return (
+    <div>
+      {/* Section Déneigement (pour parcs de maisons mobiles) */}
+      <SectionCard 
+        title="Déneigement (parcs de maisons mobiles seulement)"
+        tooltip="Cette section ne s'applique qu'aux parcs de maisons mobiles"
+      >
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
+          <p className="text-sm text-gray-600">
+            Cette section s'applique uniquement aux parcs de maisons mobiles. 
+            Si vous n'êtes pas dans ce cas, laissez ces champs à zéro.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <LabelWithTooltip htmlFor="deneig2025">
+              Frais de déneigement <strong>2025</strong>
+            </LabelWithTooltip>
+            <CurrencyInput
+              id="deneig2025"
+              value={formData.deneigement.frais2025}
+              onChange={(v) => updateDeneigement('frais2025', v)}
+            />
+          </div>
+          <div>
+            <LabelWithTooltip htmlFor="deneig2024">
+              Frais de déneigement <strong>2024</strong>
+            </LabelWithTooltip>
+            <CurrencyInput
+              id="deneig2024"
+              value={formData.deneigement.frais2024}
+              onChange={(v) => updateDeneigement('frais2024', v)}
+            />
+          </div>
+          <div>
+            <LabelWithTooltip>Ajustement mensuel</LabelWithTooltip>
+            <CalculatedField value={ajustementDeneigement} />
+          </div>
+        </div>
+      </SectionCard>
+
+      {/* Récapitulatif des ajustements */}
+      <SectionCard title="Récapitulatif des ajustements">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b-2 border-corpiq-blue">
+                <th className="text-left py-3 px-2">Section</th>
+                <th className="text-left py-3 px-2">Description</th>
+                <th className="text-right py-3 px-2 w-40">Ajustement mensuel</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b hover:bg-gray-50">
+                <td className="py-3 px-2">
+                  <span className="bg-corpiq-bordeaux text-white w-6 h-6 rounded-full inline-flex items-center justify-center text-sm font-bold mr-2">
+                    1
+                  </span>
+                </td>
+                <td className="py-3 px-2">Ajustement de base (IPC {((calculatedValues?.tauxIPC || 0) * 100).toFixed(1)}%)</td>
+                <td className="py-3 px-2 text-right font-medium text-green-700">
+                  {formatCurrency(calculatedValues?.ajustementBase || 0)}
+                </td>
+              </tr>
+              <tr className="border-b hover:bg-gray-50">
+                <td className="py-3 px-2">
+                  <span className="bg-corpiq-bordeaux text-white w-6 h-6 rounded-full inline-flex items-center justify-center text-sm font-bold mr-2">
+                    2
+                  </span>
+                </td>
+                <td className="py-3 px-2">Taxes et assurances</td>
+                <td className={`py-3 px-2 text-right font-medium ${(calculatedValues?.totalAjustementTaxesAssurances || 0) >= 0 ? 'text-green-700' : 'text-red-600'}`}>
+                  {formatCurrency(calculatedValues?.totalAjustementTaxesAssurances || 0)}
+                </td>
+              </tr>
+              <tr className="border-b hover:bg-gray-50">
+                <td className="py-3 px-2">
+                  <span className="bg-corpiq-bordeaux text-white w-6 h-6 rounded-full inline-flex items-center justify-center text-sm font-bold mr-2">
+                    3
+                  </span>
+                </td>
+                <td className="py-3 px-2">Réparations ou améliorations majeures</td>
+                <td className={`py-3 px-2 text-right font-medium ${(calculatedValues?.totalAjustementReparations || 0) >= 0 ? 'text-green-700' : 'text-red-600'}`}>
+                  {formatCurrency(calculatedValues?.totalAjustementReparations || 0)}
+                </td>
+              </tr>
+              <tr className="border-b hover:bg-gray-50">
+                <td className="py-3 px-2">
+                  <span className="bg-corpiq-bordeaux text-white w-6 h-6 rounded-full inline-flex items-center justify-center text-sm font-bold mr-2">
+                    4
+                  </span>
+                </td>
+                <td className="py-3 px-2">Nouvelles dépenses et variations d'aide</td>
+                <td className={`py-3 px-2 text-right font-medium ${(calculatedValues?.totalSection4 || 0) >= 0 ? 'text-green-700' : 'text-red-600'}`}>
+                  {formatCurrency(calculatedValues?.totalSection4 || 0)}
+                </td>
+              </tr>
+              <tr className="border-b hover:bg-gray-50">
+                <td className="py-3 px-2">
+                  <span className="bg-corpiq-bordeaux text-white w-6 h-6 rounded-full inline-flex items-center justify-center text-sm font-bold mr-2">
+                    5
+                  </span>
+                </td>
+                <td className="py-3 px-2">Déneigement (parcs de maisons mobiles)</td>
+                <td className={`py-3 px-2 text-right font-medium ${ajustementDeneigement >= 0 ? 'text-green-700' : 'text-red-600'}`}>
+                  {formatCurrency(ajustementDeneigement)}
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr className="bg-corpiq-blue text-white font-bold">
+                <td className="py-4 px-2" colSpan={2}>
+                  TOTAL DES AJUSTEMENTS
+                </td>
+                <td className="py-4 px-2 text-right text-lg">
+                  {formatCurrency(calculatedValues?.totalAjustements || 0)}
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </SectionCard>
+
+      {/* Résultat final */}
+      <div className="bg-gradient-to-br from-corpiq-blue to-corpiq-bordeaux rounded-xl p-6 text-white mb-6 shadow-lg">
+        <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+          <Calculator size={24} />
+          Résultat du calcul
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Loyer actuel */}
+          <div className="bg-white/10 rounded-lg p-4">
+            <div className="flex items-center gap-2 text-white/80 mb-2">
+              <Home size={18} />
+              <span className="text-sm">Loyer actuel</span>
+            </div>
+            <div className="text-2xl font-bold">
+              {formatCurrency(formData.loyerMensuelActuel)}
+            </div>
+          </div>
+
+          {/* Nouveau loyer */}
+          <div className="bg-white/20 rounded-lg p-4 ring-2 ring-white/30">
+            <div className="flex items-center gap-2 text-white/80 mb-2">
+              <TrendingUp size={18} />
+              <span className="text-sm">Nouveau loyer recommandé</span>
+            </div>
+            <div className="text-3xl font-bold">
+              {formatCurrency(calculatedValues?.nouveauLoyerRecommande || 0)}
+            </div>
+          </div>
+
+          {/* Variation */}
+          <div className="bg-white/10 rounded-lg p-4">
+            <div className="text-white/80 text-sm mb-2">Variation</div>
+            <div className="text-2xl font-bold">
+              {calculatedValues?.pourcentageVariation !== undefined 
+                ? `${calculatedValues.pourcentageVariation >= 0 ? '+' : ''}${calculatedValues.pourcentageVariation.toFixed(2)} %`
+                : '0,00 %'
+              }
+            </div>
+            <div className="text-sm text-white/70 mt-1">
+              ({formatCurrency(calculatedValues?.totalAjustements || 0)} / mois)
+            </div>
+          </div>
+        </div>
+
+        {/* Adresse */}
+        {formData.adresse && (
+          <div className="mt-6 pt-4 border-t border-white/20">
+            <div className="text-sm text-white/70">Logement concerné:</div>
+            <div className="font-medium">{formData.adresse}</div>
+          </div>
+        )}
+      </div>
+
+      {/* Avertissement légal */}
+      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+        <p className="text-sm text-amber-800">
+          <strong>Avis important:</strong> Ce calculateur est fourni à titre indicatif seulement et 
+          reproduit la méthodologie du Tribunal administratif du logement (TAL). Le résultat obtenu 
+          ne constitue pas une décision du TAL et ne lie pas les parties. En cas de désaccord, 
+          seul le TAL peut fixer le loyer de manière obligatoire.
+        </p>
+      </div>
+
+      {/* Actions */}
+      <div className="flex flex-wrap gap-4 justify-center">
+        <button
+          type="button"
+          onClick={onExportPDF}
+          className="btn-primary inline-flex items-center gap-2"
+        >
+          <Download size={20} />
+          Exporter en PDF
+        </button>
+        
+        <button
+          type="button"
+          onClick={() => setShowResetConfirm(true)}
+          className="btn-secondary inline-flex items-center gap-2"
+        >
+          <RotateCcw size={20} />
+          Recommencer
+        </button>
+      </div>
+
+      {/* Modal de confirmation de réinitialisation */}
+      {showResetConfirm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl p-6 max-w-md w-full shadow-xl">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Confirmer la réinitialisation</h3>
+            <p className="text-gray-600 mb-6">
+              Êtes-vous sûr de vouloir effacer toutes les données et recommencer un nouveau calcul? 
+              Cette action est irréversible.
+            </p>
+            <div className="flex gap-4 justify-end">
+              <button
+                type="button"
+                onClick={() => setShowResetConfirm(false)}
+                className="btn-secondary"
+              >
+                Annuler
+              </button>
+              <button
+                type="button"
+                onClick={handleReset}
+                className="bg-red-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-red-700 transition-colors"
+              >
+                Effacer et recommencer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <NavigationButtons 
+        onPrevious={onPrevious}
+        showNext={false}
+      />
+    </div>
+  );
+};

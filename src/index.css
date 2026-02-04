@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-corpiq-blue text-white px-6 py-3 rounded-full font-semibold 
+           hover:bg-opacity-90 transition-colors shadow-md disabled:opacity-50;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-100 text-corpiq-blue px-6 py-3 rounded-full font-semibold 
+           hover:bg-gray-200 transition-colors border border-gray-200;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg 
+           focus:ring-2 focus:ring-corpiq-blue focus:border-transparent
+           transition-all outline-none;
+  }
+  
+  .input-currency {
+    @apply input-field text-right;
+  }
+  
+  .input-readonly {
+    @apply input-field bg-gray-100 text-gray-700 cursor-not-allowed;
+  }
+  
+  .section-card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden;
+  }
+  
+  .section-header {
+    @apply bg-corpiq-blue text-white px-6 py-4 font-semibold;
+  }
+  
+  .section-content {
+    @apply p-6;
+  }
+}
+
+@keyframes highlight {
+  0% { background-color: #fef3c7; }
+  100% { background-color: transparent; }
+}
+
+.calc-highlight {
+  animation: highlight 1s ease-out;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
