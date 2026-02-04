@@ -163,17 +163,6 @@ function App() {
       <footer className="bg-gray-100 border-t border-gray-200 mt-12">
         <div className="max-w-5xl mx-auto px-4 py-6 text-center text-gray-600 text-sm">
           <p>
-            Ce calculateur reproduit la méthodologie du{' '}
-            <a 
-              href="https://extranet.tal.gouv.qc.ca/internet/asp/Fixation/Simulateurdecalcul.asp"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-corpiq-blue hover:underline"
-            >
-              Tribunal administratif du logement (TAL)
-            </a>
-          </p>
-          <p className="mt-2">
             © {new Date().getFullYear()} CORPIQ - Corporation des propriétaires immobiliers du Québec
           </p>
         </div>
