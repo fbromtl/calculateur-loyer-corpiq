@@ -4,7 +4,7 @@ import { STEPS } from './types';
 import { StepIndicator } from './components/ui';
 import { Step1, Step2, Step3, Step4, Step5 } from './components/steps';
 import { generatePDF } from './utils/pdfExport';
-import { Building2, ExternalLink, Languages } from 'lucide-react';
+import { ExternalLink, Languages } from 'lucide-react';
 import { useLanguage } from './i18n/LanguageContext';
 
 function App() {
@@ -64,7 +64,11 @@ function App() {
         <div className="max-w-5xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Building2 size={32} />
+              <img 
+                src="https://www.corpiq.com/gx/corpiq-logo.png?v=5" 
+                alt="CORPIQ Logo" 
+                className="h-10 w-auto"
+              />
               <div>
                 <h1 className="text-2xl font-bold">{t.app.title}</h1>
                 <p className="text-blue-200 text-sm">{t.app.subtitle}</p>
