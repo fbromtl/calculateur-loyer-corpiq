@@ -250,7 +250,7 @@ export const translations: Record<Language, Translations> = {
       },
       step3: {
         title: 'Major repairs',
-        description: 'Major repairs or improvements and leasehold improvements',
+        description: 'Major repairs or improvements',
       },
       step4: {
         title: 'Expenses and financial aid',
@@ -316,7 +316,7 @@ export const translations: Record<Language, Translations> = {
       totalAdjustmentTooltip: 'Sum of the three adjustments above',
     },
     step3: {
-      title: 'Major repairs or improvements and leasehold improvements',
+      title: 'Major repairs or improvements',
       tooltip: 'Major repair expenses are amortized over 20 years and distributed among the concerned dwellings',
       howItWorks: 'How it works:',
       howItWorksNote: 'Expenses are divided by 20 years, then distributed proportionally among the concerned dwellings/units according to their rent. Only the share attributable to the dwelling for which you are calculating the increase is counted.',
@@ -340,12 +340,12 @@ export const translations: Record<Language, Translations> = {
       concernedDwelling: 'Is the dwelling concerned?',
       adjustment: 'Adjustment:',
       maxLines: 'Maximum of 30 lines reached.',
-      totalAdjustment: 'Adjustment for major repairs and leasehold improvements',
+      totalAdjustment: 'Adjustment for major repairs or improvements',
       totalAdjustmentTooltip: 'Sum of adjustments for all repairs where the dwelling is concerned',
     },
     step4: {
       newExpenses: {
-        title: 'New expenses (reductions) or cessation (addition) of a service, accessory or dependency',
+        title: 'New expenses arising from the implementation of a service or the addition of an accessory or dependency',
         tooltip: 'New services offered to tenants (e.g., parking, storage, etc.)',
         note: 'Note:',
         noteText: 'Unlike major repairs, new expenses are not amortized over 20 years. They are divided by 12 months and distributed according to the weight of the dwelling.',
@@ -358,7 +358,7 @@ export const translations: Record<Language, Translations> = {
         subtotal: 'Subtotal of new expenses',
       },
       aidVariation: {
-        title: 'Variation or end of financial aid from a construction or renovation assistance program',
+        title: 'Variation or end of aid received for the implementation of a service or the addition of an accessory or dependency',
         tooltip: 'If a government aid decreases or ceases, this loss can be passed on to the rent',
         important: 'Important:',
         importantNote: 'A decrease in financial aid (amount 2025 < amount 2024) results in an increase in rent. The sign is automatically reversed in the calculation.',
@@ -376,7 +376,7 @@ export const translations: Record<Language, Translations> = {
     },
     step5: {
       snowRemoval: {
-        title: 'Adjustment for snow removal of the site intended for a mobile home',
+        title: 'Snow removal fees (mobile home parks)',
         tooltip: 'This section only applies to mobile home parks',
         note: 'This section only applies to mobile home parks. If you are not in this case, leave these fields at zero.',
         noteText: '',
@@ -385,16 +385,16 @@ export const translations: Record<Language, Translations> = {
         monthlyAdjustment: 'Monthly adjustment',
       },
       summary: {
-        title: 'Notice to the lessee of the concerned dwelling',
+        title: 'Adjustment of the rent of the concerned dwelling',
         section: 'Section',
         description: 'Description',
         monthlyAdjustment: 'Monthly adjustment',
         baseAdjustment: 'Base rent adjustment (CPI {rate}%)',
         taxesAndInsurance: 'Taxes and insurance of the building',
-        majorRepairs: 'Major repairs or improvements and leasehold improvements',
-        newExpenses: 'New expenses (services, accessories, dependencies)',
-        aidVariations: 'Variations and end of financial aid',
-        snowRemoval: 'Snow removal (mobile home site)',
+        majorRepairs: 'Major repairs or improvements',
+        newExpenses: 'New expenses arising from the implementation of a service or the addition of an accessory or dependency',
+        aidVariations: 'Variation or end of aid received for the implementation of a service or the addition of an accessory or dependency',
+        snowRemoval: 'Snow removal fees (mobile home parks)',
         totalAdjustments: 'TOTAL ADJUSTMENTS',
       },
       result: {
@@ -460,7 +460,7 @@ export const translations: Record<Language, Translations> = {
       },
       step3: {
         title: 'Réparations majeures',
-        description: 'Réparations ou améliorations majeures et améliorations locatives',
+        description: 'Réparations ou améliorations majeures',
       },
       step4: {
         title: 'Dépenses et aide financière',
@@ -526,7 +526,7 @@ export const translations: Record<Language, Translations> = {
       totalAdjustmentTooltip: 'Somme des trois ajustements ci-dessus',
     },
     step3: {
-      title: 'Réparations ou améliorations majeures et améliorations locatives',
+      title: 'Réparations ou améliorations majeures',
       tooltip: 'Les dépenses de réparations majeures sont amorties sur 20 ans et réparties entre les logements concernés',
       howItWorks: 'Comment ça fonctionne:',
       howItWorksNote: 'Les dépenses sont divisées par 20 ans, puis réparties proportionnellement entre les logements/locaux concernés selon leur loyer. Seule la part attribuable au logement pour lequel vous calculez l\'augmentation est comptée.',
@@ -550,12 +550,12 @@ export const translations: Record<Language, Translations> = {
       concernedDwelling: 'Le logement est-il concerné?',
       adjustment: 'Ajustement:',
       maxLines: 'Maximum de 30 lignes atteint.',
-      totalAdjustment: 'Ajustement pour les réparations majeures et les améliorations locatives',
+      totalAdjustment: 'Ajustement pour les réparations ou améliorations majeures',
       totalAdjustmentTooltip: 'Somme des ajustements pour toutes les réparations où le logement est concerné',
     },
     step4: {
       newExpenses: {
-        title: 'Nouvelles dépenses (réductions) ou cessation (ajout) d\'un service, d\'un accessoire ou d\'une dépendance',
+        title: 'Nouvelles dépenses découlant de la mise en place d\'un service ou de l\'ajout d\'un accessoire ou d\'une dépendance',
         tooltip: 'Nouveaux services offerts aux locataires (ex: stationnement, rangement, etc.)',
         note: 'Note:',
         noteText: 'Contrairement aux réparations majeures, les nouvelles dépenses ne sont pas amorties sur 20 ans. Elles sont divisées par 12 mois et réparties selon le poids du logement.',
@@ -568,7 +568,7 @@ export const translations: Record<Language, Translations> = {
         subtotal: 'Sous-total des nouvelles dépenses',
       },
       aidVariation: {
-        title: 'Variation ou fin d\'aide financière ou aide provenant d\'un programme d\'aide à la construction ou à la rénovation',
+        title: 'Variation ou fin d\'une aide reçue pour la mise en place d\'un service ou l\'ajout d\'un accessoire ou d\'une dépendance',
         tooltip: 'Si une aide gouvernementale diminue ou cesse, cette perte peut être répercutée sur le loyer',
         important: 'Important:',
         importantNote: 'Une diminution de l\'aide financière (montant 2025 < montant 2024) entraîne une augmentation du loyer. Le signe est inversé automatiquement dans le calcul.',
@@ -586,7 +586,7 @@ export const translations: Record<Language, Translations> = {
     },
     step5: {
       snowRemoval: {
-        title: 'Ajustement pour le déneigement de l\'emplacement destiné à une maison mobile',
+        title: 'Frais de déneigement (parc de maisons mobiles)',
         tooltip: 'Cette section ne s\'applique qu\'aux parcs de maisons mobiles',
         note: 'Cette section s\'applique uniquement aux parcs de maisons mobiles. Si vous n\'êtes pas dans ce cas, laissez ces champs à zéro.',
         noteText: '',
@@ -595,16 +595,16 @@ export const translations: Record<Language, Translations> = {
         monthlyAdjustment: 'Ajustement mensuel',
       },
       summary: {
-        title: 'Avis à la locataire ou au locataire du logement concerné',
+        title: 'Ajustement du loyer du logement concerné',
         section: 'Section',
         description: 'Description',
         monthlyAdjustment: 'Ajustement mensuel',
         baseAdjustment: 'Ajustement de base du loyer (IPC {rate}%)',
         taxesAndInsurance: 'Taxes et assurances de l\'immeuble',
-        majorRepairs: 'Réparations ou améliorations majeures et améliorations locatives',
-        newExpenses: 'Nouvelles dépenses (services, accessoires, dépendances)',
-        aidVariations: 'Variations et fins d\'aide financière',
-        snowRemoval: 'Déneigement (emplacement maison mobile)',
+        majorRepairs: 'Réparations ou améliorations majeures',
+        newExpenses: 'Nouvelles dépenses découlant de la mise en place d\'un service ou de l\'ajout d\'un accessoire ou d\'une dépendance',
+        aidVariations: 'Variation ou fin d\'une aide reçue pour la mise en place d\'un service ou l\'ajout d\'un accessoire ou d\'une dépendance',
+        snowRemoval: 'Frais de déneigement (parc de maisons mobiles)',
         totalAdjustments: 'TOTAL DES AJUSTEMENTS',
       },
       result: {
