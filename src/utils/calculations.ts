@@ -115,7 +115,8 @@ export const calculAjustementBase = (
 };
 
 // Calcul ajustement taxes (municipales ou scolaires)
-export const calculAjustementTaxes = (
+// Retourne une valeur BRUTE (sans arrondi) pour permettre un arrondi unique à la fin
+export const calculAjustementTaxesBrut = (
   taxeCourante: number,
   taxePrecedente: number,
   loyerMensuel: number,
@@ -128,23 +129,35 @@ export const calculAjustementTaxes = (
   const poidsLoyer = (loyerMensuel * 12) / revenusImmeuble;
   
   if (variation < 0) {
-    // Si diminution, on la répercute entièrement
-    return round2((variation * poidsLoyer) / 12);
+    // Si diminution, on la répercute entièrement (pas de franchise)
+    return (variation * poidsLoyer) / 12;
   }
   
-  // Si augmentation, on soustrait l'inflation (IPC)
-  const seuilInflation = tauxIPC * taxePrecedente;
-  if (variation <= seuilInflation) {
-    return 0; // Augmentation couverte par l'IPC de base
+  // Si augmentation, on soustrait la franchise (IPC)
+  const franchise = tauxIPC * taxePrecedente;
+  if (variation <= franchise) {
+    return 0; // Augmentation couverte par la franchise
   }
   
-  // Seulement la partie au-dessus de l'inflation
-  const variationNette = variation - seuilInflation;
-  return round2((variationNette * poidsLoyer) / 12);
+  // Seulement la partie au-dessus de la franchise
+  const variationNette = variation - franchise;
+  return (variationNette * poidsLoyer) / 12;
+};
+
+// Version avec arrondi pour affichage individuel
+export const calculAjustementTaxes = (
+  taxeCourante: number,
+  taxePrecedente: number,
+  loyerMensuel: number,
+  revenusImmeuble: number,
+  tauxIPC: number = TAUX_IPC_2026
+): number => {
+  return round2(calculAjustementTaxesBrut(taxeCourante, taxePrecedente, loyerMensuel, revenusImmeuble, tauxIPC));
 };
 
 // Calcul ajustement assurances
-export const calculAjustementAssurances = (
+// Retourne une valeur BRUTE (sans arrondi) pour permettre un arrondi unique à la fin
+export const calculAjustementAssurancesBrut = (
   assuranceCourante: number,
   assurancePrecedente: number,
   loyerMensuel: number,
@@ -157,16 +170,29 @@ export const calculAjustementAssurances = (
   const poidsLoyer = (loyerMensuel * 12) / revenusImmeuble;
   
   if (variation < 0) {
-    return round2((variation * poidsLoyer) / 12);
+    // Si diminution, pas de franchise
+    return (variation * poidsLoyer) / 12;
   }
   
-  const seuilInflation = tauxIPC * assurancePrecedente;
-  if (variation <= seuilInflation) {
+  // Si augmentation, on soustrait la franchise (IPC)
+  const franchise = tauxIPC * assurancePrecedente;
+  if (variation <= franchise) {
     return 0;
   }
   
-  const variationNette = variation - seuilInflation;
-  return round2((variationNette * poidsLoyer) / 12);
+  const variationNette = variation - franchise;
+  return (variationNette * poidsLoyer) / 12;
+};
+
+// Version avec arrondi pour affichage individuel
+export const calculAjustementAssurances = (
+  assuranceCourante: number,
+  assurancePrecedente: number,
+  loyerMensuel: number,
+  revenusImmeuble: number,
+  tauxIPC: number = TAUX_IPC_2026
+): number => {
+  return round2(calculAjustementAssurancesBrut(assuranceCourante, assurancePrecedente, loyerMensuel, revenusImmeuble, tauxIPC));
 };
 
 // Calcul ajustement pour une ligne de réparation
@@ -311,29 +337,32 @@ export const calculerToutesLesValeurs = (formData: FormData): CalculatedValues =
   const ajustementBase = ajustementBaseResult.ajustementBase;
   
   // Ajustements taxes et assurances
-  const ajustementTaxesMunicipales = calculAjustementTaxes(
+  // Calcul en valeurs BRUTES (sans arrondi) pour un arrondi unique à la fin - conforme TAL
+  const ajustementTaxesMunicipalesBrut = calculAjustementTaxesBrut(
     formData.taxesMunicipales.anneeCourante,
     formData.taxesMunicipales.anneePrecedente,
     formData.loyerMensuelActuel,
     sousTotaux.revenusImmeuble
   );
   
-  const ajustementTaxesScolaires = calculAjustementTaxes(
+  const ajustementTaxesScolairesBrut = calculAjustementTaxesBrut(
     formData.taxesScolaires.anneeCourante,
     formData.taxesScolaires.anneePrecedente,
     formData.loyerMensuelActuel,
     sousTotaux.revenusImmeuble
   );
   
-  const ajustementAssurances = calculAjustementAssurances(
+  const ajustementAssurancesBrut = calculAjustementAssurancesBrut(
     formData.assurances.dec2025,
     formData.assurances.dec2024,
     formData.loyerMensuelActuel,
     sousTotaux.revenusImmeuble
   );
   
+  // Arrondi UNIQUE à la fin pour le total (règle TAL)
+  // Les valeurs brutes sont sommées PUIS arrondies une seule fois
   const totalAjustementTaxesAssurances = round2(
-    ajustementTaxesMunicipales + ajustementTaxesScolaires + ajustementAssurances
+    ajustementTaxesMunicipalesBrut + ajustementTaxesScolairesBrut + ajustementAssurancesBrut
   );
   
   // Ajustements réparations
