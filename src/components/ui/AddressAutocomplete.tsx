@@ -53,7 +53,7 @@ export const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   }, []);
 
   const searchAddress = useCallback(async (searchQuery: string) => {
-    if (searchQuery.length < 3) {
+    if (searchQuery.length < 2) {
       setSuggestions([]);
       setShowDropdown(false);
       return;
@@ -103,7 +103,7 @@ export const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     }
     debounceRef.current = setTimeout(() => {
       searchAddress(newValue);
-    }, 350);
+    }, 250);
   };
 
   const handleSelect = (suggestion: AddressSuggestion) => {
