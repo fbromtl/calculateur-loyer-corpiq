@@ -135,6 +135,8 @@ export interface Translations {
       addExpense: string;
       addLine: string;
       expense: string;
+      nature: string;
+      naturePlaceholder: string;
       subtotal: string;
     };
     aidVariation: {
@@ -174,9 +176,10 @@ export interface Translations {
       baseAdjustment: string;
       taxesAndInsurance: string;
       majorRepairs: string;
-      newExpensesAndAid: string;
-      snowRemoval: string;
-      totalAdjustments: string;
+    newExpenses: string;
+    aidVariations: string;
+    snowRemoval: string;
+    totalAdjustments: string;
     };
     result: {
       title: string;
@@ -228,8 +231,8 @@ export interface Translations {
 export const translations: Record<Language, Translations> = {
   en: {
     app: {
-      title: 'Rent Increase Calculator',
-      subtitle: 'Year 2026 - CORPIQ',
+      title: 'Calculation Tool 2026',
+      subtitle: 'Administrative Housing Tribunal — CORPIQ',
       loading: 'Loading...',
       autoSave: 'Auto-save',
       footer: `© ${new Date().getFullYear()} CORPIQ - Corporation des propriétaires immobiliers du Québec`,
@@ -238,24 +241,24 @@ export const translations: Record<Language, Translations> = {
     },
     steps: {
       step1: {
-        title: 'Basic Information',
-        description: 'Dwelling and building revenue',
+        title: 'Information and base adjustment',
+        description: 'Dwelling, rent and building revenue',
       },
       step2: {
-        title: 'Taxes and Insurance',
-        description: 'Municipal taxes, school taxes and insurance',
+        title: 'Taxes and insurance',
+        description: 'Municipal taxes, school taxes and building insurance',
       },
       step3: {
-        title: 'Major Repairs',
-        description: 'Improvements and renovations',
+        title: 'Major repairs',
+        description: 'Major repairs or improvements and leasehold improvements',
       },
       step4: {
-        title: 'New Expenses',
-        description: 'Services and aid variations',
+        title: 'Expenses and financial aid',
+        description: 'New expenses and financial aid variations',
       },
       step5: {
         title: 'Summary',
-        description: 'Result and PDF export',
+        description: 'Snow removal, result and PDF export',
       },
     },
     step1: {
@@ -269,9 +272,9 @@ export const translations: Record<Language, Translations> = {
       baseAdjustment: {
         title: 'Base rent adjustment',
         tooltip: 'The base adjustment is calculated according to the annual average variation of the CPI for Quebec',
-        currentRent: 'Monthly rent of the dwelling (before increase)',
+        currentRent: 'Monthly rent of the dwelling',
         currentRentTooltip: 'The current monthly rent, before any increase',
-        ipcVariation: 'Annual average variation of the CPI',
+        ipcVariation: 'Annual average variation of the Consumer Price Index (CPI) for Quebec',
         ipcVariationTooltip: 'Rate set by the TAL for 2026 based on the average CPI of the last 3 years',
         baseAdjustment: 'Base monthly rent adjustment',
         baseAdjustmentTooltip: 'Rent × CPI Rate',
@@ -282,14 +285,14 @@ export const translations: Record<Language, Translations> = {
         dwellings: 'Dwellings',
         nonResidential: 'Non-residential units',
         number: 'Number',
-        monthlyRent: 'Monthly rents',
+        monthlyRent: 'Monthly rents (total)',
         rented: 'Rented',
         vacant: 'Vacant',
-        occupiedByOwner: 'Occupied by owner',
+        occupiedByOwner: 'Occupied by the lessor',
         subtotal: 'Subtotal',
         totalAnnualRent: 'Total rents on an annual basis',
         totalAnnualRentTooltip: '(Total dwelling rents + units) × 12 months',
-        otherRevenue: 'Other revenue from operations',
+        otherRevenue: 'Other revenue from the operation of the building',
         otherRevenueTooltip: 'Parking, laundry, etc.',
       },
     },
@@ -313,7 +316,7 @@ export const translations: Record<Language, Translations> = {
       totalAdjustmentTooltip: 'Sum of the three adjustments above',
     },
     step3: {
-      title: 'Major repairs or improvements',
+      title: 'Major repairs or improvements and leasehold improvements',
       tooltip: 'Major repair expenses are amortized over 20 years and distributed among the concerned dwellings',
       howItWorks: 'How it works:',
       howItWorksNote: 'Expenses are divided by 20 years, then distributed proportionally among the concerned dwellings/units according to their rent. Only the share attributable to the dwelling for which you are calculating the increase is counted.',
@@ -330,19 +333,19 @@ export const translations: Record<Language, Translations> = {
       thirdPartyCompensation: 'Third-party compensation',
       thirdPartyCompensationTooltip: 'Amount received from insurance or other third parties',
       retainedExpense: 'Retained expense',
-      reducedInterestLoan: 'Reduced interest loan',
+      reducedInterestLoan: 'Reduced interest loan amount',
       annualPayment: 'Annual payment',
-      nbDwellings: 'Nb dwellings',
-      nbNonResidential: 'Nb non-res.',
-      concernedDwelling: 'Concerned dwelling',
+      nbDwellings: 'Number of concerned dwellings',
+      nbNonResidential: 'Number of concerned non-res. units',
+      concernedDwelling: 'Is the dwelling concerned?',
       adjustment: 'Adjustment:',
       maxLines: 'Maximum of 30 lines reached.',
-      totalAdjustment: 'Adjustment for major repairs',
+      totalAdjustment: 'Adjustment for major repairs and leasehold improvements',
       totalAdjustmentTooltip: 'Sum of adjustments for all repairs where the dwelling is concerned',
     },
     step4: {
       newExpenses: {
-        title: '4A - New expenses for services, accessories or dependencies',
+        title: 'New expenses (reductions) or cessation (addition) of a service, accessory or dependency',
         tooltip: 'New services offered to tenants (e.g., parking, storage, etc.)',
         note: 'Note:',
         noteText: 'Unlike major repairs, new expenses are not amortized over 20 years. They are divided by 12 months and distributed according to the weight of the dwelling.',
@@ -350,45 +353,48 @@ export const translations: Record<Language, Translations> = {
         addExpense: 'Add a new expense',
         addLine: 'Add a line',
         expense: 'Expense ($)',
-        subtotal: 'Subtotal new expenses',
+        nature: 'Nature of the expense (reduction or addition)',
+        naturePlaceholder: 'Ex: Parking',
+        subtotal: 'Subtotal of new expenses',
       },
       aidVariation: {
-        title: '4B - Variation or cessation of financial aid',
+        title: 'Variation or end of financial aid from a construction or renovation assistance program',
         tooltip: 'If a government aid decreases or ceases, this loss can be passed on to the rent',
         important: 'Important:',
         importantNote: 'A decrease in financial aid (amount 2025 < amount 2024) results in an increase in rent. The sign is automatically reversed in the calculation.',
         noVariations: 'No aid variation added.',
         addVariation: 'Add an aid variation',
         addLine: 'Add a line',
-        aidNature: 'Nature of the aid',
-        amount2025: 'Amount 2025',
-        amount2024: 'Amount 2024',
+        aidNature: 'Nature of the financial aid',
+        amount2025: 'Amount received (year 2025)',
+        amount2024: 'Amount received (year 2024)',
         variation: 'Variation',
-        subtotal: 'Subtotal aid variations',
+        subtotal: 'Adjustment for variations and end of financial aid',
       },
-      totalSection4: 'Total section 4 (Expenses + Aid variations)',
-      totalSection4Tooltip: 'Sum of new expenses and aid variations',
+      totalSection4: 'Total sections 4 and 5',
+      totalSection4Tooltip: 'Sum of new expenses and financial aid variations',
     },
     step5: {
       snowRemoval: {
-        title: 'Snow removal (mobile home parks only)',
+        title: 'Adjustment for snow removal of the site intended for a mobile home',
         tooltip: 'This section only applies to mobile home parks',
         note: 'This section only applies to mobile home parks. If you are not in this case, leave these fields at zero.',
         noteText: '',
-        fees2025: 'Snow removal fees 2025',
-        fees2024: 'Snow removal fees 2024',
+        fees2025: 'Fees 2025',
+        fees2024: 'Fees 2024',
         monthlyAdjustment: 'Monthly adjustment',
       },
       summary: {
-        title: 'Summary of adjustments',
+        title: 'Notice to the lessee of the concerned dwelling',
         section: 'Section',
         description: 'Description',
         monthlyAdjustment: 'Monthly adjustment',
-        baseAdjustment: 'Base adjustment (CPI {rate}%)',
-        taxesAndInsurance: 'Taxes and insurance',
-        majorRepairs: 'Major repairs or improvements',
-        newExpensesAndAid: 'New expenses and aid variations',
-        snowRemoval: 'Snow removal (mobile home parks)',
+        baseAdjustment: 'Base rent adjustment (CPI {rate}%)',
+        taxesAndInsurance: 'Taxes and insurance of the building',
+        majorRepairs: 'Major repairs or improvements and leasehold improvements',
+        newExpenses: 'New expenses (services, accessories, dependencies)',
+        aidVariations: 'Variations and end of financial aid',
+        snowRemoval: 'Snow removal (mobile home site)',
         totalAdjustments: 'TOTAL ADJUSTMENTS',
       },
       result: {
@@ -419,7 +425,7 @@ export const translations: Record<Language, Translations> = {
       completePreviousSteps: 'Complete previous steps first',
     },
     pdf: {
-      title: 'Rent Increase Calculator 2026',
+      title: 'Calculation Tool 2026',
       subtitle: 'CORPIQ - Corporation des propriétaires immobiliers du Québec',
       concernedDwelling: 'Concerned dwelling:',
       summary: 'SUMMARY OF ADJUSTMENTS',
@@ -435,8 +441,8 @@ export const translations: Record<Language, Translations> = {
   },
   fr: {
     app: {
-      title: 'Calculateur d\'augmentation de loyer',
-      subtitle: 'Année 2026 - CORPIQ',
+      title: 'Outil de calcul 2026',
+      subtitle: 'Tribunal administratif du logement — CORPIQ',
       loading: 'Chargement...',
       autoSave: 'Sauvegarde automatique',
       footer: `© ${new Date().getFullYear()} CORPIQ - Corporation des propriétaires immobiliers du Québec`,
@@ -445,24 +451,24 @@ export const translations: Record<Language, Translations> = {
     },
     steps: {
       step1: {
-        title: 'Informations de base',
-        description: 'Logement et revenus de l\'immeuble',
+        title: 'Renseignements et ajustement de base',
+        description: 'Logement, loyer et revenus de l\'immeuble',
       },
       step2: {
         title: 'Taxes et assurances',
-        description: 'Taxes municipales, scolaires et assurances',
+        description: 'Taxes municipales, scolaires et assurances de l\'immeuble',
       },
       step3: {
         title: 'Réparations majeures',
-        description: 'Améliorations et rénovations',
+        description: 'Réparations ou améliorations majeures et améliorations locatives',
       },
       step4: {
-        title: 'Nouvelles dépenses',
-        description: 'Services et variations d\'aide',
+        title: 'Dépenses et aide financière',
+        description: 'Nouvelles dépenses et variations d\'aide financière',
       },
       step5: {
         title: 'Récapitulatif',
-        description: 'Résultat et export PDF',
+        description: 'Déneigement, résultat et export PDF',
       },
     },
     step1: {
@@ -476,9 +482,9 @@ export const translations: Record<Language, Translations> = {
       baseAdjustment: {
         title: 'Ajustement de base du loyer',
         tooltip: 'L\'ajustement de base est calculé selon la variation annuelle moyenne de l\'IPC pour le Québec',
-        currentRent: 'Loyer mensuel du logement (avant augmentation)',
+        currentRent: 'Loyer mensuel du logement',
         currentRentTooltip: 'Le loyer mensuel actuel, avant toute augmentation',
-        ipcVariation: 'Variation annuelle moyenne de l\'IPC',
+        ipcVariation: 'Variation annuelle moyenne de l\'indice des prix à la consommation (IPC) pour le Québec',
         ipcVariationTooltip: 'Taux fixé par le TAL pour 2026 basé sur la moyenne de l\'IPC des 3 dernières années',
         baseAdjustment: 'Ajustement de base du loyer mensuel',
         baseAdjustmentTooltip: 'Loyer × Taux IPC',
@@ -489,14 +495,14 @@ export const translations: Record<Language, Translations> = {
         dwellings: 'Logements',
         nonResidential: 'Locaux non résidentiels',
         number: 'Nombre',
-        monthlyRent: 'Loyers mensuels',
+        monthlyRent: 'Loyers mensuels (totaux)',
         rented: 'Loués',
         vacant: 'Inoccupés',
-        occupiedByOwner: 'Occupés par le locateur',
+        occupiedByOwner: 'Occupés par le locateur ou la locatrice',
         subtotal: 'Sous-total',
         totalAnnualRent: 'Total des loyers sur une base annuelle',
         totalAnnualRentTooltip: '(Total loyers logements + locaux) × 12 mois',
-        otherRevenue: 'Autres revenus provenant de l\'exploitation',
+        otherRevenue: 'Autres revenus provenant de l\'exploitation de l\'immeuble',
         otherRevenueTooltip: 'Stationnements, buanderie, etc.',
       },
     },
@@ -520,7 +526,7 @@ export const translations: Record<Language, Translations> = {
       totalAdjustmentTooltip: 'Somme des trois ajustements ci-dessus',
     },
     step3: {
-      title: 'Réparations ou améliorations majeures',
+      title: 'Réparations ou améliorations majeures et améliorations locatives',
       tooltip: 'Les dépenses de réparations majeures sont amorties sur 20 ans et réparties entre les logements concernés',
       howItWorks: 'Comment ça fonctionne:',
       howItWorksNote: 'Les dépenses sont divisées par 20 ans, puis réparties proportionnellement entre les logements/locaux concernés selon leur loyer. Seule la part attribuable au logement pour lequel vous calculez l\'augmentation est comptée.',
@@ -539,17 +545,17 @@ export const translations: Record<Language, Translations> = {
       retainedExpense: 'Dépense retenue',
       reducedInterestLoan: 'Montant du prêt à intérêt réduit',
       annualPayment: 'Versement annuel',
-      nbDwellings: 'Nb logements concernés',
-      nbNonResidential: 'Nb locaux non rés. concernés',
+      nbDwellings: 'Nombre de logements concernés',
+      nbNonResidential: 'Nombre de locaux non résidentiels concernés',
       concernedDwelling: 'Le logement est-il concerné?',
       adjustment: 'Ajustement:',
       maxLines: 'Maximum de 30 lignes atteint.',
-      totalAdjustment: 'Ajustement pour les réparations majeures',
+      totalAdjustment: 'Ajustement pour les réparations majeures et les améliorations locatives',
       totalAdjustmentTooltip: 'Somme des ajustements pour toutes les réparations où le logement est concerné',
     },
     step4: {
       newExpenses: {
-        title: '4A - Nouvelles dépenses pour services, accessoires ou dépendances',
+        title: 'Nouvelles dépenses (réductions) ou cessation (ajout) d\'un service, d\'un accessoire ou d\'une dépendance',
         tooltip: 'Nouveaux services offerts aux locataires (ex: stationnement, rangement, etc.)',
         note: 'Note:',
         noteText: 'Contrairement aux réparations majeures, les nouvelles dépenses ne sont pas amorties sur 20 ans. Elles sont divisées par 12 mois et réparties selon le poids du logement.',
@@ -557,45 +563,48 @@ export const translations: Record<Language, Translations> = {
         addExpense: 'Ajouter une nouvelle dépense',
         addLine: 'Ajouter une ligne',
         expense: 'Dépense ($)',
-        subtotal: 'Sous-total nouvelles dépenses',
+        nature: 'Nature de la dépense (réduction ou ajout)',
+        naturePlaceholder: 'Ex: Stationnement',
+        subtotal: 'Sous-total des nouvelles dépenses',
       },
       aidVariation: {
-        title: '4B - Variation ou cessation d\'une aide financière',
+        title: 'Variation ou fin d\'aide financière ou aide provenant d\'un programme d\'aide à la construction ou à la rénovation',
         tooltip: 'Si une aide gouvernementale diminue ou cesse, cette perte peut être répercutée sur le loyer',
         important: 'Important:',
         importantNote: 'Une diminution de l\'aide financière (montant 2025 < montant 2024) entraîne une augmentation du loyer. Le signe est inversé automatiquement dans le calcul.',
         noVariations: 'Aucune variation d\'aide ajoutée.',
         addVariation: 'Ajouter une variation d\'aide',
         addLine: 'Ajouter une ligne',
-        aidNature: 'Nature de l\'aide',
-        amount2025: 'Montant 2025',
-        amount2024: 'Montant 2024',
+        aidNature: 'Nature de l\'aide financière',
+        amount2025: 'Montant reçu (année 2025)',
+        amount2024: 'Montant reçu (année 2024)',
         variation: 'Variation',
-        subtotal: 'Sous-total variations d\'aide',
+        subtotal: 'Ajustement pour les variations et les fins d\'aide financière',
       },
-      totalSection4: 'Total section 4 (Dépenses + Variations d\'aide)',
-      totalSection4Tooltip: 'Somme des nouvelles dépenses et des variations d\'aide',
+      totalSection4: 'Total des sections 4 et 5',
+      totalSection4Tooltip: 'Somme des nouvelles dépenses et des variations d\'aide financière',
     },
     step5: {
       snowRemoval: {
-        title: 'Déneigement (parcs de maisons mobiles seulement)',
+        title: 'Ajustement pour le déneigement de l\'emplacement destiné à une maison mobile',
         tooltip: 'Cette section ne s\'applique qu\'aux parcs de maisons mobiles',
         note: 'Cette section s\'applique uniquement aux parcs de maisons mobiles. Si vous n\'êtes pas dans ce cas, laissez ces champs à zéro.',
         noteText: '',
-        fees2025: 'Frais de déneigement 2025',
-        fees2024: 'Frais de déneigement 2024',
+        fees2025: 'Frais 2025',
+        fees2024: 'Frais 2024',
         monthlyAdjustment: 'Ajustement mensuel',
       },
       summary: {
-        title: 'Récapitulatif des ajustements',
+        title: 'Avis à la locataire ou au locataire du logement concerné',
         section: 'Section',
         description: 'Description',
         monthlyAdjustment: 'Ajustement mensuel',
-        baseAdjustment: 'Ajustement de base (IPC {rate}%)',
-        taxesAndInsurance: 'Taxes et assurances',
-        majorRepairs: 'Réparations ou améliorations majeures',
-        newExpensesAndAid: 'Nouvelles dépenses et variations d\'aide',
-        snowRemoval: 'Déneigement (parcs de maisons mobiles)',
+        baseAdjustment: 'Ajustement de base du loyer (IPC {rate}%)',
+        taxesAndInsurance: 'Taxes et assurances de l\'immeuble',
+        majorRepairs: 'Réparations ou améliorations majeures et améliorations locatives',
+        newExpenses: 'Nouvelles dépenses (services, accessoires, dépendances)',
+        aidVariations: 'Variations et fins d\'aide financière',
+        snowRemoval: 'Déneigement (emplacement maison mobile)',
         totalAdjustments: 'TOTAL DES AJUSTEMENTS',
       },
       result: {
@@ -626,7 +635,7 @@ export const translations: Record<Language, Translations> = {
       completePreviousSteps: 'Complétez les étapes précédentes d\'abord',
     },
     pdf: {
-      title: 'Calculateur d\'augmentation de loyer 2026',
+      title: 'Outil de calcul 2026',
       subtitle: 'CORPIQ - Corporation des propriétaires immobiliers du Québec',
       concernedDwelling: 'Logement concerné:',
       summary: 'RÉCAPITULATIF DES AJUSTEMENTS',

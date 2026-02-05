@@ -90,11 +90,12 @@ export const generatePDF = async (
 
   // Tableau des ajustements
   const ajustements = [
-    [t.step5.summary.baseAdjustment.replace('{rate}', (calculatedValues.tauxIPC * 100).toFixed(1)), formatCurrency(calculatedValues.ajustementBase)],
-    [t.step5.summary.taxesAndInsurance, formatCurrency(calculatedValues.totalAjustementTaxesAssurances)],
-    [t.step5.summary.majorRepairs, formatCurrency(calculatedValues.totalAjustementReparations)],
-    [t.step5.summary.newExpensesAndAid, formatCurrency(calculatedValues.totalSection4)],
-    [t.step5.summary.snowRemoval, formatCurrency(calculatedValues.ajustementDeneigement)],
+    [`1. ${t.step5.summary.baseAdjustment.replace('{rate}', (calculatedValues.tauxIPC * 100).toFixed(1))}`, formatCurrency(calculatedValues.ajustementBase)],
+    [`2. ${t.step5.summary.taxesAndInsurance}`, formatCurrency(calculatedValues.totalAjustementTaxesAssurances)],
+    [`3. ${t.step5.summary.majorRepairs}`, formatCurrency(calculatedValues.totalAjustementReparations)],
+    [`4. ${t.step5.summary.newExpenses}`, formatCurrency(calculatedValues.totalAjustementNouvellesDepenses)],
+    [`5. ${t.step5.summary.aidVariations}`, formatCurrency(calculatedValues.totalAjustementVariationsAide)],
+    [`6. ${t.step5.summary.snowRemoval}`, formatCurrency(calculatedValues.ajustementDeneigement)],
   ];
 
   doc.setTextColor(0, 0, 0);

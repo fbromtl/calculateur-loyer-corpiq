@@ -66,9 +66,10 @@ export const Step4: React.FC<Step4Props> = ({
 
   return (
     <div>
-      {/* Section 4A: Nouvelles dépenses */}
+      {/* Section 4 TAL: Nouvelles dépenses */}
       <SectionCard 
         title={t.step4.newExpenses.title}
+        badge={4}
         tooltip={t.step4.newExpenses.tooltip}
       >
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
@@ -108,13 +109,13 @@ export const Step4: React.FC<Step4Props> = ({
                   </div>
                   
                   <div>
-                    <LabelWithTooltip>{t.step3.nature}</LabelWithTooltip>
+                    <LabelWithTooltip>{t.step4.newExpenses.nature}</LabelWithTooltip>
                     <input
                       type="text"
                       value={ligne.nature}
                       onChange={(e) => updateNouvelleDepense(ligne.id, { nature: e.target.value })}
                       className="input-field"
-                      placeholder={t.step3.naturePlaceholder}
+                      placeholder={t.step4.newExpenses.naturePlaceholder}
                     />
                   </div>
 
@@ -176,14 +177,14 @@ export const Step4: React.FC<Step4Props> = ({
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b-2 border-corpiq-blue text-left">
-                    <th className="py-2 px-2">Nature</th>
-                    <th className="py-2 px-2 text-right">Dépense</th>
-                    <th className="py-2 px-2 text-right">Aide fin.</th>
-                    <th className="py-2 px-2 text-right">Dép. retenue</th>
-                    <th className="py-2 px-2 text-center">Nb log.</th>
-                    <th className="py-2 px-2 text-center">Nb loc.</th>
-                    <th className="py-2 px-2 text-center">Concerné</th>
-                    <th className="py-2 px-2 text-right">Ajust.</th>
+                    <th className="py-2 px-2">{t.step4.newExpenses.nature}</th>
+                    <th className="py-2 px-2 text-right">{t.step4.newExpenses.expense}</th>
+                    <th className="py-2 px-2 text-right">{t.step3.financialAid}</th>
+                    <th className="py-2 px-2 text-right">{t.step3.retainedExpense}</th>
+                    <th className="py-2 px-2 text-center">{t.step3.nbDwellings}</th>
+                    <th className="py-2 px-2 text-center">{t.step3.nbNonResidential}</th>
+                    <th className="py-2 px-2 text-center">{t.step3.concernedDwelling}</th>
+                    <th className="py-2 px-2 text-right">{t.step3.adjustment}</th>
                     <th className="py-2 px-2"></th>
                   </tr>
                 </thead>
@@ -196,7 +197,7 @@ export const Step4: React.FC<Step4Props> = ({
                           value={ligne.nature}
                           onChange={(e) => updateNouvelleDepense(ligne.id, { nature: e.target.value })}
                           className="input-field text-sm"
-                          placeholder="Nature..."
+                          placeholder={t.step4.newExpenses.naturePlaceholder}
                         />
                       </td>
                       <td className="py-2 px-2 w-28">
@@ -264,7 +265,7 @@ export const Step4: React.FC<Step4Props> = ({
               className="btn-secondary inline-flex items-center gap-2"
             >
               <Plus size={20} />
-              Ajouter une ligne
+              {t.step4.newExpenses.addLine}
             </button>
           </div>
         )}
@@ -279,9 +280,10 @@ export const Step4: React.FC<Step4Props> = ({
         </div>
       </SectionCard>
 
-      {/* Section 4B: Variations d'aide */}
+      {/* Section 5 TAL: Variations d'aide */}
       <SectionCard 
         title={t.step4.aidVariation.title}
+        badge={5}
         tooltip={t.step4.aidVariation.tooltip}
       >
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
@@ -309,7 +311,7 @@ export const Step4: React.FC<Step4Props> = ({
               {formData.variationsAide.map((ligne, index) => (
                 <div key={ligne.id} className="bg-gray-50 rounded-lg p-4 space-y-3">
                   <div className="flex justify-between items-start">
-                    <span className="font-semibold text-corpiq-blue">Aide {index + 1}</span>
+                    <span className="font-semibold text-corpiq-blue">{t.step4.aidVariation.aidNature} {index + 1}</span>
                     <button
                       type="button"
                       onClick={() => removeVariationAide(ligne.id)}
@@ -320,26 +322,26 @@ export const Step4: React.FC<Step4Props> = ({
                   </div>
                   
                   <div>
-                    <LabelWithTooltip>Nature de l'aide</LabelWithTooltip>
+                    <LabelWithTooltip>{t.step4.aidVariation.aidNature}</LabelWithTooltip>
                     <input
                       type="text"
                       value={ligne.nature}
-                      onChange={(e) => updateVariationAide(ligne.id, { nature: e.target.value })}
+                          onChange={(e) => updateVariationAide(ligne.id, { nature: e.target.value })}
                       className="input-field"
-                      placeholder="Ex: Subvention rénovation"
+                      placeholder={t.step4.aidVariation.aidNature}
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <LabelWithTooltip>Montant 2025</LabelWithTooltip>
+                      <LabelWithTooltip>{t.step4.aidVariation.amount2025}</LabelWithTooltip>
                       <CurrencyInput
                         value={ligne.montant2025}
                         onChange={(v) => updateVariationAide(ligne.id, { montant2025: v })}
                       />
                     </div>
                     <div>
-                      <LabelWithTooltip>Montant 2024</LabelWithTooltip>
+                      <LabelWithTooltip>{t.step4.aidVariation.amount2024}</LabelWithTooltip>
                       <CurrencyInput
                         value={ligne.montant2024}
                         onChange={(v) => updateVariationAide(ligne.id, { montant2024: v })}
@@ -349,11 +351,11 @@ export const Step4: React.FC<Step4Props> = ({
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <LabelWithTooltip>Variation</LabelWithTooltip>
+                      <LabelWithTooltip>{t.step4.aidVariation.variation}</LabelWithTooltip>
                       <CalculatedField value={ligne.variation} />
                     </div>
                     <div>
-                      <LabelWithTooltip>Nb logements</LabelWithTooltip>
+                      <LabelWithTooltip>{t.step3.nbDwellings}</LabelWithTooltip>
                       <NumberInput
                         value={ligne.nbLogements}
                         onChange={(v) => updateVariationAide(ligne.id, { nbLogements: v })}
@@ -366,10 +368,10 @@ export const Step4: React.FC<Step4Props> = ({
                     <Checkbox
                       checked={ligne.logementConcerne}
                       onChange={(v) => updateVariationAide(ligne.id, { logementConcerne: v })}
-                      label="Logement concerné"
+                      label={t.step3.concernedDwelling}
                     />
                     <div className="text-right">
-                      <span className="text-sm text-gray-500">Ajustement:</span>
+                      <span className="text-sm text-gray-500">{t.step3.adjustment}</span>
                       <div className={`font-semibold ${getAjustementVariationAide(ligne) > 0 ? 'text-red-600' : 'text-green-700'}`}>
                         {formatCurrency(getAjustementVariationAide(ligne))}
                       </div>
@@ -384,14 +386,14 @@ export const Step4: React.FC<Step4Props> = ({
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b-2 border-corpiq-blue text-left">
-                    <th className="py-2 px-2">Nature</th>
-                    <th className="py-2 px-2 text-right">Montant 2025</th>
-                    <th className="py-2 px-2 text-right">Montant 2024</th>
-                    <th className="py-2 px-2 text-right">Variation</th>
-                    <th className="py-2 px-2 text-center">Nb log.</th>
-                    <th className="py-2 px-2 text-center">Nb loc.</th>
-                    <th className="py-2 px-2 text-center">Concerné</th>
-                    <th className="py-2 px-2 text-right">Ajust.</th>
+                    <th className="py-2 px-2">{t.step4.aidVariation.aidNature}</th>
+                    <th className="py-2 px-2 text-right">{t.step4.aidVariation.amount2025}</th>
+                    <th className="py-2 px-2 text-right">{t.step4.aidVariation.amount2024}</th>
+                    <th className="py-2 px-2 text-right">{t.step4.aidVariation.variation}</th>
+                    <th className="py-2 px-2 text-center">{t.step3.nbDwellings}</th>
+                    <th className="py-2 px-2 text-center">{t.step3.nbNonResidential}</th>
+                    <th className="py-2 px-2 text-center">{t.step3.concernedDwelling}</th>
+                    <th className="py-2 px-2 text-right">{t.step3.adjustment}</th>
                     <th className="py-2 px-2"></th>
                   </tr>
                 </thead>
@@ -404,7 +406,7 @@ export const Step4: React.FC<Step4Props> = ({
                           value={ligne.nature}
                           onChange={(e) => updateVariationAide(ligne.id, { nature: e.target.value })}
                           className="input-field text-sm"
-                          placeholder="Nature..."
+                          placeholder={t.step4.aidVariation.aidNature}
                         />
                       </td>
                       <td className="py-2 px-2 w-28">
@@ -472,7 +474,7 @@ export const Step4: React.FC<Step4Props> = ({
               className="btn-secondary inline-flex items-center gap-2"
             >
               <Plus size={20} />
-              Ajouter une ligne
+              {t.step4.aidVariation.addLine}
             </button>
           </div>
         )}
