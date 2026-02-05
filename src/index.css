@@ -90,6 +90,15 @@ body {
   animation: tooltipFadeIn 0.15s ease-out;
 }
 
+@keyframes addressDropdownEnter {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.address-dropdown-enter {
+  animation: addressDropdownEnter 0.15s ease-out;
+}
+
 @media print {
   .no-print {
     display: none !important;

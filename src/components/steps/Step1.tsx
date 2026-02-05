@@ -10,6 +10,7 @@ import {
   NavigationButtons,
   InfoTooltip
 } from '../ui';
+import { AddressAutocomplete } from '../ui/AddressAutocomplete';
 import { formatCurrency } from '../../utils/calculations';
 import { useLanguage } from '../../i18n/LanguageContext';
 
@@ -71,12 +72,10 @@ export const Step1: React.FC<Step1Props> = ({
             <LabelWithTooltip htmlFor="adresse" required>
               {t.step1.housingInfo.address}
             </LabelWithTooltip>
-            <textarea
+            <AddressAutocomplete
               id="adresse"
               value={formData.adresse}
-              onChange={(e) => updateFormData({ adresse: e.target.value })}
-              className="input-field"
-              rows={2}
+              onChange={(value) => updateFormData({ adresse: value })}
               placeholder={t.step1.housingInfo.addressPlaceholder}
             />
           </div>
