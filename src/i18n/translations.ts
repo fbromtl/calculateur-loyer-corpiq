@@ -242,7 +242,7 @@ export const translations: Record<Language, Translations> = {
     steps: {
       step1: {
         title: 'Information and base adjustment',
-        description: 'Dwelling, rent and building revenue',
+        description: 'Dwelling, rent and revenue from the building',
       },
       step2: {
         title: 'Taxes and insurance',
@@ -280,7 +280,7 @@ export const translations: Record<Language, Translations> = {
         baseAdjustmentTooltip: 'Rent × CPI Rate',
       },
       buildingRevenue: {
-        title: 'Building revenue',
+        title: 'Revenue from the building',
         tooltip: 'Rents from all dwellings and units in the building. This data is used to calculate the weight of the concerned dwelling.',
         dwellings: 'Dwellings',
         nonResidential: 'Non-residential units',
