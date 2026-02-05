@@ -31,7 +31,7 @@ export const InfoTooltip: React.FC<InfoTooltipProps> = ({ content }) => (
 // Composant Section Card
 interface SectionCardProps {
   title: string;
-  badge?: number;
+  badge?: number | string;
   children: React.ReactNode;
   tooltip?: string;
 }
@@ -41,7 +41,7 @@ export const SectionCard: React.FC<SectionCardProps> = ({ title, badge, children
     <div className="section-header flex items-center justify-between">
       <div className="flex items-center gap-2">
         {badge && (
-          <span className="bg-corpiq-bordeaux text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">
+          <span className={`bg-corpiq-bordeaux text-white ${String(badge).length > 1 ? 'w-7 text-xs' : 'w-6 text-sm'} h-6 rounded-full flex items-center justify-center font-bold`}>
             {badge}
           </span>
         )}

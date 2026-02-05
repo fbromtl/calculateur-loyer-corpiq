@@ -66,10 +66,10 @@ export const Step4: React.FC<Step4Props> = ({
 
   return (
     <div>
-      {/* Section 4 TAL: Nouvelles dépenses */}
+      {/* Section 4a TAL: Nouvelles dépenses */}
       <SectionCard 
         title={t.step4.newExpenses.title}
-        badge={4}
+        badge="4a"
         tooltip={t.step4.newExpenses.tooltip}
       >
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
@@ -280,10 +280,10 @@ export const Step4: React.FC<Step4Props> = ({
         </div>
       </SectionCard>
 
-      {/* Section 5 TAL: Variations d'aide */}
+      {/* Section 4b TAL: Variations d'aide */}
       <SectionCard 
         title={t.step4.aidVariation.title}
-        badge={5}
+        badge="4b"
         tooltip={t.step4.aidVariation.tooltip}
       >
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">

@@ -93,9 +93,9 @@ export const generatePDF = async (
     [`1. ${t.step5.summary.baseAdjustment.replace('{rate}', (calculatedValues.tauxIPC * 100).toFixed(1))}`, formatCurrency(calculatedValues.ajustementBase)],
     [`2. ${t.step5.summary.taxesAndInsurance}`, formatCurrency(calculatedValues.totalAjustementTaxesAssurances)],
     [`3. ${t.step5.summary.majorRepairs}`, formatCurrency(calculatedValues.totalAjustementReparations)],
-    [`4. ${t.step5.summary.newExpenses}`, formatCurrency(calculatedValues.totalAjustementNouvellesDepenses)],
-    [`5. ${t.step5.summary.aidVariations}`, formatCurrency(calculatedValues.totalAjustementVariationsAide)],
-    [`6. ${t.step5.summary.snowRemoval}`, formatCurrency(calculatedValues.ajustementDeneigement)],
+    [`4a. ${t.step5.summary.newExpenses}`, formatCurrency(calculatedValues.totalAjustementNouvellesDepenses)],
+    [`4b. ${t.step5.summary.aidVariations}`, formatCurrency(calculatedValues.totalAjustementVariationsAide)],
+    [`5. ${t.step5.summary.snowRemoval}`, formatCurrency(calculatedValues.ajustementDeneigement)],
   ];
 
   doc.setTextColor(0, 0, 0);

@@ -56,10 +56,10 @@ export const Step5: React.FC<Step5Props> = ({
 
   return (
     <div>
-      {/* Section 6 TAL: Déneigement (pour parcs de maisons mobiles) */}
+      {/* Section 5 TAL: Déneigement (pour parcs de maisons mobiles) */}
       <SectionCard 
         title={t.step5.snowRemoval.title}
-        badge={6}
+        badge={5}
         tooltip={t.step5.snowRemoval.tooltip}
       >
         <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
@@ -143,8 +143,8 @@ export const Step5: React.FC<Step5Props> = ({
               </tr>
               <tr className="border-b hover:bg-gray-50">
                 <td className="py-3 px-2">
-                  <span className="bg-corpiq-bordeaux text-white w-6 h-6 rounded-full inline-flex items-center justify-center text-sm font-bold mr-2">
-                    4
+                  <span className="bg-corpiq-bordeaux text-white w-7 h-6 rounded-full inline-flex items-center justify-center text-xs font-bold mr-2">
+                    4a
                   </span>
                 </td>
                 <td className="py-3 px-2">{t.step5.summary.newExpenses}</td>
@@ -154,8 +154,8 @@ export const Step5: React.FC<Step5Props> = ({
               </tr>
               <tr className="border-b hover:bg-gray-50">
                 <td className="py-3 px-2">
-                  <span className="bg-corpiq-bordeaux text-white w-6 h-6 rounded-full inline-flex items-center justify-center text-sm font-bold mr-2">
-                    5
+                  <span className="bg-corpiq-bordeaux text-white w-7 h-6 rounded-full inline-flex items-center justify-center text-xs font-bold mr-2">
+                    4b
                   </span>
                 </td>
                 <td className="py-3 px-2">{t.step5.summary.aidVariations}</td>
@@ -166,7 +166,7 @@ export const Step5: React.FC<Step5Props> = ({
               <tr className="border-b hover:bg-gray-50">
                 <td className="py-3 px-2">
                   <span className="bg-corpiq-bordeaux text-white w-6 h-6 rounded-full inline-flex items-center justify-center text-sm font-bold mr-2">
-                    6
+                    5
                   </span>
                 </td>
                 <td className="py-3 px-2">{t.step5.summary.snowRemoval}</td>
