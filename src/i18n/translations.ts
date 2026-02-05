@@ -105,9 +105,14 @@ export interface Translations {
     nature: string;
     naturePlaceholder: string;
     expense: string;
+    expenseTooltip: string;
     financialAid: string;
+    financialAidTooltip: string;
     thirdPartyCompensation: string;
+    thirdPartyCompensationTooltip: string;
     retainedExpense: string;
+    reducedInterestLoan: string;
+    annualPayment: string;
     nbDwellings: string;
     nbNonResidential: string;
     concernedDwelling: string;
@@ -315,9 +320,14 @@ export const translations: Record<Language, Translations> = {
       nature: 'Nature of the expense',
       naturePlaceholder: 'Ex: Roof repair',
       expense: 'Expense ($)',
+      expenseTooltip: 'Total cost of the repair or improvement',
       financialAid: 'Financial aid',
+      financialAidTooltip: 'Subsidies or grants received for this expense',
       thirdPartyCompensation: 'Third-party compensation',
+      thirdPartyCompensationTooltip: 'Amount received from insurance or other third parties',
       retainedExpense: 'Retained expense',
+      reducedInterestLoan: 'Reduced interest loan',
+      annualPayment: 'Annual payment',
       nbDwellings: 'Nb dwellings',
       nbNonResidential: 'Nb non-res.',
       concernedDwelling: 'Concerned dwelling',
@@ -515,12 +525,17 @@ export const translations: Record<Language, Translations> = {
       nature: 'Nature de la dépense',
       naturePlaceholder: 'Ex: Réfection toiture',
       expense: 'Dépense ($)',
+      expenseTooltip: 'Coût total de la réparation ou de l\'amélioration',
       financialAid: 'Aide financière',
-      thirdPartyCompensation: 'Indemnité tiers',
+      financialAidTooltip: 'Subventions ou aides reçues pour cette dépense',
+      thirdPartyCompensation: 'Indemnité versée par un tiers',
+      thirdPartyCompensationTooltip: 'Montant reçu d\'assurances ou d\'autres tiers',
       retainedExpense: 'Dépense retenue',
-      nbDwellings: 'Nb logements',
-      nbNonResidential: 'Nb locaux non-rés.',
-      concernedDwelling: 'Logement concerné',
+      reducedInterestLoan: 'Montant du prêt à intérêt réduit',
+      annualPayment: 'Versement annuel',
+      nbDwellings: 'Nb logements concernés',
+      nbNonResidential: 'Nb locaux non rés. concernés',
+      concernedDwelling: 'Le logement est-il concerné?',
       adjustment: 'Ajustement:',
       maxLines: 'Maximum de 30 lignes atteint.',
       totalAdjustment: 'Ajustement pour les réparations majeures',

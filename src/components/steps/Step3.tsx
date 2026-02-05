@@ -133,6 +133,23 @@ export const Step3: React.FC<Step3Props> = ({
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
+                      <LabelWithTooltip>{t.step3.reducedInterestLoan}</LabelWithTooltip>
+                      <CurrencyInput
+                        value={ligne.montantPretReduit}
+                        onChange={(v) => updateReparation(ligne.id, { montantPretReduit: v })}
+                      />
+                    </div>
+                    <div>
+                      <LabelWithTooltip>{t.step3.annualPayment}</LabelWithTooltip>
+                      <CurrencyInput
+                        value={ligne.versementAnnuel}
+                        onChange={(v) => updateReparation(ligne.id, { versementAnnuel: v })}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
                       <LabelWithTooltip>{t.step3.nbDwellings}</LabelWithTooltip>
                       <NumberInput
                         value={ligne.nbLogements}
@@ -172,55 +189,88 @@ export const Step3: React.FC<Step3Props> = ({
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b-2 border-corpiq-blue text-left">
-                    <th className="py-2 px-2">Nature</th>
-                    <th className="py-2 px-2 text-right">Dépense</th>
-                    <th className="py-2 px-2 text-right">Aide fin.</th>
-                    <th className="py-2 px-2 text-right">Indem. tiers</th>
-                    <th className="py-2 px-2 text-right">Dép. retenue</th>
-                    <th className="py-2 px-2 text-center">Nb log.</th>
-                    <th className="py-2 px-2 text-center">Nb loc.</th>
-                    <th className="py-2 px-2 text-center">Concerné</th>
-                    <th className="py-2 px-2 text-right">Ajust.</th>
-                    <th className="py-2 px-2"></th>
+                    <th className="py-2 px-1 text-xs">{t.step3.nature}</th>
+                    <th className="py-2 px-1 text-xs text-right">
+                      <span className="flex items-center justify-end gap-1">
+                        {t.step3.expense}
+                        <InfoTooltip content={t.step3.expenseTooltip} />
+                      </span>
+                    </th>
+                    <th className="py-2 px-1 text-xs text-right">
+                      <span className="flex items-center justify-end gap-1">
+                        {t.step3.financialAid}
+                        <InfoTooltip content={t.step3.financialAidTooltip} />
+                      </span>
+                    </th>
+                    <th className="py-2 px-1 text-xs text-right">
+                      <span className="flex items-center justify-end gap-1">
+                        {t.step3.thirdPartyCompensation}
+                        <InfoTooltip content={t.step3.thirdPartyCompensationTooltip} />
+                      </span>
+                    </th>
+                    <th className="py-2 px-1 text-xs text-right bg-blue-50">{t.step3.retainedExpense}</th>
+                    <th className="py-2 px-1 text-xs text-right">{t.step3.reducedInterestLoan}</th>
+                    <th className="py-2 px-1 text-xs text-right">{t.step3.annualPayment}</th>
+                    <th className="py-2 px-1 text-xs text-center">{t.step3.nbDwellings}</th>
+                    <th className="py-2 px-1 text-xs text-center">{t.step3.nbNonResidential}</th>
+                    <th className="py-2 px-1 text-xs text-center">{t.step3.concernedDwelling}</th>
+                    <th className="py-2 px-1 text-xs text-right"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  {formData.reparations.map((ligne) => (
+                  {formData.reparations.map((ligne, index) => (
                     <tr key={ligne.id} className="border-b hover:bg-gray-50">
-                      <td className="py-2 px-2">
-                        <input
-                          type="text"
-                          value={ligne.nature}
-                          onChange={(e) => updateReparation(ligne.id, { nature: e.target.value })}
-                          className="input-field text-sm"
-                          placeholder="Nature..."
-                        />
+                      <td className="py-2 px-1">
+                        <div className="flex items-center gap-1">
+                          <span className="text-gray-500 text-xs w-4">{index + 1}</span>
+                          <input
+                            type="text"
+                            value={ligne.nature}
+                            onChange={(e) => updateReparation(ligne.id, { nature: e.target.value })}
+                            className="input-field text-sm w-24"
+                            placeholder="Nature..."
+                          />
+                        </div>
                       </td>
-                      <td className="py-2 px-2 w-28">
+                      <td className="py-2 px-1 w-24">
                         <CurrencyInput
                           value={ligne.depense}
                           onChange={(v) => updateReparation(ligne.id, { depense: v })}
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2 px-2 w-28">
+                      <td className="py-2 px-1 w-20">
                         <CurrencyInput
                           value={ligne.aideFinanciere}
                           onChange={(v) => updateReparation(ligne.id, { aideFinanciere: v })}
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2 px-2 w-28">
+                      <td className="py-2 px-1 w-20">
                         <CurrencyInput
                           value={ligne.indemniteTiers}
                           onChange={(v) => updateReparation(ligne.id, { indemniteTiers: v })}
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2 px-2 w-28">
+                      <td className="py-2 px-1 w-24 bg-blue-50">
                         <CalculatedField value={ligne.depenseRetenue} className="text-sm" />
                       </td>
-                      <td className="py-2 px-2 w-20">
+                      <td className="py-2 px-1 w-20">
+                        <CurrencyInput
+                          value={ligne.montantPretReduit}
+                          onChange={(v) => updateReparation(ligne.id, { montantPretReduit: v })}
+                          className="text-sm"
+                        />
+                      </td>
+                      <td className="py-2 px-1 w-20">
+                        <CurrencyInput
+                          value={ligne.versementAnnuel}
+                          onChange={(v) => updateReparation(ligne.id, { versementAnnuel: v })}
+                          className="text-sm"
+                        />
+                      </td>
+                      <td className="py-2 px-1 w-16">
                         <NumberInput
                           value={ligne.nbLogements}
                           onChange={(v) => updateReparation(ligne.id, { nbLogements: v })}
@@ -228,7 +278,7 @@ export const Step3: React.FC<Step3Props> = ({
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2 px-2 w-20">
+                      <td className="py-2 px-1 w-16">
                         <NumberInput
                           value={ligne.nbLocauxNonResidentiels}
                           onChange={(v) => updateReparation(ligne.id, { nbLocauxNonResidentiels: v })}
@@ -236,7 +286,7 @@ export const Step3: React.FC<Step3Props> = ({
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2 px-2 text-center">
+                      <td className="py-2 px-1 text-center">
                         <input
                           type="checkbox"
                           checked={ligne.logementConcerne}
@@ -244,15 +294,12 @@ export const Step3: React.FC<Step3Props> = ({
                           className="w-5 h-5 rounded border-gray-300 text-corpiq-blue focus:ring-corpiq-blue cursor-pointer"
                         />
                       </td>
-                      <td className="py-2 px-2 w-28">
-                        <CalculatedField value={getAjustementLigne(ligne)} className="text-sm" />
-                      </td>
-                      <td className="py-2 px-2">
+                      <td className="py-2 px-1">
                         <button
                           type="button"
                           onClick={() => removeReparation(ligne.id)}
                           className="text-red-500 hover:text-red-700 p-1"
-                          title="Supprimer"
+                          title={t.common.delete}
                         >
                           <Trash2 size={18} />
                         </button>
@@ -261,6 +308,16 @@ export const Step3: React.FC<Step3Props> = ({
                   ))}
                 </tbody>
               </table>
+            </div>
+
+            {/* Affichage de l'ajustement total sous le tableau */}
+            <div className="hidden md:flex justify-end mt-4">
+              <div className="bg-corpiq-light px-4 py-2 rounded-lg">
+                <span className="text-sm font-medium mr-4">{t.step3.totalAdjustment}:</span>
+                <span className="font-bold text-green-700">
+                  {formatCurrency(calculatedValues?.totalAjustementReparations || 0)}
+                </span>
+              </div>
             </div>
 
             <button
