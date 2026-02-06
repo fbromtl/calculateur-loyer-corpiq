@@ -350,7 +350,7 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
               style={{width: `${progressPercent}%`, background: 'linear-gradient(90deg, #10b981, #059669, #047857)'}} />
           </div>
           <div className="bg-white p-3 sm:p-4 lg:p-5">
-            <div className="grid gap-1" style={{gridTemplateColumns: `repeat(${steps.length}, 1fr)`}}>
+            <div className="flex gap-1">
               {steps.map((step) => {
                 const accessible = canAccessStep ? canAccessStep(step.id) : true;
                 const clickable = onStepClick && accessible;
@@ -361,7 +361,7 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
                   <button key={step.id} type="button"
                     onClick={() => clickable && onStepClick(step.id)}
                     disabled={!clickable}
-                    className={`relative flex items-center gap-2 px-2 py-2.5 rounded-xl transition-all duration-300 ${
+                    className={`relative flex items-center gap-2 px-2 py-2.5 rounded-xl transition-all duration-300 flex-1 min-w-0 ${
                       current ? 'bg-corpiq-blue/5 ring-1 ring-corpiq-blue/15' 
                       : done ? 'hover:bg-emerald-50/50' 
                       : accessible ? 'hover:bg-gray-50' 
@@ -369,17 +369,17 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
                     } ${clickable ? 'cursor-pointer group' : 'cursor-not-allowed'}`}
                     title={!accessible ? disabledMessage : step.title}>
                     {/* Number circle */}
-                    <div className={`w-9 h-9 rounded-lg flex items-center justify-center font-extrabold text-xs transition-all duration-300 flex-shrink-0 ${
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-extrabold text-xs transition-all duration-300 flex-shrink-0 ${
                       done ? 'text-white' 
                       : current ? 'text-white shadow-lg shadow-corpiq-blue/30' 
                       : accessible ? 'text-gray-400 border-2 border-gray-200 bg-white group-hover:border-corpiq-blue/25 group-hover:text-corpiq-blue' 
                       : 'text-gray-300 border border-gray-200 bg-gray-50'
                     }`}
                     style={done ? {background: 'linear-gradient(135deg, #10b981, #059669)'} : current ? {background: 'linear-gradient(135deg, #13315c, #1a4178)'} : undefined}>
-                      {done ? <Check size={16} strokeWidth={3} /> : step.id}
+                      {done ? <Check size={14} strokeWidth={3} /> : step.id}
                     </div>
                     {/* Title */}
-                    <div className="hidden md:block min-w-0 text-left">
+                    <div className="hidden md:block min-w-0 text-left overflow-hidden">
                       <div className={`text-[10px] font-bold leading-tight truncate transition-colors ${
                         current ? 'text-corpiq-blue' : done ? 'text-emerald-700' : accessible ? 'text-gray-500 group-hover:text-gray-700' : 'text-gray-300'
                       }`}>{step.title}</div>
