@@ -3,7 +3,7 @@ import { useCalculateur } from './hooks/useCalculateur';
 import { StepIndicator } from './components/ui';
 import { Step1, Step2, Step3, Step4, Step5, Step6 } from './components/steps';
 import { generatePDF } from './utils/pdfExport';
-import { ExternalLink, Languages, Building2 } from 'lucide-react';
+import { ExternalLink, Languages } from 'lucide-react';
 import { useLanguage } from './i18n/LanguageContext';
 
 function App() {
@@ -87,15 +87,24 @@ function App() {
     <div className="min-h-screen flex flex-col bg-gray-50">
       {/* Header */}
       <header className="relative text-white sticky top-0 z-40" style={{background: 'linear-gradient(135deg, #0a1b35, #0c2240 30%, #13315c 70%, #1a4178)'}}>
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-white/[0.02]" />
+          <div className="absolute -bottom-16 -left-16 w-48 h-48 rounded-full bg-white/[0.015]" />
+        </div>
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between py-3.5 sm:py-4">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center border border-white/10">
-                <Building2 size={18} className="text-white" />
+          <div className="flex items-center justify-between py-3 sm:py-3.5">
+            <div className="flex items-center gap-3.5">
+              <div className="flex-shrink-0">
+                <img 
+                  src="/corpiq-logo.png" 
+                  alt="CORPIQ" 
+                  className="h-9 sm:h-10 w-auto object-contain drop-shadow-sm"
+                />
               </div>
+              <div className="hidden sm:block w-px h-8 bg-white/15" />
               <div>
-                <h1 className="text-base sm:text-lg font-extrabold tracking-tight leading-tight">{t.app.title}</h1>
-                <p className="text-blue-200/40 text-[11px] font-medium hidden sm:block">{t.app.subtitle}</p>
+                <h1 className="text-sm sm:text-[15px] font-bold tracking-tight leading-tight text-white/95">{t.app.title}</h1>
+                <p className="text-[11px] sm:text-xs text-blue-200/50 font-medium mt-0.5 tracking-wide">{t.app.subtitle}</p>
               </div>
             </div>
             <div className="flex items-center gap-1">

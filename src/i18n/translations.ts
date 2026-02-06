@@ -247,8 +247,8 @@ export interface Translations {
 export const translations: Record<Language, Translations> = {
   en: {
     app: {
-      title: 'Calculation Tool 2026',
-      subtitle: 'Administrative Housing Tribunal — CORPIQ',
+      title: 'Calculation Tool 2026 — CORPIQ',
+      subtitle: 'Rent Increase Calculator',
       loading: 'Loading...',
       autoSave: 'Auto-save',
       footer: `© ${new Date().getFullYear()} CORPIQ - Corporation des propriétaires immobiliers du Québec`,
@@ -473,8 +473,8 @@ export const translations: Record<Language, Translations> = {
   },
   fr: {
     app: {
-      title: 'Outil de calcul 2026',
-      subtitle: 'Tribunal administratif du logement — CORPIQ',
+      title: 'Outil de calcul 2026 — CORPIQ',
+      subtitle: 'Calculateur d\'augmentation de loyer',
       loading: 'Chargement...',
       autoSave: 'Sauvegarde automatique',
       footer: `© ${new Date().getFullYear()} CORPIQ - Corporation des propriétaires immobiliers du Québec`,
