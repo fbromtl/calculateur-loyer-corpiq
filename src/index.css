@@ -2,203 +2,154 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Base ─────────────────────────────────────────────────── */
+/* ─── Base ──────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 :root {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.6;
-  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f0f4f8 0%, #f8fafc 50%, #eef2f7 100%);
+  background-color: #f0f2f5;
+  background-image:
+    radial-gradient(at 20% 0%, rgba(19, 49, 92, 0.04) 0%, transparent 60%),
+    radial-gradient(at 80% 100%, rgba(83, 15, 50, 0.03) 0%, transparent 60%);
   background-attachment: fixed;
 }
 
-/* ─── Custom Scrollbar ────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
+/* ─── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #bfc7d0; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #97a3b0; }
+::selection { background: rgba(19, 49, 92, 0.12); color: #13315c; }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #c1c9d4;
-  border-radius: 99px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #9ba5b2;
-}
-
-/* ─── Selection ───────────────────────────────────────────── */
-::selection {
-  background: rgba(19, 49, 92, 0.15);
-  color: #13315c;
-}
-
-/* ─── Component Layer ─────────────────────────────────────── */
+/* ─── Components ────────────────────────────────────────── */
 @layer components {
   .btn-primary {
-    @apply bg-corpiq-blue text-white px-7 py-3 rounded-xl font-semibold
+    @apply bg-corpiq-blue text-white px-7 py-3.5 rounded-2xl font-bold text-[15px]
            hover:bg-corpiq-blue-light active:bg-corpiq-blue-dark
-           transition-all duration-200 ease-out
+           transition-all duration-250 ease-out
            shadow-button hover:shadow-button-hover
            hover:-translate-y-0.5 active:translate-y-0
-           disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-button
-           focus:outline-none focus:ring-2 focus:ring-corpiq-blue/30 focus:ring-offset-2;
+           disabled:opacity-40 disabled:hover:translate-y-0 disabled:hover:shadow-button disabled:cursor-not-allowed
+           focus:outline-none focus:ring-2 focus:ring-corpiq-blue/25 focus:ring-offset-2;
   }
 
   .btn-secondary {
-    @apply bg-white text-corpiq-blue px-7 py-3 rounded-xl font-semibold
+    @apply bg-white text-corpiq-blue px-7 py-3.5 rounded-2xl font-bold text-[15px]
            border-2 border-gray-200
-           hover:border-corpiq-blue/30 hover:bg-corpiq-light-blue/30
-           active:bg-corpiq-light-blue/50
-           transition-all duration-200 ease-out
+           hover:border-corpiq-blue/20 hover:bg-corpiq-blue-50/40
+           active:bg-corpiq-blue-50
+           transition-all duration-250 ease-out
            hover:-translate-y-0.5 active:translate-y-0
-           focus:outline-none focus:ring-2 focus:ring-corpiq-blue/20 focus:ring-offset-2;
+           focus:outline-none focus:ring-2 focus:ring-corpiq-blue/15 focus:ring-offset-2;
   }
 
   .input-field {
-    @apply w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl
-           text-gray-800 placeholder:text-gray-400
-           focus:ring-2 focus:ring-corpiq-blue/15 focus:border-corpiq-blue/40
-           focus:shadow-input-focus
+    @apply w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-2xl
+           text-gray-800 text-[15px] placeholder:text-gray-400
+           focus:border-corpiq-blue/50 focus:shadow-input-focus
+           hover:border-gray-300
            transition-all duration-200 outline-none;
   }
 
   .input-currency {
-    @apply input-field text-right tabular-nums;
+    @apply input-field text-right tabular-nums font-medium;
   }
 
   .input-readonly {
-    @apply input-field bg-gray-50 text-gray-600 cursor-not-allowed border-gray-100
-           focus:ring-0 focus:border-gray-100 focus:shadow-none;
+    @apply input-field bg-gray-50/80 text-gray-600 cursor-not-allowed border-gray-100
+           hover:border-gray-100 focus:border-gray-100 focus:shadow-none;
   }
 
   .section-card {
-    @apply bg-white rounded-2xl shadow-card border border-gray-100/80 overflow-hidden
-           transition-shadow duration-300 hover:shadow-card-hover;
+    @apply bg-white rounded-3xl shadow-card overflow-hidden
+           transition-all duration-300 hover:shadow-card-hover;
   }
 
   .section-header {
-    @apply bg-gradient-to-r from-corpiq-blue to-corpiq-blue-light text-white px-6 py-4 font-semibold;
+    @apply bg-gradient-to-r from-corpiq-blue via-corpiq-blue-light to-corpiq-blue
+           text-white px-7 py-5 font-bold text-base relative overflow-hidden;
+  }
+
+  .section-header::before {
+    content: '';
+    @apply absolute inset-0 opacity-10;
+    background: repeating-linear-gradient(
+      -45deg, transparent, transparent 10px, rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 20px
+    );
   }
 
   .section-content {
-    @apply p-6;
+    @apply p-7;
   }
 }
 
-/* ─── Animations ──────────────────────────────────────────── */
+/* ─── Animations ────────────────────────────────────────── */
 @keyframes highlight {
-  0% { background-color: #fef3c7; }
-  100% { background-color: transparent; }
+  0% { background-color: #fef3c7; transform: scale(1.01); }
+  100% { background-color: transparent; transform: scale(1); }
 }
+.calc-highlight { animation: highlight 0.8s ease-out; }
 
-.calc-highlight {
-  animation: highlight 1s ease-out;
-}
-
-/* Info Tooltip Animations */
 @keyframes infoOverlayEnter {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-
 @keyframes infoPanelEnter {
   from { opacity: 0; transform: scale(0.95) translateY(10px); }
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
-
 @keyframes tooltipFadeIn {
   from { opacity: 0; transform: scale(0.96); }
   to { opacity: 1; transform: scale(1); }
 }
+.info-overlay-enter { animation: infoOverlayEnter 0.2s ease-out; }
+.info-panel-enter { animation: infoPanelEnter 0.25s ease-out; }
+.tooltip-content { animation: tooltipFadeIn 0.15s ease-out; }
 
-.info-overlay-enter {
-  animation: infoOverlayEnter 0.2s ease-out;
-}
-
-.info-panel-enter {
-  animation: infoPanelEnter 0.25s ease-out;
-}
-
-.tooltip-content {
-  animation: tooltipFadeIn 0.15s ease-out;
-}
-
-/* Address Dropdown */
 @keyframes addressDropdownEnter {
   from { opacity: 0; transform: translateY(-4px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.address-dropdown-enter { animation: addressDropdownEnter 0.15s ease-out; }
 
-.address-dropdown-enter {
-  animation: addressDropdownEnter 0.15s ease-out;
-}
-
-/* Step transition */
 @keyframes stepEnter {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.step-enter { animation: stepEnter 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
 
-.step-enter {
-  animation: stepEnter 0.45s ease-out;
-}
-
-/* Pulse ring for active step */
 @keyframes pulseRing {
-  0% { box-shadow: 0 0 0 0 rgba(19, 49, 92, 0.3); }
-  70% { box-shadow: 0 0 0 8px rgba(19, 49, 92, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(19, 49, 92, 0.35); }
+  70% { box-shadow: 0 0 0 10px rgba(19, 49, 92, 0); }
   100% { box-shadow: 0 0 0 0 rgba(19, 49, 92, 0); }
 }
+.pulse-ring { animation: pulseRing 2s ease-in-out infinite; }
 
-.pulse-ring {
-  animation: pulseRing 2s ease-in-out infinite;
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
 }
 
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, #13315c 0%, #530f32 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Glass effect */
+/* Glass */
 .glass {
-  backdrop-filter: blur(12px) saturate(1.5);
-  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  backdrop-filter: blur(16px) saturate(1.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
 }
 
-/* Number input arrows hide */
+/* Hide number input arrows */
 input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; }
 
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
-/* ─── Print ───────────────────────────────────────────────── */
-@media print {
-  .no-print {
-    display: none !important;
-  }
-}
+@media print { .no-print { display: none !important; } }

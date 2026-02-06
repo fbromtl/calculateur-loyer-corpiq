@@ -133,7 +133,7 @@ export const Step1: React.FC<Step1Props> = ({
 
           {/* Immeuble normal */}
           {!formData.isRPA && (
-            <div className="bg-gray-50/80 p-5 rounded-xl border border-gray-100">
+            <div className="bg-gray-50/80 p-6 rounded-2xl border-2 border-gray-100">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <LabelWithTooltip tooltip={t.step1.baseAdjustment.ipcVariationTooltip}>
@@ -158,10 +158,10 @@ export const Step1: React.FC<Step1Props> = ({
 
           {/* RPA */}
           {formData.isRPA && (
-            <div className="bg-blue-50/60 p-5 rounded-xl border border-blue-200/60">
+            <div className="bg-blue-50/60 p-6 rounded-2xl border-2 border-blue-200/60">
               <h4 className="font-semibold text-corpiq-blue mb-4 text-sm">Calcul RPA (2 blocs)</h4>
               
-              <div className="bg-white/80 p-4 rounded-xl mb-3 border border-blue-100/50">
+              <div className="bg-white/80 p-5 rounded-2xl mb-3 border border-blue-100/50">
                 <div className="text-sm font-medium text-gray-700 mb-3">
                   Bloc A — Services à la personne (taux fixe 6,7%)
                 </div>
@@ -181,7 +181,7 @@ export const Step1: React.FC<Step1Props> = ({
                 </div>
               </div>
               
-              <div className="bg-white/80 p-4 rounded-xl mb-3 border border-blue-100/50">
+              <div className="bg-white/80 p-5 rounded-2xl mb-3 border border-blue-100/50">
                 <div className="text-sm font-medium text-gray-700 mb-3">
                   Bloc B — Loyer sans services (taux IPC)
                 </div>
@@ -371,7 +371,7 @@ export const Step1: React.FC<Step1Props> = ({
           </div>
 
           {/* Totaux */}
-          <div className="bg-gray-50/80 p-5 rounded-xl border border-gray-100 space-y-4">
+          <div className="bg-gray-50/80 p-6 rounded-2xl border-2 border-gray-100 space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <LabelWithTooltip tooltip={t.step1.buildingRevenue.totalAnnualRentTooltip}>

@@ -53,7 +53,7 @@ export const Step3: React.FC<Step3Props> = ({
         badge={3}
         tooltip={t.step3.tooltip}
       >
-        <div className="bg-amber-50/60 border border-amber-200/50 rounded-xl p-4 mb-6">
+        <div className="bg-amber-50/60 border-2 border-amber-200/50 rounded-2xl p-5 mb-6">
           <p className="text-sm text-amber-800 leading-relaxed">
             <strong>{t.step3.howItWorks}</strong> {t.step3.howItWorksNote}
           </p>
@@ -339,10 +339,10 @@ export const Step3: React.FC<Step3Props> = ({
         )}
 
         {/* Total */}
-        <div className="bg-gray-50/80 p-4 rounded-xl border border-gray-100 mt-6">
+        <div className="bg-gray-50/80 p-5 rounded-2xl border-2 border-gray-100 mt-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <span className="bg-gradient-to-br from-corpiq-bordeaux to-corpiq-bordeaux-light text-white w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold shadow-sm">
+            <div className="flex items-center gap-3">
+              <span className="w-9 h-9 rounded-xl text-sm font-extrabold flex items-center justify-center text-white shadow-md" style={{background: 'linear-gradient(135deg, #530f32 0%, #6b1441 100%)'}}>
                 3
               </span>
               <span className="font-semibold text-sm">{t.step3.totalAdjustment}</span>
