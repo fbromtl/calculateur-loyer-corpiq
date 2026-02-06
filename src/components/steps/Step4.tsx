@@ -523,25 +523,19 @@ export const Step4: React.FC<Step4Props> = ({
       </div>
 
       {/* Question déneigement */}
-      <div className="bg-white rounded-2xl border border-gray-200/80 p-5 mb-6" style={{boxShadow: '0 2px 12px rgba(0,0,0,0.04)'}}>
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{background: 'linear-gradient(135deg, #0ea5e9, #38bdf8)'}}>
-            <Snowflake size={18} className="text-white" />
-          </div>
-          <div>
-            <h3 className="text-sm font-bold text-gray-800">
-              {t.step5.snowQuestion}
-            </h3>
-          </div>
+      <div className="flex items-center justify-between bg-white rounded-xl border border-gray-200/80 px-4 py-3.5 mb-6" style={{boxShadow: '0 1px 4px rgba(0,0,0,0.03)'}}>
+        <div className="flex items-center gap-2.5">
+          <Snowflake size={15} className="text-sky-500 flex-shrink-0" />
+          <span className="text-sm font-medium text-gray-700">{t.step5.snowQuestion}</span>
         </div>
-        <div className="flex gap-3">
+        <div className="flex items-center bg-gray-100 rounded-lg p-0.5 ml-4 flex-shrink-0">
           <button
             type="button"
             onClick={() => updateFormData({ hasDeneigement: true })}
-            className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold border-2 transition-all duration-200 ${
+            className={`px-3.5 py-1.5 rounded-md text-xs font-bold transition-all duration-200 ${
               formData.hasDeneigement
-                ? 'border-corpiq-blue bg-corpiq-blue/5 text-corpiq-blue shadow-sm'
-                : 'border-gray-200 bg-white text-gray-500 hover:border-gray-300 hover:bg-gray-50'
+                ? 'bg-white text-corpiq-blue shadow-sm'
+                : 'text-gray-400 hover:text-gray-600'
             }`}
           >
             {t.common.yes}
@@ -549,10 +543,10 @@ export const Step4: React.FC<Step4Props> = ({
           <button
             type="button"
             onClick={() => updateFormData({ hasDeneigement: false, deneigement: { frais2025: 0, frais2024: 0, ajustement: 0 } })}
-            className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold border-2 transition-all duration-200 ${
+            className={`px-3.5 py-1.5 rounded-md text-xs font-bold transition-all duration-200 ${
               !formData.hasDeneigement
-                ? 'border-corpiq-blue bg-corpiq-blue/5 text-corpiq-blue shadow-sm'
-                : 'border-gray-200 bg-white text-gray-500 hover:border-gray-300 hover:bg-gray-50'
+                ? 'bg-white text-corpiq-blue shadow-sm'
+                : 'text-gray-400 hover:text-gray-600'
             }`}
           >
             {t.common.no}

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useCalculateur } from './hooks/useCalculateur';
-import { STEPS } from './types';
 import { StepIndicator } from './components/ui';
 import { Step1, Step2, Step3, Step4, Step5, Step6 } from './components/steps';
 import { generatePDF } from './utils/pdfExport';
@@ -17,6 +16,47 @@ function App() {
     addVariationAide, updateVariationAide, removeVariationAide,
     resetForm, nextStep, prevStep, goToStep, canAccessStep,
   } = useCalculateur();
+
+  // ─── Dynamic steps based on hasDeneigement ───
+  const activeSteps = React.useMemo(() => {
+    const base = [
+      { id: 1, title: t.steps.step1.title, description: t.steps.step1.description },
+      { id: 2, title: t.steps.step2.title, description: t.steps.step2.description },
+      { id: 3, title: t.steps.step3.title, description: t.steps.step3.description },
+      { id: 4, title: t.steps.step4.title, description: t.steps.step4.description },
+    ];
+    if (formData.hasDeneigement) {
+      return [
+        ...base,
+        { id: 5, title: t.steps.step5.title, description: t.steps.step5.description },
+        { id: 6, title: t.steps.step6.title, description: t.steps.step6.description },
+      ];
+    }
+    return [
+      ...base,
+      { id: 5, title: t.steps.step6.title, description: t.steps.step6.description },
+    ];
+  }, [formData.hasDeneigement, t]);
+
+  // Map internal step ↔ visual step
+  const visualCurrentStep = (!formData.hasDeneigement && currentStep === 6) ? 5 : currentStep;
+  const totalVisualSteps = activeSteps.length;
+  const currentStepInfo = activeSteps.find(s => s.id === visualCurrentStep);
+
+  const handleStepClick = (visualStep: number) => {
+    if (!formData.hasDeneigement && visualStep === 5) {
+      goToStep(6);
+    } else {
+      goToStep(visualStep);
+    }
+  };
+
+  const handleCanAccessStep = (visualStep: number) => {
+    if (!formData.hasDeneigement && visualStep === 5) {
+      return canAccessStep(6);
+    }
+    return canAccessStep(visualStep);
+  };
 
   const handleExportPDF = async () => {
     if (calculatedValues) {
@@ -76,27 +116,27 @@ function App() {
         {/* Progress */}
         <div className="h-0.5 bg-black/20">
           <div className="h-full transition-all duration-700 ease-out rounded-r-full bg-emerald-500"
-            style={{ width: `${(currentStep / STEPS.length) * 100}%` }} />
+            style={{ width: `${(visualCurrentStep / totalVisualSteps) * 100}%` }} />
         </div>
       </header>
 
       {/* Main */}
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <StepIndicator currentStep={currentStep} totalSteps={STEPS.length} steps={STEPS}
-          onStepClick={goToStep} canAccessStep={canAccessStep} disabledMessage={t.common.completePreviousSteps} />
+        <StepIndicator currentStep={visualCurrentStep} totalSteps={totalVisualSteps} steps={activeSteps}
+          onStepClick={handleStepClick} canAccessStep={handleCanAccessStep} disabledMessage={t.common.completePreviousSteps} />
 
         {/* Step title */}
         <div className="mb-6 animate-fade-in">
           <div className="inline-flex items-center gap-1.5 mb-2 px-2.5 py-1 rounded-md bg-corpiq-blue/5 text-corpiq-blue">
             <span className="text-[10px] font-bold uppercase tracking-widest">
-              {language === 'en' ? 'Step' : 'Étape'} {currentStep}/{STEPS.length}
+              {language === 'en' ? 'Step' : 'Étape'} {visualCurrentStep}/{totalVisualSteps}
             </span>
           </div>
           <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900 leading-tight">
-            {t.steps[`step${currentStep}` as keyof typeof t.steps].title}
+            {currentStepInfo?.title}
           </h2>
           <p className="text-gray-500 mt-1 text-sm leading-relaxed max-w-2xl">
-            {t.steps[`step${currentStep}` as keyof typeof t.steps].description}
+            {currentStepInfo?.description}
           </p>
         </div>
 
@@ -105,7 +145,7 @@ function App() {
           {currentStep === 2 && <Step2 formData={formData} calculatedValues={calculatedValues} updateFormData={updateFormData} onNext={nextStep} onPrevious={prevStep} />}
           {currentStep === 3 && <Step3 formData={formData} calculatedValues={calculatedValues} addReparation={addReparation} updateReparation={updateReparation} removeReparation={removeReparation} onNext={nextStep} onPrevious={prevStep} />}
           {currentStep === 4 && <Step4 formData={formData} calculatedValues={calculatedValues} updateFormData={updateFormData} addNouvelleDepense={addNouvelleDepense} updateNouvelleDepense={updateNouvelleDepense} removeNouvelleDepense={removeNouvelleDepense} addVariationAide={addVariationAide} updateVariationAide={updateVariationAide} removeVariationAide={removeVariationAide} onNext={() => formData.hasDeneigement ? nextStep() : goToStep(6)} onPrevious={prevStep} />}
-          {currentStep === 5 && <Step5 formData={formData} calculatedValues={calculatedValues} updateFormData={updateFormData} onPrevious={prevStep} onNext={nextStep} />}
+          {currentStep === 5 && formData.hasDeneigement && <Step5 formData={formData} calculatedValues={calculatedValues} updateFormData={updateFormData} onPrevious={prevStep} onNext={nextStep} />}
           {currentStep === 6 && <Step6 formData={formData} calculatedValues={calculatedValues} onPrevious={() => formData.hasDeneigement ? prevStep() : goToStep(4)} onReset={resetForm} onExportPDF={handleExportPDF} />}
         </div>
 
