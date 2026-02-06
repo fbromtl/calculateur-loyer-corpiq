@@ -177,34 +177,34 @@ export const Step4: React.FC<Step4Props> = ({
 
             {/* Desktop */}
             <div className="hidden md:block overflow-x-auto -mx-2">
-              <table className="w-full text-sm">
+              <table className="w-full text-sm border-collapse">
                 <thead>
-                  <tr className="border-b-2 border-corpiq-blue/20 text-left" style={{ fontFamily: "'Inter', system-ui, Helvetica, Arial, sans-serif" }}>
-                    <th className="py-2.5 px-2 text-xs font-medium text-gray-500 leading-normal">{t.step4.newExpenses.nature}</th>
-                    <th className="py-2.5 px-2 text-xs text-right font-medium text-gray-500 leading-normal">
+                  <tr className="border-b border-gray-200 bg-gray-50/50">
+                    <th className="py-2 px-2 text-left text-[11px] font-semibold text-gray-600">{t.step4.newExpenses.nature}</th>
+                    <th className="py-2 px-2 text-right text-[11px] font-semibold text-gray-600 w-28">
                       <span className="flex items-center justify-end gap-1">
                         {t.step4.newExpenses.expense}
                         <InfoTooltip content={t.step4.newExpenses.expenseTooltip} />
                       </span>
                     </th>
-                    <th className="py-2.5 px-2 text-xs text-right font-medium text-gray-500 leading-normal">
+                    <th className="py-2 px-2 text-right text-[11px] font-semibold text-gray-600 w-28">
                       <span className="flex items-center justify-end gap-1">
                         {t.step3.financialAid}
                         <InfoTooltip content={t.step4.newExpenses.financialAidTooltip} />
                       </span>
                     </th>
-                    <th className="py-2.5 px-2 text-xs text-right font-medium text-gray-500 leading-normal">{t.step3.retainedExpense}</th>
-                    <th className="py-2.5 px-2 text-xs text-center font-medium text-gray-500 leading-normal">{t.step3.nbDwellings}</th>
-                    <th className="py-2.5 px-2 text-xs text-center font-medium text-gray-500 leading-normal">{t.step3.nbNonResidential}</th>
-                    <th className="py-2.5 px-2 text-xs text-center font-medium text-gray-500 leading-normal">{t.step3.concernedDwelling}</th>
-                    <th className="py-2.5 px-2 text-xs text-right font-medium text-gray-500 leading-normal">{t.step3.adjustment}</th>
-                    <th className="py-2.5 px-2"></th>
+                    <th className="py-2 px-2 text-right text-[11px] font-semibold text-gray-600 w-28">{t.step3.retainedExpense}</th>
+                    <th className="py-2 px-2 text-center text-[11px] font-semibold text-gray-600 w-20">{t.step3.nbDwellings}</th>
+                    <th className="py-2 px-2 text-center text-[11px] font-semibold text-gray-600 w-20">{t.step3.nbNonResidential}</th>
+                    <th className="py-2 px-2 text-center text-[11px] font-semibold text-gray-600">{t.step3.concernedDwelling}</th>
+                    <th className="py-2 px-2 text-right text-[11px] font-semibold text-gray-600 w-28">{t.step3.adjustment}</th>
+                    <th className="py-2 px-2 w-8"></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {formData.nouvellesDepenses.map((ligne) => (
                     <tr key={ligne.id} className="group hover:bg-corpiq-light-blue/10 transition-colors">
-                      <td className="py-2.5 px-2">
+                      <td className="py-2 px-2">
                         <input
                           type="text"
                           value={ligne.nature}
@@ -213,24 +213,24 @@ export const Step4: React.FC<Step4Props> = ({
                           placeholder={t.step4.newExpenses.naturePlaceholder}
                         />
                       </td>
-                      <td className="py-2.5 px-2 w-28">
+                      <td className="py-2 px-2 w-28">
                         <CurrencyInput
                           value={ligne.depense}
                           onChange={(v) => updateNouvelleDepense(ligne.id, { depense: v })}
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2.5 px-2 w-28">
+                      <td className="py-2 px-2 w-28">
                         <CurrencyInput
                           value={ligne.aideFinanciere}
                           onChange={(v) => updateNouvelleDepense(ligne.id, { aideFinanciere: v })}
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2.5 px-2 w-28">
+                      <td className="py-2 px-2 w-28">
                         <CalculatedField value={ligne.depenseRetenue} className="text-sm" />
                       </td>
-                      <td className="py-2.5 px-2 w-20">
+                      <td className="py-2 px-2 w-20">
                         <NumberInput
                           value={ligne.nbLogements}
                           onChange={(v) => updateNouvelleDepense(ligne.id, { nbLogements: v })}
@@ -238,7 +238,7 @@ export const Step4: React.FC<Step4Props> = ({
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2.5 px-2 w-20">
+                      <td className="py-2 px-2 w-20">
                         <NumberInput
                           value={ligne.nbLocauxNonResidentiels}
                           onChange={(v) => updateNouvelleDepense(ligne.id, { nbLocauxNonResidentiels: v })}
@@ -246,7 +246,7 @@ export const Step4: React.FC<Step4Props> = ({
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2.5 px-2 text-center">
+                      <td className="py-2 px-2 text-center">
                         <div className="flex justify-center">
                           <Checkbox
                             checked={ligne.logementConcerne}
@@ -254,10 +254,10 @@ export const Step4: React.FC<Step4Props> = ({
                           />
                         </div>
                       </td>
-                      <td className="py-2.5 px-2 w-28">
+                      <td className="py-2 px-2 w-28">
                         <CalculatedField value={getAjustementNouvelleDepense(ligne)} className="text-sm" />
                       </td>
-                      <td className="py-2.5 px-2">
+                      <td className="py-2 px-2 w-8">
                         <button
                           type="button"
                           onClick={() => removeNouvelleDepense(ligne.id)}
@@ -398,24 +398,24 @@ export const Step4: React.FC<Step4Props> = ({
 
             {/* Desktop */}
             <div className="hidden md:block overflow-x-auto -mx-2">
-              <table className="w-full text-sm">
+              <table className="w-full text-sm border-collapse">
                 <thead>
-                  <tr className="border-b-2 border-corpiq-blue/20 text-left" style={{ fontFamily: "'Inter', system-ui, Helvetica, Arial, sans-serif" }}>
-                    <th className="py-2.5 px-2 text-xs font-medium text-gray-500 leading-normal">{t.step4.aidVariation.aidNature}</th>
-                    <th className="py-2.5 px-2 text-xs text-right font-medium text-gray-500 leading-normal">{t.step4.aidVariation.amount2025}</th>
-                    <th className="py-2.5 px-2 text-xs text-right font-medium text-gray-500 leading-normal">{t.step4.aidVariation.amount2024}</th>
-                    <th className="py-2.5 px-2 text-xs text-right font-medium text-gray-500 leading-normal">{t.step4.aidVariation.variation}</th>
-                    <th className="py-2.5 px-2 text-xs text-center font-medium text-gray-500 leading-normal">{t.step3.nbDwellings}</th>
-                    <th className="py-2.5 px-2 text-xs text-center font-medium text-gray-500 leading-normal">{t.step3.nbNonResidential}</th>
-                    <th className="py-2.5 px-2 text-xs text-center font-medium text-gray-500 leading-normal">{t.step3.concernedDwelling}</th>
-                    <th className="py-2.5 px-2 text-xs text-right font-medium text-gray-500 leading-normal">{t.step3.adjustment}</th>
-                    <th className="py-2.5 px-2"></th>
+                  <tr className="border-b border-gray-200 bg-gray-50/50">
+                    <th className="py-2 px-2 text-left text-[11px] font-semibold text-gray-600">{t.step4.aidVariation.aidNature}</th>
+                    <th className="py-2 px-2 text-right text-[11px] font-semibold text-gray-600 w-28">{t.step4.aidVariation.amount2025}</th>
+                    <th className="py-2 px-2 text-right text-[11px] font-semibold text-gray-600 w-28">{t.step4.aidVariation.amount2024}</th>
+                    <th className="py-2 px-2 text-right text-[11px] font-semibold text-gray-600 w-28">{t.step4.aidVariation.variation}</th>
+                    <th className="py-2 px-2 text-center text-[11px] font-semibold text-gray-600 w-20">{t.step3.nbDwellings}</th>
+                    <th className="py-2 px-2 text-center text-[11px] font-semibold text-gray-600 w-20">{t.step3.nbNonResidential}</th>
+                    <th className="py-2 px-2 text-center text-[11px] font-semibold text-gray-600">{t.step3.concernedDwelling}</th>
+                    <th className="py-2 px-2 text-right text-[11px] font-semibold text-gray-600 w-28">{t.step3.adjustment}</th>
+                    <th className="py-2 px-2 w-8"></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {formData.variationsAide.map((ligne) => (
                     <tr key={ligne.id} className="group hover:bg-corpiq-light-blue/10 transition-colors">
-                      <td className="py-2.5 px-2">
+                      <td className="py-2 px-2">
                         <input
                           type="text"
                           value={ligne.nature}
@@ -424,24 +424,24 @@ export const Step4: React.FC<Step4Props> = ({
                           placeholder={t.step4.aidVariation.aidNature}
                         />
                       </td>
-                      <td className="py-2.5 px-2 w-28">
+                      <td className="py-2 px-2 w-28">
                         <CurrencyInput
                           value={ligne.montant2025}
                           onChange={(v) => updateVariationAide(ligne.id, { montant2025: v })}
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2.5 px-2 w-28">
+                      <td className="py-2 px-2 w-28">
                         <CurrencyInput
                           value={ligne.montant2024}
                           onChange={(v) => updateVariationAide(ligne.id, { montant2024: v })}
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2.5 px-2 w-28">
+                      <td className="py-2 px-2 w-28">
                         <CalculatedField value={ligne.variation} className="text-sm" />
                       </td>
-                      <td className="py-2.5 px-2 w-20">
+                      <td className="py-2 px-2 w-20">
                         <NumberInput
                           value={ligne.nbLogements}
                           onChange={(v) => updateVariationAide(ligne.id, { nbLogements: v })}
@@ -449,7 +449,7 @@ export const Step4: React.FC<Step4Props> = ({
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2.5 px-2 w-20">
+                      <td className="py-2 px-2 w-20">
                         <NumberInput
                           value={ligne.nbLocauxNonResidentiels}
                           onChange={(v) => updateVariationAide(ligne.id, { nbLocauxNonResidentiels: v })}
@@ -457,7 +457,7 @@ export const Step4: React.FC<Step4Props> = ({
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2.5 px-2 text-center">
+                      <td className="py-2 px-2 text-center">
                         <div className="flex justify-center">
                           <Checkbox
                             checked={ligne.logementConcerne}
@@ -465,10 +465,10 @@ export const Step4: React.FC<Step4Props> = ({
                           />
                         </div>
                       </td>
-                      <td className="py-2.5 px-2 w-28">
+                      <td className="py-2 px-2 w-28">
                         <CalculatedField value={getAjustementVariationAide(ligne)} className="text-sm" />
                       </td>
-                      <td className="py-2.5 px-2">
+                      <td className="py-2 px-2 w-8">
                         <button
                           type="button"
                           onClick={() => removeVariationAide(ligne.id)}
