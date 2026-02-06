@@ -53,7 +53,7 @@ export const InfoTooltip: React.FC<InfoTooltipProps> = ({ content }) => {
 
   return (
     <>
-      <button type="button" onClick={() => setIsOpen(true)}
+      <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setIsOpen(true); }}
         className="ml-1.5 inline-flex items-center justify-center w-[22px] h-[22px] rounded-full text-corpiq-blue/70 hover:text-white transition-all duration-300 focus:outline-none hover:scale-125 flex-shrink-0 relative group/tip"
         style={{background: 'linear-gradient(135deg, rgba(19,49,92,0.08), rgba(26,65,120,0.12))'}}>
         <span className="absolute inset-0 rounded-full opacity-0 group-hover/tip:opacity-100 transition-opacity duration-300"
@@ -61,7 +61,7 @@ export const InfoTooltip: React.FC<InfoTooltipProps> = ({ content }) => {
         <HelpCircle size={12} strokeWidth={2.5} className="relative z-10" />
       </button>
       {isOpen && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4" onClick={() => setIsOpen(false)}>
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setIsOpen(false); }}>
           <div className="absolute inset-0 bg-black/50 backdrop-blur-md info-overlay-enter" />
           <div className="relative bg-white rounded-3xl max-w-lg w-full max-h-[80vh] overflow-hidden info-panel-enter"
             style={{ boxShadow: '0 25px 80px rgba(19,49,92,0.25), 0 8px 24px rgba(0,0,0,0.1)' }}
@@ -80,7 +80,7 @@ export const InfoTooltip: React.FC<InfoTooltipProps> = ({ content }) => {
                     <p className="text-blue-200/50 text-[10px] font-medium">Détails et explications</p>
                   </div>
                 </div>
-                <button type="button" onClick={() => setIsOpen(false)}
+                <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setIsOpen(false); }}
                   className="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all border border-white/10">
                   <X size={16} className="text-white" />
                 </button>
@@ -162,12 +162,12 @@ const HeaderTooltip: React.FC<{ content: string }> = ({ content }) => {
 
   return (
     <>
-      <button type="button" onClick={() => setIsOpen(true)}
+      <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setIsOpen(true); }}
         className="ml-1 inline-flex items-center justify-center w-7 h-7 rounded-full bg-white/15 text-white hover:bg-white/30 transition-all duration-300 focus:outline-none hover:scale-110 flex-shrink-0 border border-white/10">
         <HelpCircle size={14} strokeWidth={2.5} />
       </button>
       {isOpen && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4" onClick={() => setIsOpen(false)}>
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setIsOpen(false); }}>
           <div className="absolute inset-0 bg-black/50 backdrop-blur-md info-overlay-enter" />
           <div className="relative bg-white rounded-3xl max-w-lg w-full max-h-[80vh] overflow-hidden info-panel-enter"
             style={{ boxShadow: '0 25px 80px rgba(19,49,92,0.25), 0 8px 24px rgba(0,0,0,0.1)' }}
@@ -185,7 +185,7 @@ const HeaderTooltip: React.FC<{ content: string }> = ({ content }) => {
                     <p className="text-blue-200/50 text-[10px] font-medium">Détails et explications</p>
                   </div>
                 </div>
-                <button type="button" onClick={() => setIsOpen(false)}
+                <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setIsOpen(false); }}
                   className="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all border border-white/10">
                   <X size={16} className="text-white" />
                 </button>

@@ -60,7 +60,7 @@ export const Step1: React.FC<Step1Props> = ({
       <SectionCard title={t.step1.housingInfo.title}>
         <div className="space-y-5">
           <div>
-            <LabelWithTooltip htmlFor="adresse" required>
+            <LabelWithTooltip htmlFor="adresse">
               {t.step1.housingInfo.address}
             </LabelWithTooltip>
             <AddressAutocomplete

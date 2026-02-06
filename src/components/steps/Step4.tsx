@@ -180,24 +180,24 @@ export const Step4: React.FC<Step4Props> = ({
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b-2 border-corpiq-blue/20 text-left">
-                    <th className="py-2.5 px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">{t.step4.newExpenses.nature}</th>
-                    <th className="py-2.5 px-2 text-xs text-right font-semibold text-gray-500 uppercase tracking-wider">
+                    <th className="py-2.5 px-2 text-xs font-semibold text-gray-500">{t.step4.newExpenses.nature}</th>
+                    <th className="py-2.5 px-2 text-xs text-right font-semibold text-gray-500">
                       <span className="flex items-center justify-end gap-1">
                         {t.step4.newExpenses.expense}
                         <InfoTooltip content={t.step4.newExpenses.expenseTooltip} />
                       </span>
                     </th>
-                    <th className="py-2.5 px-2 text-xs text-right font-semibold text-gray-500 uppercase tracking-wider">
+                    <th className="py-2.5 px-2 text-xs text-right font-semibold text-gray-500">
                       <span className="flex items-center justify-end gap-1">
                         {t.step3.financialAid}
                         <InfoTooltip content={t.step4.newExpenses.financialAidTooltip} />
                       </span>
                     </th>
-                    <th className="py-2.5 px-2 text-xs text-right font-semibold text-gray-500 uppercase tracking-wider">{t.step3.retainedExpense}</th>
-                    <th className="py-2.5 px-2 text-xs text-center font-semibold text-gray-500 uppercase tracking-wider">{t.step3.nbDwellings}</th>
-                    <th className="py-2.5 px-2 text-xs text-center font-semibold text-gray-500 uppercase tracking-wider">{t.step3.nbNonResidential}</th>
-                    <th className="py-2.5 px-2 text-xs text-center font-semibold text-gray-500 uppercase tracking-wider">{t.step3.concernedDwelling}</th>
-                    <th className="py-2.5 px-2 text-xs text-right font-semibold text-gray-500 uppercase tracking-wider">{t.step3.adjustment}</th>
+                    <th className="py-2.5 px-2 text-xs text-right font-semibold text-gray-500">{t.step3.retainedExpense}</th>
+                    <th className="py-2.5 px-2 text-xs text-center font-semibold text-gray-500">{t.step3.nbDwellings}</th>
+                    <th className="py-2.5 px-2 text-xs text-center font-semibold text-gray-500">{t.step3.nbNonResidential}</th>
+                    <th className="py-2.5 px-2 text-xs text-center font-semibold text-gray-500">{t.step3.concernedDwelling}</th>
+                    <th className="py-2.5 px-2 text-xs text-right font-semibold text-gray-500">{t.step3.adjustment}</th>
                     <th className="py-2.5 px-2"></th>
                   </tr>
                 </thead>
@@ -402,14 +402,14 @@ export const Step4: React.FC<Step4Props> = ({
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b-2 border-corpiq-blue/20 text-left">
-                    <th className="py-2.5 px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">{t.step4.aidVariation.aidNature}</th>
-                    <th className="py-2.5 px-2 text-xs text-right font-semibold text-gray-500 uppercase tracking-wider">{t.step4.aidVariation.amount2025}</th>
-                    <th className="py-2.5 px-2 text-xs text-right font-semibold text-gray-500 uppercase tracking-wider">{t.step4.aidVariation.amount2024}</th>
-                    <th className="py-2.5 px-2 text-xs text-right font-semibold text-gray-500 uppercase tracking-wider">{t.step4.aidVariation.variation}</th>
-                    <th className="py-2.5 px-2 text-xs text-center font-semibold text-gray-500 uppercase tracking-wider">{t.step3.nbDwellings}</th>
-                    <th className="py-2.5 px-2 text-xs text-center font-semibold text-gray-500 uppercase tracking-wider">{t.step3.nbNonResidential}</th>
-                    <th className="py-2.5 px-2 text-xs text-center font-semibold text-gray-500 uppercase tracking-wider">{t.step3.concernedDwelling}</th>
-                    <th className="py-2.5 px-2 text-xs text-right font-semibold text-gray-500 uppercase tracking-wider">{t.step3.adjustment}</th>
+                    <th className="py-2.5 px-2 text-xs font-semibold text-gray-500">{t.step4.aidVariation.aidNature}</th>
+                    <th className="py-2.5 px-2 text-xs text-right font-semibold text-gray-500">{t.step4.aidVariation.amount2025}</th>
+                    <th className="py-2.5 px-2 text-xs text-right font-semibold text-gray-500">{t.step4.aidVariation.amount2024}</th>
+                    <th className="py-2.5 px-2 text-xs text-right font-semibold text-gray-500">{t.step4.aidVariation.variation}</th>
+                    <th className="py-2.5 px-2 text-xs text-center font-semibold text-gray-500">{t.step3.nbDwellings}</th>
+                    <th className="py-2.5 px-2 text-xs text-center font-semibold text-gray-500">{t.step3.nbNonResidential}</th>
+                    <th className="py-2.5 px-2 text-xs text-center font-semibold text-gray-500">{t.step3.concernedDwelling}</th>
+                    <th className="py-2.5 px-2 text-xs text-right font-semibold text-gray-500">{t.step3.adjustment}</th>
                     <th className="py-2.5 px-2"></th>
                   </tr>
                 </thead>
