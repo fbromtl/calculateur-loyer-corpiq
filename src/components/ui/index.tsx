@@ -325,7 +325,7 @@ export const LabelWithTooltip: React.FC<LabelWithTooltipProps> = ({ htmlFor, chi
   </label>
 );
 
-// ─── StepIndicator (Dramatic 6 Steps) ───────────────────────
+// ─── StepIndicator (Dynamic) ───────────────────────
 interface StepIndicatorProps {
   currentStep: number; totalSteps: number;
   steps: { id: number; title: string; description: string }[];
@@ -335,59 +335,52 @@ interface StepIndicatorProps {
 export const StepIndicator: React.FC<StepIndicatorProps> = ({
   currentStep, steps, onStepClick, canAccessStep, disabledMessage,
 }) => {
-  const completedCount = currentStep - 1;
-  const progressPercent = Math.round((completedCount / (steps.length - 1)) * 100);
-
   return (
     <div className="mb-8">
       {/* Desktop */}
       <div className="hidden sm:block">
-        <div className="relative rounded-2xl overflow-hidden border border-gray-200/60"
+        <div className="bg-white rounded-2xl border border-gray-200/60 px-6 py-5"
           style={{boxShadow: '0 2px 8px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.03)'}}>
-          {/* Header gradient bar */}
-          <div className="h-1.5 relative" style={{background: 'linear-gradient(90deg, #e5e7eb, #e5e7eb)'}}>
-            <div className="absolute inset-y-0 left-0 transition-all duration-1000 ease-out rounded-r-full"
-              style={{width: `${progressPercent}%`, background: 'linear-gradient(90deg, #10b981, #059669, #047857)'}} />
-          </div>
-          <div className="bg-white p-3 sm:p-4 lg:p-5">
-            <div className="flex gap-1">
-              {steps.map((step) => {
-                const accessible = canAccessStep ? canAccessStep(step.id) : true;
-                const clickable = onStepClick && accessible;
-                const done = step.id < currentStep;
-                const current = step.id === currentStep;
+          <div className="flex items-start">
+            {steps.map((step, index) => {
+              const accessible = canAccessStep ? canAccessStep(step.id) : true;
+              const clickable = onStepClick && accessible;
+              const done = step.id < currentStep;
+              const current = step.id === currentStep;
+              const isLast = index === steps.length - 1;
 
-                return (
-                  <button key={step.id} type="button"
+              return (
+                <React.Fragment key={step.id}>
+                  {/* Step circle + title */}
+                  <button type="button"
                     onClick={() => clickable && onStepClick(step.id)}
                     disabled={!clickable}
-                    className={`relative flex items-center gap-2 px-2 py-2.5 rounded-xl transition-all duration-300 flex-1 min-w-0 ${
-                      current ? 'bg-corpiq-blue/5 ring-1 ring-corpiq-blue/15' 
-                      : done ? 'hover:bg-emerald-50/50' 
-                      : accessible ? 'hover:bg-gray-50' 
-                      : ''
-                    } ${clickable ? 'cursor-pointer group' : 'cursor-not-allowed'}`}
+                    className={`flex flex-col items-center gap-1.5 transition-all duration-300 ${clickable ? 'cursor-pointer group' : 'cursor-default'}`}
+                    style={{minWidth: 0, width: 'auto'}}
                     title={!accessible ? disabledMessage : step.title}>
-                    {/* Number circle */}
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-extrabold text-xs transition-all duration-300 flex-shrink-0 ${
-                      done ? 'text-white' 
-                      : current ? 'text-white shadow-lg shadow-corpiq-blue/30' 
-                      : accessible ? 'text-gray-400 border-2 border-gray-200 bg-white group-hover:border-corpiq-blue/25 group-hover:text-corpiq-blue' 
-                      : 'text-gray-300 border border-gray-200 bg-gray-50'
+                    <div className={`w-9 h-9 rounded-full flex items-center justify-center font-extrabold text-xs transition-all duration-500 flex-shrink-0 ${
+                      done ? 'text-white scale-100'
+                      : current ? 'text-white shadow-lg shadow-corpiq-blue/25 scale-110'
+                      : accessible ? 'text-gray-400 border-2 border-gray-200 bg-white group-hover:border-corpiq-blue/30 group-hover:text-corpiq-blue'
+                      : 'text-gray-300 border-2 border-gray-100 bg-gray-50'
                     }`}
                     style={done ? {background: 'linear-gradient(135deg, #10b981, #059669)'} : current ? {background: 'linear-gradient(135deg, #13315c, #1a4178)'} : undefined}>
-                      {done ? <Check size={14} strokeWidth={3} /> : step.id}
+                      {done ? <Check size={15} strokeWidth={3} /> : step.id}
                     </div>
-                    {/* Title */}
-                    <div className="hidden md:block min-w-0 text-left overflow-hidden">
-                      <div className={`text-[10px] font-bold leading-tight truncate transition-colors ${
-                        current ? 'text-corpiq-blue' : done ? 'text-emerald-700' : accessible ? 'text-gray-500 group-hover:text-gray-700' : 'text-gray-300'
-                      }`}>{step.title}</div>
-                    </div>
+                    <span className={`hidden md:block text-[10px] font-semibold leading-tight text-center max-w-[80px] transition-colors duration-300 ${
+                      current ? 'text-corpiq-blue font-bold' : done ? 'text-emerald-600' : accessible ? 'text-gray-400 group-hover:text-gray-600' : 'text-gray-300'
+                    }`}>{step.title}</span>
                   </button>
-                );
-              })}
-            </div>
+                  {/* Connector line */}
+                  {!isLast && (
+                    <div className="flex-1 flex items-center px-1.5 mt-[18px]">
+                      <div className="w-full h-[2px] rounded-full transition-all duration-700 ease-out"
+                        style={{background: done ? 'linear-gradient(90deg, #10b981, #059669)' : '#e5e7eb'}} />
+                    </div>
+                  )}
+                </React.Fragment>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -395,34 +388,33 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
       {/* Mobile */}
       <div className="sm:hidden">
         <div className="bg-white rounded-2xl border border-gray-200/60 overflow-hidden" style={{boxShadow: '0 1px 3px rgba(0,0,0,0.04)'}}>
-          {/* Progress bar */}
-          <div className="h-1 bg-gray-100 relative">
-            <div className="absolute inset-y-0 left-0 transition-all duration-700 ease-out"
-              style={{width: `${(currentStep / steps.length) * 100}%`, background: 'linear-gradient(90deg, #10b981, #059669)'}} />
-          </div>
-          <div className="p-3">
-            {/* Step dots */}
-            <div className="flex items-center justify-center gap-1.5 mb-2">
-              {steps.map((step) => {
+          <div className="px-4 py-3">
+            {/* Stepper row */}
+            <div className="flex items-center mb-2.5">
+              {steps.map((step, index) => {
                 const done = step.id < currentStep;
                 const current = step.id === currentStep;
+                const isLast = index === steps.length - 1;
                 return (
-                  <button key={step.id} type="button"
-                    onClick={() => onStepClick && canAccessStep?.(step.id) && onStepClick(step.id)}
-                    className={`transition-all duration-300 rounded-full ${
-                      current ? 'w-8 h-2.5 bg-corpiq-blue' : done ? 'w-5 h-2.5 bg-emerald-500' : 'w-2.5 h-2.5 bg-gray-200'
-                    }`} />
+                  <React.Fragment key={step.id}>
+                    <button type="button"
+                      onClick={() => onStepClick && canAccessStep?.(step.id) && onStepClick(step.id)}
+                      className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-extrabold transition-all duration-300 ${
+                        done ? 'text-white' : current ? 'text-white' : 'text-gray-300 border-2 border-gray-200 bg-white'
+                      }`}
+                      style={done ? {background: 'linear-gradient(135deg, #10b981, #059669)'} : current ? {background: 'linear-gradient(135deg, #13315c, #1a4178)'} : undefined}>
+                      {done ? <Check size={12} strokeWidth={3} /> : step.id}
+                    </button>
+                    {!isLast && (
+                      <div className="flex-1 h-[2px] mx-1 rounded-full transition-all duration-500"
+                        style={{background: done ? 'linear-gradient(90deg, #10b981, #059669)' : '#e5e7eb'}} />
+                    )}
+                  </React.Fragment>
                 );
               })}
             </div>
-            <div className="flex items-center justify-between px-1">
-              <div className="flex items-center gap-1.5">
-                <span className="w-6 h-6 rounded-md text-[10px] font-extrabold text-white flex items-center justify-center"
-                  style={{background: 'linear-gradient(135deg, #13315c, #1a4178)'}}>
-                  {currentStep}
-                </span>
-                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/ {steps.length}</span>
-              </div>
+            {/* Current step label */}
+            <div className="flex items-center justify-center">
               <span className="text-xs font-bold text-gray-700">{steps[currentStep - 1]?.title}</span>
             </div>
           </div>
