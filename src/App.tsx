@@ -86,46 +86,57 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       {/* Header */}
-      <header className="relative text-white sticky top-0 z-40" style={{background: 'linear-gradient(135deg, #0a1b35, #0c2240 30%, #13315c 70%, #1a4178)'}}>
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-white/[0.02]" />
-          <div className="absolute -bottom-16 -left-16 w-48 h-48 rounded-full bg-white/[0.015]" />
+      <header className="relative text-white sticky top-0 z-40 overflow-hidden" style={{background: 'linear-gradient(135deg, #071428 0%, #0c2240 35%, #112d52 65%, #163a6a 100%)'}}>
+        {/* Subtle ambient glow */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -top-20 left-1/4 w-96 h-32 rounded-full opacity-[0.04]" style={{background: 'radial-gradient(ellipse, #4a9eff, transparent 70%)'}} />
+          <div className="absolute -bottom-10 right-1/3 w-64 h-20 rounded-full opacity-[0.03]" style={{background: 'radial-gradient(ellipse, #6bb5ff, transparent 70%)'}} />
         </div>
+        {/* Top accent line */}
+        <div className="h-[2px]" style={{background: 'linear-gradient(90deg, transparent 0%, #3b82f6 20%, #60a5fa 50%, #3b82f6 80%, transparent 100%)'}} />
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between py-3 sm:py-3.5">
-            <div className="flex items-center gap-3.5">
-              <div className="flex-shrink-0">
-                <img 
-                  src="/corpiq-logo.png" 
-                  alt="CORPIQ" 
-                  className="h-9 sm:h-10 w-auto object-contain drop-shadow-sm"
-                />
-              </div>
-              <div className="hidden sm:block w-px h-8 bg-white/15" />
-              <div>
-                <h1 className="text-sm sm:text-[15px] font-bold tracking-tight leading-tight text-white/95">{t.app.title}</h1>
-                <p className="text-[11px] sm:text-xs text-blue-200/50 font-medium mt-0.5 tracking-wide">{t.app.subtitle}</p>
+          <div className="flex items-center justify-between py-3.5 sm:py-4">
+            {/* Logo + Title */}
+            <div className="flex items-center gap-4">
+              <a href="https://www.corpiq.com" target="_blank" rel="noopener noreferrer" className="flex-shrink-0 group">
+                <div className="relative">
+                  <div className="absolute -inset-1.5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{background: 'radial-gradient(ellipse, rgba(96,165,250,0.15), transparent 70%)'}} />
+                  <img 
+                    src="/corpiq-logo.png" 
+                    alt="CORPIQ" 
+                    className="relative h-8 sm:h-9 w-auto object-contain brightness-110 group-hover:brightness-125 transition-all duration-300"
+                  />
+                </div>
+              </a>
+              <div className="hidden sm:block w-px self-stretch bg-gradient-to-b from-transparent via-white/20 to-transparent my-0.5" />
+              <div className="min-w-0">
+                <h1 className="text-[13px] sm:text-[15px] font-semibold tracking-[-0.01em] leading-tight text-white">{t.app.title}</h1>
+                <p className="text-[10px] sm:text-[11px] text-blue-300/45 font-medium mt-0.5 uppercase tracking-[0.08em]">{t.app.subtitle}</p>
               </div>
             </div>
-            <div className="flex items-center gap-1">
+            {/* Actions */}
+            <div className="flex items-center gap-0.5">
               <button onClick={() => setLanguage(language === 'en' ? 'fr' : 'en')}
-                className="flex items-center gap-1.5 text-white/60 hover:text-white transition-all px-3 py-2 rounded-lg hover:bg-white/10 font-semibold text-xs"
+                className="flex items-center gap-1.5 text-white/50 hover:text-white transition-all duration-200 px-2.5 py-1.5 rounded-md hover:bg-white/[0.08] text-xs font-semibold"
                 title={language === 'en' ? 'Changer en français' : 'Switch to English'}>
-                <Languages size={14} />
-                <span>{language === 'en' ? 'FR' : 'EN'}</span>
+                <Languages size={13} />
+                <span className="tracking-wide">{language === 'en' ? 'FR' : 'EN'}</span>
               </button>
               <a href="https://www.corpiq.com" target="_blank" rel="noopener noreferrer"
-                className="hidden md:flex items-center gap-1.5 text-white/40 hover:text-white transition-all px-3 py-2 rounded-lg hover:bg-white/10 text-xs">
-                <span>corpiq.com</span>
-                <ExternalLink size={11} />
+                className="hidden md:flex items-center gap-1.5 text-white/30 hover:text-white/70 transition-all duration-200 px-2.5 py-1.5 rounded-md hover:bg-white/[0.06] text-[11px]">
+                <span className="tracking-wide">corpiq.com</span>
+                <ExternalLink size={10} />
               </a>
             </div>
           </div>
         </div>
-        {/* Progress */}
-        <div className="h-0.5 bg-black/20">
-          <div className="h-full transition-all duration-700 ease-out rounded-r-full bg-emerald-500"
-            style={{ width: `${(visualCurrentStep / totalVisualSteps) * 100}%` }} />
+        {/* Progress bar */}
+        <div className="h-[3px] bg-black/30">
+          <div className="h-full transition-all duration-700 ease-out rounded-r-full"
+            style={{ 
+              width: `${(visualCurrentStep / totalVisualSteps) * 100}%`,
+              background: 'linear-gradient(90deg, #10b981, #34d399, #6ee7b7)'
+            }} />
         </div>
       </header>
 
@@ -167,19 +178,16 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="text-white mt-auto" style={{background: 'linear-gradient(135deg, #0a1b35, #0c2240 50%, #13315c)'}}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-5">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-2">
-            <div className="flex items-center gap-2.5">
-              <img src="/corpiq-logo.png" alt="CORPIQ" className="h-6 w-auto object-contain opacity-70" />
-              <div>
-                <p className="font-bold text-xs tracking-wide">CORPIQ</p>
-                <p className="text-blue-300/35 text-[10px]">Corporation des propriétaires immobiliers du Québec</p>
-              </div>
+      <footer className="text-white mt-auto relative overflow-hidden" style={{background: 'linear-gradient(135deg, #071428, #0c2240 50%, #112d52)'}}>
+        <div className="absolute top-0 inset-x-0 h-px" style={{background: 'linear-gradient(90deg, transparent, rgba(59,130,246,0.2), transparent)'}} />
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 py-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <img src="/corpiq-logo.png" alt="CORPIQ" className="h-5 w-auto object-contain opacity-60" />
+              <div className="w-px h-4 bg-white/10 hidden md:block" />
+              <p className="text-blue-200/30 text-[10px] font-medium tracking-wide">Corporation des propriétaires immobiliers du Québec</p>
             </div>
-            <div className="text-center md:text-right">
-              <p className="text-blue-200/25 text-[10px]">© {new Date().getFullYear()} CORPIQ — {t.app.footerRights}</p>
-            </div>
+            <p className="text-blue-200/20 text-[10px] tracking-wide">© {new Date().getFullYear()} CORPIQ — {t.app.footerRights}</p>
           </div>
         </div>
       </footer>
