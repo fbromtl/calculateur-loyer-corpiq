@@ -26,6 +26,7 @@ export const useCalculateur = () => {
           ...parsed,
           // S'assurer que les nouveaux champs ont une valeur par défaut
           partServicesPersonne: parsed.partServicesPersonne ?? initialFormData.partServicesPersonne,
+          hasDeneigement: parsed.hasDeneigement ?? initialFormData.hasDeneigement,
         });
       }
     } catch (e) {

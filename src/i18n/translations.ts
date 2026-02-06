@@ -172,6 +172,7 @@ export interface Translations {
   
   // Step 5
   step5: {
+    snowQuestion: string;
     snowRemoval: {
       title: string;
       tooltip: string;
@@ -222,6 +223,8 @@ export interface Translations {
     required: string;
     delete: string;
     completePreviousSteps: string;
+    yes: string;
+    no: string;
   };
   
   // PDF
@@ -401,6 +404,7 @@ export const translations: Record<Language, Translations> = {
       totalSection4Tooltip: 'Sum of new expenses and financial aid variations',
     },
     step5: {
+      snowQuestion: 'Do you have snow removal fees for a mobile home park?',
       snowRemoval: {
         title: 'Snow removal fees (mobile home parks)',
         tooltip: 'Only fill in this section if it is a mobile home park.',
@@ -449,6 +453,8 @@ export const translations: Record<Language, Translations> = {
       required: '*',
       delete: 'Delete',
       completePreviousSteps: 'Complete previous steps first',
+      yes: 'Yes',
+      no: 'No',
     },
     pdf: {
       title: 'Calculation Tool 2026',
@@ -624,6 +630,7 @@ export const translations: Record<Language, Translations> = {
       totalSection4Tooltip: 'Somme des nouvelles dépenses et des variations d\'aide financière',
     },
     step5: {
+      snowQuestion: 'Avez-vous des frais de déneigement pour un parc de maisons mobiles ?',
       snowRemoval: {
         title: 'Frais de déneigement (parc de maisons mobiles)',
         tooltip: 'Ne remplissez cette section que s\'il s\'agit d\'un parc de maisons mobiles.',
@@ -672,6 +679,8 @@ export const translations: Record<Language, Translations> = {
       required: '*',
       delete: 'Supprimer',
       completePreviousSteps: 'Complétez les étapes précédentes d\'abord',
+      yes: 'Oui',
+      no: 'Non',
     },
     pdf: {
       title: 'Outil de calcul 2026',

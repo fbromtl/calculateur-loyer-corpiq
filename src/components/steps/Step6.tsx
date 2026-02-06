@@ -43,7 +43,7 @@ export const Step6: React.FC<Step6Props> = ({
     { badge: '2', label: t.step5.summary.taxesAndInsurance, value: calculatedValues?.totalAjustementTaxesAssurances || 0 },
     { badge: '3', label: t.step5.summary.majorRepairs, value: calculatedValues?.totalAjustementReparations || 0 },
     { badge: '4', label: t.step5.summary.newExpenses, value: calculatedValues?.totalSection4 || 0 },
-    { badge: '5', label: t.step5.summary.snowRemoval, value: ajustementDeneigement },
+    ...(formData.hasDeneigement ? [{ badge: '5', label: t.step5.summary.snowRemoval, value: ajustementDeneigement }] : []),
   ];
 
   const totalAjustements = calculatedValues?.totalAjustements || 0;

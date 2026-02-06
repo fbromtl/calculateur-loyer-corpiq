@@ -10,13 +10,14 @@ import {
   NavigationButtons,
   InfoTooltip
 } from '../ui';
-import { Plus, Trash2, PackagePlus, ArrowUpDown } from 'lucide-react';
+import { Plus, Trash2, PackagePlus, ArrowUpDown, Snowflake } from 'lucide-react';
 import { calculAjustementNouvelleDepense, calculAjustementVariationAide, formatCurrency } from '../../utils/calculations';
 import { useLanguage } from '../../i18n/LanguageContext';
 
 interface Step4Props {
   formData: FormData;
   calculatedValues: CalculatedValues | null;
+  updateFormData: (updates: Partial<FormData>) => void;
   addNouvelleDepense: () => void;
   updateNouvelleDepense: (id: string, updates: Partial<LigneNouvelleDepense>) => void;
   removeNouvelleDepense: (id: string) => void;
@@ -30,6 +31,7 @@ interface Step4Props {
 export const Step4: React.FC<Step4Props> = ({
   formData,
   calculatedValues,
+  updateFormData,
   addNouvelleDepense,
   updateNouvelleDepense,
   removeNouvelleDepense,
@@ -517,6 +519,44 @@ export const Step4: React.FC<Step4Props> = ({
           <div className="w-36">
             <CalculatedField value={calculatedValues?.totalSection4 || 0} highlight />
           </div>
+        </div>
+      </div>
+
+      {/* Question déneigement */}
+      <div className="bg-white rounded-2xl border border-gray-200/80 p-5 mb-6" style={{boxShadow: '0 2px 12px rgba(0,0,0,0.04)'}}>
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{background: 'linear-gradient(135deg, #0ea5e9, #38bdf8)'}}>
+            <Snowflake size={18} className="text-white" />
+          </div>
+          <div>
+            <h3 className="text-sm font-bold text-gray-800">
+              {t.step5.snowQuestion}
+            </h3>
+          </div>
+        </div>
+        <div className="flex gap-3">
+          <button
+            type="button"
+            onClick={() => updateFormData({ hasDeneigement: true })}
+            className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold border-2 transition-all duration-200 ${
+              formData.hasDeneigement
+                ? 'border-corpiq-blue bg-corpiq-blue/5 text-corpiq-blue shadow-sm'
+                : 'border-gray-200 bg-white text-gray-500 hover:border-gray-300 hover:bg-gray-50'
+            }`}
+          >
+            {t.common.yes}
+          </button>
+          <button
+            type="button"
+            onClick={() => updateFormData({ hasDeneigement: false, deneigement: { frais2025: 0, frais2024: 0, ajustement: 0 } })}
+            className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold border-2 transition-all duration-200 ${
+              !formData.hasDeneigement
+                ? 'border-corpiq-blue bg-corpiq-blue/5 text-corpiq-blue shadow-sm'
+                : 'border-gray-200 bg-white text-gray-500 hover:border-gray-300 hover:bg-gray-50'
+            }`}
+          >
+            {t.common.no}
+          </button>
         </div>
       </div>
 

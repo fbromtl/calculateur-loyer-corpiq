@@ -537,13 +537,13 @@ export const calculerToutesLesValeurs = (formData: FormData): CalculatedValues =
   const totalSection4Brut = totalAjustementNouvellesDepensesBrut + totalAjustementVariationsAideBrut;
   const totalSection4 = round2(totalSection4Brut);
   
-  // Ajustement déneigement (Section 6) - valeur BRUTE
-  const ajustementDeneigementBrut = calculAjustementDeneigementBrut(
+  // Ajustement déneigement (Section 6) - valeur BRUTE (seulement si applicable)
+  const ajustementDeneigementBrut = formData.hasDeneigement ? calculAjustementDeneigementBrut(
     formData.deneigement.frais2025,
     formData.deneigement.frais2024,
     formData.loyerMensuelActuel,
     sousTotaux.revenusImmeuble
-  );
+  ) : 0;
   // Version arrondie pour affichage
   const ajustementDeneigement = round2(ajustementDeneigementBrut);
   

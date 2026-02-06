@@ -445,19 +445,15 @@ export const generatePDF = async (
   addSubtotalRow(t.step4.aidVariation.subtotal, formatCurrency(calculatedValues.totalAjustementVariationsAide));
   y += 4;
 
-  // ========== SECTION 5 : DÉNEIGEMENT ==========
-  addSectionTitle('5', t.step5.snowRemoval.title);
-  y += 2;
-
-  const hasDeneigement = formData.deneigement.frais2025 > 0 || formData.deneigement.frais2024 > 0;
-  if (!hasDeneigement) {
-    addSmallLabel(language === 'fr' ? 'Non applicable (pas un parc de maisons mobiles).' : 'Not applicable (not a mobile home park).');
-  } else {
+  // ========== SECTION 5 : DÉNEIGEMENT (seulement si applicable) ==========
+  if (formData.hasDeneigement) {
+    addSectionTitle('5', t.step5.snowRemoval.title);
+    y += 2;
     addRow(t.step5.snowRemoval.fees2025, formatCurrency(formData.deneigement.frais2025), false, 6);
     addRow(t.step5.snowRemoval.fees2024, formatCurrency(formData.deneigement.frais2024), false, 6);
+    addSubtotalRow(t.step5.snowRemoval.monthlyAdjustment, formatCurrency(calculatedValues.ajustementDeneigement));
+    y += 6;
   }
-  addSubtotalRow(t.step5.snowRemoval.monthlyAdjustment, formatCurrency(calculatedValues.ajustementDeneigement));
-  y += 6;
 
   // ========== RÉCAPITULATIF FINAL ==========
   checkPageBreak(80);
@@ -477,7 +473,7 @@ export const generatePDF = async (
     [`2. ${t.step5.summary.taxesAndInsurance}`, formatCurrency(calculatedValues.totalAjustementTaxesAssurances)],
     [`3. ${t.step5.summary.majorRepairs}`, formatCurrency(calculatedValues.totalAjustementReparations)],
     [`4. ${t.step5.summary.newExpenses}`, formatCurrency(calculatedValues.totalSection4)],
-    [`5. ${t.step5.summary.snowRemoval}`, formatCurrency(calculatedValues.ajustementDeneigement)],
+    ...(formData.hasDeneigement ? [[`5. ${t.step5.summary.snowRemoval}`, formatCurrency(calculatedValues.ajustementDeneigement)]] : []),
   ];
 
   doc.setTextColor(0, 0, 0);

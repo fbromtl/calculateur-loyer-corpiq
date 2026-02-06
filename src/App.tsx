@@ -104,9 +104,9 @@ function App() {
           {currentStep === 1 && <Step1 formData={formData} calculatedValues={calculatedValues} updateFormData={updateFormData} onNext={nextStep} />}
           {currentStep === 2 && <Step2 formData={formData} calculatedValues={calculatedValues} updateFormData={updateFormData} onNext={nextStep} onPrevious={prevStep} />}
           {currentStep === 3 && <Step3 formData={formData} calculatedValues={calculatedValues} addReparation={addReparation} updateReparation={updateReparation} removeReparation={removeReparation} onNext={nextStep} onPrevious={prevStep} />}
-          {currentStep === 4 && <Step4 formData={formData} calculatedValues={calculatedValues} addNouvelleDepense={addNouvelleDepense} updateNouvelleDepense={updateNouvelleDepense} removeNouvelleDepense={removeNouvelleDepense} addVariationAide={addVariationAide} updateVariationAide={updateVariationAide} removeVariationAide={removeVariationAide} onNext={nextStep} onPrevious={prevStep} />}
+          {currentStep === 4 && <Step4 formData={formData} calculatedValues={calculatedValues} updateFormData={updateFormData} addNouvelleDepense={addNouvelleDepense} updateNouvelleDepense={updateNouvelleDepense} removeNouvelleDepense={removeNouvelleDepense} addVariationAide={addVariationAide} updateVariationAide={updateVariationAide} removeVariationAide={removeVariationAide} onNext={() => formData.hasDeneigement ? nextStep() : goToStep(6)} onPrevious={prevStep} />}
           {currentStep === 5 && <Step5 formData={formData} calculatedValues={calculatedValues} updateFormData={updateFormData} onPrevious={prevStep} onNext={nextStep} />}
-          {currentStep === 6 && <Step6 formData={formData} calculatedValues={calculatedValues} onPrevious={prevStep} onReset={resetForm} onExportPDF={handleExportPDF} />}
+          {currentStep === 6 && <Step6 formData={formData} calculatedValues={calculatedValues} onPrevious={() => formData.hasDeneigement ? prevStep() : goToStep(4)} onReset={resetForm} onExportPDF={handleExportPDF} />}
         </div>
 
         {/* Auto-save */}
