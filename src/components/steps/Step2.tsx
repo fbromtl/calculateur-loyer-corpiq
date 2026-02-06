@@ -81,42 +81,10 @@ export const Step2: React.FC<Step2Props> = ({
     updateFormData({ assurances: { ...formData.assurances, dec2024: v } });
   }, [formData.assurances, updateFormData]);
 
-  const ajustementTaxesMunicipales = React.useMemo(() => {
-    if (!calculatedValues || calculatedValues.revenusImmeuble === 0) return 0;
-    const { taxesMunicipales, loyerMensuelActuel } = formData;
-    const { revenusImmeuble, tauxIPC } = calculatedValues;
-    if (taxesMunicipales.anneePrecedente === 0) return 0;
-    const variation = taxesMunicipales.anneeCourante - taxesMunicipales.anneePrecedente;
-    const poidsLoyer = (loyerMensuelActuel * 12) / revenusImmeuble;
-    if (variation < 0) return Math.round((variation * poidsLoyer) / 12 * 100) / 100;
-    const seuilInflation = tauxIPC * taxesMunicipales.anneePrecedente;
-    if (variation <= seuilInflation) return 0;
-    return Math.round(((variation - seuilInflation) * poidsLoyer) / 12 * 100) / 100;
-  }, [formData, calculatedValues]);
-
-  const ajustementTaxesScolaires = React.useMemo(() => {
-    if (!calculatedValues || calculatedValues.revenusImmeuble === 0) return 0;
-    const { taxesScolaires, loyerMensuelActuel } = formData;
-    const { revenusImmeuble, tauxIPC } = calculatedValues;
-    const variation = taxesScolaires.anneeCourante - taxesScolaires.anneePrecedente;
-    const poidsLoyer = (loyerMensuelActuel * 12) / revenusImmeuble;
-    if (variation <= 0) return Math.round((variation * poidsLoyer) / 12 * 100) / 100;
-    const seuilInflation = tauxIPC * taxesScolaires.anneePrecedente;
-    return Math.round((Math.max(variation - seuilInflation, 0) * poidsLoyer) / 12 * 100) / 100;
-  }, [formData, calculatedValues]);
-
-  const ajustementAssurances = React.useMemo(() => {
-    if (!calculatedValues || calculatedValues.revenusImmeuble === 0) return 0;
-    const { assurances, loyerMensuelActuel } = formData;
-    const { revenusImmeuble, tauxIPC } = calculatedValues;
-    if (assurances.dec2024 === 0) return 0;
-    const variation = assurances.dec2025 - assurances.dec2024;
-    const poidsLoyer = (loyerMensuelActuel * 12) / revenusImmeuble;
-    if (variation < 0) return Math.round((variation * poidsLoyer) / 12 * 100) / 100;
-    const seuilInflation = tauxIPC * assurances.dec2024;
-    if (variation <= seuilInflation) return 0;
-    return Math.round(((variation - seuilInflation) * poidsLoyer) / 12 * 100) / 100;
-  }, [formData, calculatedValues]);
+  // Utiliser les valeurs centralisées de calculations.ts (source unique de vérité)
+  const ajustementTaxesMunicipales = calculatedValues?.ajustementTaxesMunicipales || 0;
+  const ajustementTaxesScolaires = calculatedValues?.ajustementTaxesScolaires || 0;
+  const ajustementAssurances = calculatedValues?.ajustementAssurances || 0;
 
   return (
     <div>

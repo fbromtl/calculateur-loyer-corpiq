@@ -474,10 +474,14 @@ export const calculerToutesLesValeurs = (formData: FormData): CalculatedValues =
     sousTotaux.revenusImmeuble
   );
   
-  // Arrondi UNIQUE à la fin pour le total (règle TAL)
-  // Les valeurs brutes sont sommées PUIS arrondies une seule fois
+  // Valeurs individuelles arrondies pour affichage
+  const ajustementTaxesMunicipales = round2(ajustementTaxesMunicipalesBrut);
+  const ajustementTaxesScolaires = round2(ajustementTaxesScolairesBrut);
+  const ajustementAssurances = round2(ajustementAssurancesBrut);
+  
+  // Total = somme des valeurs arrondies (cohérent avec l'affichage)
   const totalAjustementTaxesAssurances = round2(
-    ajustementTaxesMunicipalesBrut + ajustementTaxesScolairesBrut + ajustementAssurancesBrut
+    ajustementTaxesMunicipales + ajustementTaxesScolaires + ajustementAssurances
   );
   
   // Ajustements réparations - somme des valeurs BRUTES puis arrondi unique (règle TAL)
@@ -581,6 +585,9 @@ export const calculerToutesLesValeurs = (formData: FormData): CalculatedValues =
     ajustementServices: ajustementBaseResult.ajustementServices,
     ajustementSansServices: ajustementBaseResult.ajustementSansServices,
     ...sousTotaux,
+    ajustementTaxesMunicipales,
+    ajustementTaxesScolaires,
+    ajustementAssurances,
     totalAjustementTaxesAssurances,
     totalAjustementReparations,
     totalAjustementNouvellesDepenses,

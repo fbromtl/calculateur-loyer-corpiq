@@ -113,6 +113,9 @@ export interface CalculatedValues {
   poidsLoyer: number;
   
   // Valeurs calculées section 2
+  ajustementTaxesMunicipales: number;
+  ajustementTaxesScolaires: number;
+  ajustementAssurances: number;
   totalAjustementTaxesAssurances: number;
   
   // Valeurs calculées section 3
