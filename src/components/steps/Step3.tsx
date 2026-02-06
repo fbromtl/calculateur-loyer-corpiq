@@ -192,30 +192,30 @@ export const Step3: React.FC<Step3Props> = ({
               <table className="w-full text-sm border-collapse">
                 <thead>
                   <tr className="border-b border-gray-200 bg-gray-50/50">
-                    <th className="py-2 px-1.5 text-left text-[11px] font-semibold text-gray-600">{t.step3.nature}</th>
-                    <th className="py-2 px-1.5 text-right text-[11px] font-semibold text-gray-600 w-24">
-                      <span className="flex items-center justify-end gap-1">
+                    <th className="py-2 px-1.5 text-center text-[11px] font-semibold text-gray-600">{t.step3.nature}</th>
+                    <th className="py-2 px-1.5 text-center text-[11px] font-semibold text-gray-600 w-32">
+                      <span className="flex items-center justify-center gap-1">
                         {t.step3.expense}
                         <InfoTooltip content={t.step3.expenseTooltip} />
                       </span>
                     </th>
-                    <th className="py-2 px-1.5 text-right text-[11px] font-semibold text-gray-600 w-20">
-                      <span className="flex items-center justify-end gap-1">
+                    <th className="py-2 px-1.5 text-center text-[11px] font-semibold text-gray-600 w-28">
+                      <span className="flex items-center justify-center gap-1">
                         {t.step3.financialAid}
                         <InfoTooltip content={t.step3.financialAidTooltip} />
                       </span>
                     </th>
-                    <th className="py-2 px-1.5 text-right text-[11px] font-semibold text-gray-600 w-20">
-                      <span className="flex items-center justify-end gap-1">
+                    <th className="py-2 px-1.5 text-center text-[11px] font-semibold text-gray-600 w-28">
+                      <span className="flex items-center justify-center gap-1">
                         {t.step3.thirdPartyCompensation}
                         <InfoTooltip content={t.step3.thirdPartyCompensationTooltip} />
                       </span>
                     </th>
-                    <th className="py-2 px-1.5 text-right text-[11px] font-semibold text-gray-600 bg-blue-50/40 w-24">{t.step3.retainedExpense}</th>
-                    <th className="py-2 px-1.5 text-right text-[11px] font-semibold text-gray-600 w-28">{t.step3.reducedInterestLoan}</th>
-                    <th className="py-2 px-1.5 text-right text-[11px] font-semibold text-gray-600 w-28">{t.step3.annualPayment}</th>
-                    <th className="py-2 px-1.5 text-center text-[11px] font-semibold text-gray-600 w-16">{t.step3.nbDwellings}</th>
-                    <th className="py-2 px-1.5 text-center text-[11px] font-semibold text-gray-600 w-16">{t.step3.nbNonResidential}</th>
+                    <th className="py-2 px-1.5 text-center text-[11px] font-semibold text-gray-600 bg-blue-50/40 w-32">{t.step3.retainedExpense}</th>
+                    <th className="py-2 px-1.5 text-center text-[11px] font-semibold text-gray-600 w-32">{t.step3.reducedInterestLoan}</th>
+                    <th className="py-2 px-1.5 text-center text-[11px] font-semibold text-gray-600 w-32">{t.step3.annualPayment}</th>
+                    <th className="py-2 px-1.5 text-center text-[11px] font-semibold text-gray-600 w-28">{t.step3.nbDwellings}</th>
+                    <th className="py-2 px-1.5 text-center text-[11px] font-semibold text-gray-600 w-28">{t.step3.nbNonResidential}</th>
                     <th className="py-2 px-1.5 text-center text-[11px] font-semibold text-gray-600">{t.step3.concernedDwelling}</th>
                     <th className="py-2 px-1.5 w-8"></th>
                   </tr>
@@ -230,50 +230,50 @@ export const Step3: React.FC<Step3Props> = ({
                             type="text"
                             value={ligne.nature}
                             onChange={(e) => updateReparation(ligne.id, { nature: e.target.value })}
-                            className="input-field text-sm w-24"
+                            className="input-field text-sm w-28"
                             placeholder="Nature..."
                           />
                         </div>
                       </td>
-                      <td className="py-2 px-1.5 w-24">
+                      <td className="py-2 px-1.5 w-32">
                         <CurrencyInput
                           value={ligne.depense}
                           onChange={(v) => updateReparation(ligne.id, { depense: v })}
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2 px-1.5 w-20">
+                      <td className="py-2 px-1.5 w-28">
                         <CurrencyInput
                           value={ligne.aideFinanciere}
                           onChange={(v) => updateReparation(ligne.id, { aideFinanciere: v })}
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2 px-1.5 w-20">
+                      <td className="py-2 px-1.5 w-28">
                         <CurrencyInput
                           value={ligne.indemniteTiers}
                           onChange={(v) => updateReparation(ligne.id, { indemniteTiers: v })}
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2 px-1.5 w-24 bg-blue-50/30">
+                      <td className="py-2 px-1.5 w-32 bg-blue-50/30">
                         <CalculatedField value={ligne.depenseRetenue} className="text-sm" />
                       </td>
-                      <td className="py-2 px-1.5 w-28">
+                      <td className="py-2 px-1.5 w-32">
                         <CurrencyInput
                           value={ligne.montantPretReduit}
                           onChange={(v) => updateReparation(ligne.id, { montantPretReduit: v })}
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2 px-1.5 w-28">
+                      <td className="py-2 px-1.5 w-32">
                         <CurrencyInput
                           value={ligne.versementAnnuel}
                           onChange={(v) => updateReparation(ligne.id, { versementAnnuel: v })}
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2 px-1.5 w-16">
+                      <td className="py-2 px-1.5 w-28">
                         <NumberInput
                           value={ligne.nbLogements}
                           onChange={(v) => updateReparation(ligne.id, { nbLogements: v })}
@@ -281,7 +281,7 @@ export const Step3: React.FC<Step3Props> = ({
                           className="text-sm"
                         />
                       </td>
-                      <td className="py-2 px-1.5 w-16">
+                      <td className="py-2 px-1.5 w-28">
                         <NumberInput
                           value={ligne.nbLocauxNonResidentiels}
                           onChange={(v) => updateReparation(ligne.id, { nbLocauxNonResidentiels: v })}
