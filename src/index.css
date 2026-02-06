@@ -53,10 +53,10 @@ body {
   }
 
   .input-field {
-    @apply w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-2xl
+    @apply w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl
            text-gray-800 text-[15px] placeholder:text-gray-400
-           focus:border-corpiq-blue/50 focus:shadow-input-focus
-           hover:border-gray-300
+           focus:border-corpiq-blue/50 focus:shadow-input-focus focus:bg-white
+           hover:border-gray-300 hover:bg-gray-50/50
            transition-all duration-200 outline-none;
   }
 
@@ -71,24 +71,31 @@ body {
 
   .section-card {
     @apply bg-white rounded-3xl shadow-card overflow-hidden
-           transition-all duration-300 hover:shadow-card-hover;
+           transition-all duration-300 hover:shadow-card-hover
+           border border-gray-100/80;
   }
 
   .section-header {
-    @apply bg-gradient-to-r from-corpiq-blue via-corpiq-blue-light to-corpiq-blue
-           text-white px-7 py-5 font-bold text-base relative overflow-hidden;
+    @apply text-white px-6 py-4 font-bold text-base relative overflow-hidden;
+    background: linear-gradient(135deg, #0c2240 0%, #13315c 40%, #1a4178 100%);
   }
 
   .section-header::before {
     content: '';
     @apply absolute inset-0 opacity-10;
     background: repeating-linear-gradient(
-      -45deg, transparent, transparent 10px, rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 20px
+      -45deg, transparent, transparent 10px, rgba(255,255,255,0.04) 10px, rgba(255,255,255,0.04) 20px
     );
   }
 
+  .section-header::after {
+    content: '';
+    @apply absolute bottom-0 left-0 right-0 h-px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  }
+
   .section-content {
-    @apply p-7;
+    @apply p-6 sm:p-7;
   }
 }
 
@@ -135,8 +142,25 @@ body {
 .pulse-ring { animation: pulseRing 2s ease-in-out infinite; }
 
 @keyframes shimmer {
-  from { background-position: -200% 0; }
-  to { background-position: 200% 0; }
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer { animation: shimmer 3s linear infinite; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+.animate-float { animation: float 6s ease-in-out infinite; }
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient { 
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite; 
 }
 
 /* Glass */

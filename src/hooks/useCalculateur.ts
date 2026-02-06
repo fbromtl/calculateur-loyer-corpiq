@@ -202,6 +202,7 @@ export const useCalculateur = () => {
       case 3:
       case 4:
       case 5:
+      case 6:
         // Pour les étapes suivantes, l'étape 1 doit être complète
         return formData.loyerMensuelActuel > 0;
       default:
@@ -228,7 +229,7 @@ export const useCalculateur = () => {
   const nextStep = useCallback(() => {
     // Vérifier que l'étape actuelle est valide avant d'avancer
     if (isStepValid(currentStep)) {
-      setCurrentStep(prev => Math.min(prev + 1, 5));
+      setCurrentStep(prev => Math.min(prev + 1, 6));
     }
   }, [currentStep, isStepValid]);
 
@@ -239,7 +240,7 @@ export const useCalculateur = () => {
   const goToStep = useCallback((step: number) => {
     // Ne permettre la navigation que si l'étape est accessible
     if (canAccessStep(step)) {
-      setCurrentStep(Math.max(1, Math.min(step, 5)));
+      setCurrentStep(Math.max(1, Math.min(step, 6)));
     }
   }, [canAccessStep]);
 

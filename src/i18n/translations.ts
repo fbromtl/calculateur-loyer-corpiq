@@ -34,6 +34,10 @@ export interface Translations {
       title: string;
       description: string;
     };
+    step6: {
+      title: string;
+      description: string;
+    };
   };
   
   // Step 1
@@ -266,8 +270,12 @@ export const translations: Record<Language, Translations> = {
         description: 'New expenses and financial aid variations',
       },
       step5: {
+        title: 'Snow removal',
+        description: 'Snow removal fees (mobile homes)',
+      },
+      step6: {
         title: 'Summary',
-        description: 'Snow removal, result and PDF export',
+        description: 'Final result and PDF export',
       },
     },
     step1: {
@@ -485,8 +493,12 @@ export const translations: Record<Language, Translations> = {
         description: 'Nouvelles dépenses et variations d\'aide financière',
       },
       step5: {
+        title: 'Déneigement',
+        description: 'Frais de déneigement (maisons mobiles)',
+      },
+      step6: {
         title: 'Récapitulatif',
-        description: 'Déneigement, résultat et export PDF',
+        description: 'Résultat final et export PDF',
       },
     },
     step1: {

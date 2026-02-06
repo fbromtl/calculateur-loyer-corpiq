@@ -236,22 +236,22 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
               <button type="button"
                 onClick={() => clickable && onStepClick(step.id)}
                 disabled={!clickable}
-                className={`flex flex-col items-center transition-all duration-300 ${clickable ? 'cursor-pointer group' : 'cursor-not-allowed'}`}
+                className={`flex flex-col items-center transition-all duration-300 min-w-0 ${clickable ? 'cursor-pointer group' : 'cursor-not-allowed'}`}
                 title={!accessible ? disabledMessage : undefined}>
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-extrabold text-sm transition-all duration-300 ${
-                  done ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 scale-100'
+                <div className={`w-11 h-11 rounded-xl flex items-center justify-center font-extrabold text-sm transition-all duration-300 ${
+                  done ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/25'
                   : current ? 'bg-corpiq-blue text-white shadow-xl shadow-corpiq-blue/30 pulse-ring scale-110'
                   : accessible ? 'bg-white text-gray-400 border-2 border-gray-200 group-hover:border-corpiq-blue/40 group-hover:text-corpiq-blue group-hover:scale-105'
                   : 'bg-gray-100 text-gray-300 border-2 border-gray-200'
                 }`}>
-                  {done ? <Check size={20} strokeWidth={3} /> : step.id}
+                  {done ? <Check size={18} strokeWidth={3} /> : step.id}
                 </div>
-                <span className={`text-xs mt-3 text-center font-bold max-w-[90px] leading-tight hidden md:block transition-colors ${
+                <span className={`text-[10px] mt-2.5 text-center font-bold max-w-[80px] leading-tight hidden lg:block transition-colors ${
                   current ? 'text-corpiq-blue' : done ? 'text-emerald-600' : accessible ? 'text-gray-400' : 'text-gray-300'
                 }`}>{step.title}</span>
               </button>
               {index < steps.length - 1 && (
-                <div className="flex-1 mt-6 mx-4 h-1 rounded-full overflow-hidden bg-gray-200">
+                <div className="flex-1 mt-5 mx-2 lg:mx-3 h-0.5 rounded-full overflow-hidden bg-gray-200">
                   <div className={`h-full rounded-full transition-all duration-700 ease-out ${done ? 'bg-emerald-500 w-full' : 'w-0'}`} />
                 </div>
               )}
@@ -263,14 +263,18 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
 
     {/* Mobile */}
     <div className="sm:hidden">
-      <div className="flex items-center justify-center gap-2.5">
+      <div className="flex items-center justify-center gap-1.5 mb-2">
         {steps.map((step) => (
-          <div key={step.id}
-            className={`h-2.5 rounded-full transition-all duration-300 ${
-              step.id === currentStep ? 'w-10 bg-corpiq-blue' : step.id < currentStep ? 'w-7 bg-emerald-500' : 'w-2.5 bg-gray-300'
+          <button key={step.id} type="button"
+            onClick={() => onStepClick && canAccessStep?.(step.id) && onStepClick(step.id)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              step.id === currentStep ? 'w-8 bg-corpiq-blue' : step.id < currentStep ? 'w-5 bg-emerald-500' : 'w-2 bg-gray-300'
             }`} />
         ))}
       </div>
+      <p className="text-center text-xs font-semibold text-gray-500">
+        {currentStep}/{steps.length} — {steps[currentStep - 1]?.title}
+      </p>
     </div>
   </div>
 );

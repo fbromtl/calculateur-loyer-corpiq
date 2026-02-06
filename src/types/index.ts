@@ -143,7 +143,8 @@ export const STEPS: StepInfo[] = [
   { id: 2, title: 'Taxes et assurances', description: 'Taxes municipales, scolaires et assurances' },
   { id: 3, title: 'Réparations majeures', description: 'Améliorations et rénovations' },
   { id: 4, title: 'Nouvelles dépenses', description: 'Services et variations d\'aide' },
-  { id: 5, title: 'Récapitulatif', description: 'Résultat et export PDF' },
+  { id: 5, title: 'Déneigement', description: 'Frais de déneigement (maisons mobiles)' },
+  { id: 6, title: 'Récapitulatif', description: 'Résultat final et export PDF' },
 ];
 
 export const TAUX_IPC_2026 = 0.031; // 3.1%
